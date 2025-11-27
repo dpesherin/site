@@ -27,9 +27,12 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SERVER_PORT || 22 }}
         script: |
-          cd /var/www/site
-          git pull origin master
-          echo "✅ Code updated via git pull"
+           whoami
+           pwd
+           ls -la
+           cd /var/www/site
+           git pull origin master
+           echo "✅ Code updated via git pull"
           
     - name: Install dependencies (manual trigger only)
       if: ${{ github.event_name == 'workflow_dispatch' }}
