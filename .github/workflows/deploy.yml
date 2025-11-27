@@ -29,7 +29,8 @@ jobs:
         script: |
            whoami
            pwd
-           cd /var/www/site && ls -la && git pull origin master && echo "✅ Code updated via git pull"
+           cd /var/www/site && ls -la && git pull origin master
+           echo "✅ Code updated via git pull"
           
     - name: Install app (manual trigger only)
       if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -40,4 +41,5 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SERVER_PORT || 22 }}
         script: |
-          cd /var/www/site && ls -la && npm run install && echo "✅ App installed via npm run install"
+          cd /var/www/site && ls -la && npm run install
+          echo "✅ App installed via npm run install"
