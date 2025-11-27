@@ -30,9 +30,7 @@ jobs:
            whoami
            pwd
            ls -la
-           cd /var/www/site
-           git pull origin master
-           echo "✅ Code updated via git pull"
+           git -C /var/www/site pull origin master && echo "✅ Code updated via git pull"
           
     - name: Install dependencies (manual trigger only)
       if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -43,6 +41,4 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SERVER_PORT || 22 }}
         script: |
-          cd /var/www/site
-          npm run install
-          echo "✅ Dependencies installed via npm run install"
+          cd /var/www/site && npm run install && echo "✅ Dependencies installed via npm run install"
