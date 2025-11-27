@@ -5,7 +5,7 @@ import bcrypt from "bcrypt"
 (async()=>{
     dotenv.config()
     const db = new DB()
-    console.log("USERS TABLE IMPORTING....")
+    console.log("ℹ️  USERS TABLE IMPORTING....")
     const installUserTable = `
     CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
@@ -20,9 +20,9 @@ import bcrypt from "bcrypt"
     );
     `
     await db.query(installUserTable)
-    console.log("%cUSERS TABLE SUCCESSFULLY IMPORTED", 'color: green; font-size: 16px; font-weight: bold;')
+    console.log("\x1b[32m✅ USERS TABLE SUCCESSFULLY IMPORTED\x1b[0m")
 
-    console.log("FILES TABLE IMPORTING....")
+    console.log("ℹ️  FILES TABLE IMPORTING....")
     const installFilesTable = `
     CREATE TABLE IF NOT EXISTS files (
         id SERIAL PRIMARY KEY,
@@ -34,9 +34,9 @@ import bcrypt from "bcrypt"
     );
     `
     await db.query(installFilesTable)
-    console.log("%cFILES TABLE SUCCESSFULLY IMPORTED", 'color: green; font-size: 16px; font-weight: bold;')
+    console.log("\x1b[32m✅ FILES TABLE SUCCESSFULLY IMPORTED\x1b[0m")
 
-    console.log("APPLICATIONS TABLE IMPORTING....")
+    console.log("ℹ️  APPLICATIONS TABLE IMPORTING....")
     const installApplicationsTable = `
     CREATE TABLE IF NOT EXISTS applications (
         id SERIAL PRIMARY KEY,
@@ -51,9 +51,9 @@ import bcrypt from "bcrypt"
     );
     `
     await db.query(installApplicationsTable)
-    console.log("%cAPPLICATIONS TABLE SUCCESSFULLY IMPORTED", 'color: green; font-size: 16px; font-weight: bold;')
+    console.log("\x1b[32m✅ APPLICATIONS TABLE SUCCESSFULLY IMPORTED\x1b[0m")
 
-    console.log("SCHEDULE TABLE IMPORTING....")
+    console.log("ℹ️  SCHEDULE TABLE IMPORTING....")
     const installScheduleTable = `
     CREATE TABLE IF NOT EXISTS schedule (
         id SERIAL PRIMARY KEY,
@@ -64,9 +64,9 @@ import bcrypt from "bcrypt"
     );
     `
     await db.query(installScheduleTable)
-    console.log("%cSCHEDULE TABLE SUCCESSFULLY IMPORTED", 'color: green; font-size: 16px; font-weight: bold;')
+    console.log("\x1b[32m✅ SCHEDULE TABLE SUCCESSFULLY IMPORTED\x1b[0m")
 
-    console.log("PHOTOSESSIONS TABLE IMPORTING....")
+    console.log("ℹ️  PHOTOSESSIONS TABLE IMPORTING....")
     const installPhoteSessionsTable = `
     CREATE TABLE IF NOT EXISTS photosessions (
         id SERIAL PRIMARY KEY,
@@ -77,9 +77,9 @@ import bcrypt from "bcrypt"
     );
     `
     await db.query(installPhoteSessionsTable)
-    console.log("%cPHOTOSESSIONS TABLE SUCCESSFULLY IMPORTED", 'color: green; font-size: 16px; font-weight: bold;')
+    console.log("\x1b[32m✅ PHOTOSESSIONS TABLE SUCCESSFULLY IMPORTED\x1b[0m")
 
-    console.log("CREATING ADMIN USER....")
+    console.log("ℹ️  CREATING ADMIN USER....")
     const candUserQuery = `
     SELECT * 
     FROM users
@@ -102,10 +102,11 @@ import bcrypt from "bcrypt"
             ($1, $2, $3, $4, $5)
         `
         await db.query(createUserQuery, [true, userData.email, userData.login, cryptPass, 'admin'])
-        console.log("%cADMIN USER CREATED SUCCESSFULLY", 'color: green; font-size: 16px; font-weight: bold;')
+        console.log("\x1b[32m✅ ADMIN USER CREATED SUCCESSFULLY\x1b[0m")
         console.table(userData)
     }else
     {
-        console.log("%cADMIN USER ALREARY EXISTS", 'color: red; font-size: 16px; font-weight: bold;')
+        console.log("\x1b[31m❌ ADMIN USER ALREARY EXISTS\x1b[0m")
     }
+    return
 })()
