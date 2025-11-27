@@ -44,5 +44,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SERVER_PORT || 22 }}
         script: |
-          cd /var/www/site && ls -la && npm run install
+          cd /var/www/site
+          ls -la
+          npm run install_app
           echo "✅ App installed via npm run install"
