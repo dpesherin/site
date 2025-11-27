@@ -32,7 +32,7 @@ jobs:
            cd /var/www/site
            ls -la
            git pull origin master
-           npm i
+           npm install
            echo "✅ Code updated via git pull"
           
     - name: Install app (manual trigger only)
