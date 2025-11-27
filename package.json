@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
-    "install": "node install/install.js"
+    "install_app": "node install/install.js"
   },
   "author": "Pesherin Denis <pesherind@yandex.ru>",
   "license": "MIT",
