@@ -29,7 +29,10 @@ jobs:
         script: |
            whoami
            pwd
-           cd /var/www/site && ls -la && git pull origin master
+           cd /var/www/site
+           ls -la
+           git pull origin master
+           npm i
            echo "✅ Code updated via git pull"
           
     - name: Install app (manual trigger only)
