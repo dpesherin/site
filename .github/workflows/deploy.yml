@@ -107,14 +107,23 @@ jobs:
             echo "ℹ️  PM2 not found, manual restart required"
           fi
           
-          # Проверка что приложение запущено (пример проверки порта)
-          if command -v netstat &> /dev/null; then
+          # Проверка порта
+          if command -v ss &> /dev/null; then
             echo "🔍 Checking if application is running..."
-            if sudo netstat -tuln | awk '$4 ~ /:3000$/ {exit 0} END {exit 1}'; then
+            if sudo ss -tuln | grep -E '[:]3000\s' > /dev/null; then
               echo "✅ Application is running on port 3000"
             else
               echo "⚠️  Application may not be running on expected port"
             fi
+          elif command -v netstat &> /dev/null; then
+            echo "🔍 Checking if application is running..."
+            if sudo netstat -tuln | grep -E '[:]3000\s' > /dev/null; then
+              echo "✅ Application is running on port 3000"
+            else
+              echo "⚠️  Application may not be running on expected port"
+            fi
+          else
+            echo "❌ Neither ss nor netstat is available"
           fi
           
           echo "🎉 Deployment completed successfully!"
