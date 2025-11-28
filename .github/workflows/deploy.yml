@@ -27,10 +27,87 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SERVER_PORT || 22 }}
         script: |
-           whoami
-           pwd
-           cd /var/www/site
-           ls -la
-           git pull origin master
-           npm install
-           echo "✅ Code updated via git pull"
+          set -e  # Прерывать выполнение при любой ошибке
+          set -o pipefail  # Прерывать при ошибках в pipe
+          
+          echo "🚀 Starting deployment process..."
+          
+          # Проверка существования директории
+          if [ ! -d "/var/www/site" ]; then
+            echo "❌ Error: Directory /var/www/site does not exist"
+            exit 1
+          fi
+          
+          echo "📁 Switching to project directory..."
+          cd /var/www/site || {
+            echo "❌ Failed to change directory to /var/www/site"
+            exit 1
+          }
+          
+          echo "🔍 Current directory: $(pwd)"
+          echo "👤 Running as user: $(whoami)"
+          
+          # Проверка прав доступа
+          if [ ! -w "." ]; then
+            echo "❌ Error: No write permissions in current directory"
+            exit 1
+          fi
+          
+          echo "🔄 Pulling latest changes from Git..."
+          git fetch origin || {
+            echo "❌ Git fetch failed"
+            exit 1
+          }
+          
+          # Проверка существования ветки
+          if ! git show-ref --verify --quiet refs/remotes/origin/master; then
+            echo "❌ Error: Branch master does not exist in remote"
+            exit 1
+          fi
+          
+          git pull origin master || {
+            echo "❌ Git pull failed"
+            exit 1
+          }
+          
+          echo "✅ Git pull completed successfully"
+          echo "📦 Installing dependencies..."
+          
+          # Проверка существования package.json
+          if [ ! -f "package.json" ]; then
+            echo "❌ Error: package.json not found"
+            exit 1
+          fi
+          
+          npm install || {
+            echo "❌ npm install failed"
+            exit 1
+          }
+          
+          echo "✅ Dependencies installed successfully"
+          
+          # Проверка существования package-lock.json для аудита
+          if [ -f "package-lock.json" ]; then
+            echo "🔒 Running npm audit..."
+            npm audit --audit-level moderate || {
+              echo "⚠️  npm audit found vulnerabilities"
+              # Не прерываем выполнение, только предупреждаем
+            }
+          fi
+          
+          # Проверка что приложение запущено (пример проверки порта)
+          if command -v netstat &> /dev/null; then
+            echo "🔍 Checking if application is running..."
+            # Замените 3000 на ваш порт
+            if netstat -tuln | grep -q ':3000'; then
+              echo "✅ Application is running on port 3000"
+            else
+              echo "⚠️  Application may not be running on expected port"
+            fi
+          fi
+          
+          echo "🎉 Deployment completed successfully!"
+          echo "📊 Deployment info:"
+          echo "   Branch: $(git branch --show-current)"
+          echo "   Commit: $(git log -1 --oneline)"
+          echo "   Date: $(date)"
