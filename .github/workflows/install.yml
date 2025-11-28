@@ -1,12 +1,10 @@
 name: Deploy Node.js App
 
 on:
-  push:
-    branches: [ master ]
   workflow_dispatch:    # Ручной триггер
 
 jobs:
-  deploy:
+  install:
     runs-on: ubuntu-24.04
     
     steps:
@@ -18,8 +16,9 @@ jobs:
       with:
         node-version: '24'
         cache: 'npm'
-        
-    - name: Deploy to server and pull changes
+          
+    - name: Install app
+      if: ${{ github.event_name == 'workflow_dispatch' }}
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.SERVER_HOST }}
@@ -27,10 +26,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SERVER_PORT || 22 }}
         script: |
-           whoami
-           pwd
-           cd /var/www/site
-           ls -la
-           git pull origin master
-           npm install
-           echo "✅ Code updated via git pull"
+          cd /var/www/site
+          ls -la
+          npm run install_app
+          echo "✅ App installed via npm run install"
