@@ -111,7 +111,7 @@ jobs:
           if command -v netstat &> /dev/null; then
             echo "🔍 Checking if application is running..."
             # Замените 3000 на ваш порт
-            if sudo netstat -tuln | grep -q ':3000'; then
+            if sudo netstat -tuln | grep '3000'; then
               echo "✅ Application is running on port 3000"
             else
               echo "⚠️  Application may not be running on expected port"
