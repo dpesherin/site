@@ -94,6 +94,18 @@ jobs:
               # Не прерываем выполнение, только предупреждаем
             }
           fi
+
+           # Перезагрузка приложения (пример для PM2)
+          if command -v pm2 &> /dev/null; then
+            echo "🔄 Restarting application with PM2..."
+            pm2 restart all || {
+              echo "❌ PM2 restart failed"
+              exit 1
+            }
+            echo "✅ Application restarted with PM2"
+          else
+            echo "ℹ️  PM2 not found, manual restart required"
+          fi
           
           # Проверка что приложение запущено (пример проверки порта)
           if command -v netstat &> /dev/null; then
