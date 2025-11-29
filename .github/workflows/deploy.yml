@@ -157,25 +157,6 @@ jobs:
             echo "ℹ️  PM2 not found, manual restart required"
           fi
           
-          # Проверка порта
-          if command -v ss &> /dev/null; then
-            echo "🔍 Checking if application is running..."
-            if sudo ss -tuln | grep ':3000' > /dev/null; then
-              echo "✅ Application is running on port 3000"
-            else
-              echo "⚠️  Application may not be running on expected port"
-            fi
-          elif command -v netstat &> /dev/null; then
-            echo "🔍 Checking if application is running..."
-            if sudo netstat -tuln | grep ':3000' > /dev/null; then
-              echo "✅ Application is running on port 3000"
-            else
-              echo "⚠️  Application may not be running on expected port"
-            fi
-          else
-            echo "❌ Neither ss nor netstat is available"
-          fi
-          
           echo "🎉 Deployment completed successfully!"
           echo "📊 Deployment info:"
           echo "   Branch: $(git branch --show-current)"
