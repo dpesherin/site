@@ -38,6 +38,9 @@ jobs:
         
   deploy:
     runs-on: ubuntu-24.04
+    needs: test # ✅ ВАЖНО: эта job зависит от успешного выполнения test job
+    if: needs.test.result == 'success' # ✅ Деплой только если тесты прошли успешно
+    timeout-minutes: 15
     
     steps:
     - name: Checkout code
