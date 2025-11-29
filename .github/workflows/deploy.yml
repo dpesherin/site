@@ -83,7 +83,17 @@ jobs:
             exit 1
           fi
           
-          echo "🔄 Pulling latest changes from Git..."
+          echo "🔄 Resetting any local changes..."
+          git reset --hard HEAD || {
+            echo "⚠️  Git reset failed, continuing..."
+          }
+          
+          echo "🧹 Cleaning untracked files..."
+          git clean -fd || {
+            echo "⚠️  Git clean failed, continuing..."
+          }
+          
+          echo "📥 Pulling latest changes from Git..."
           git fetch origin || {
             echo "❌ Git fetch failed"
             exit 1
@@ -95,12 +105,19 @@ jobs:
             exit 1
           fi
           
-          git pull origin master || {
+          echo "🔄 Switching to master branch..."
+          git checkout master --force || {
+            echo "❌ Git checkout failed"
+            exit 1
+          }
+          
+          echo "📥 Pulling changes..."
+          git pull origin master --force || {
             echo "❌ Git pull failed"
             exit 1
           }
           
-          echo "✅ Git pull completed successfully"
+          echo "✅ Git operations completed successfully"
           echo "📦 Installing dependencies..."
           
           # Проверка существования package.json
