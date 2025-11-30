@@ -1,5 +1,6 @@
 import express from "express"
 import cors from "cors"
+import cookieParser from "cookie-parser"
 import { CheckRouter } from "./routers/CheckRouter.js"
 import {MainRouter} from "./routers/MainRouter.js"
 import { UserRouter } from "./routers/UserRouter.js"
@@ -16,6 +17,7 @@ export class App {
   _setupMiddleware() {
     this._app.use(cors())
     this._app.use(express.json())
+    this._app.use(cookieParser())
   }
 
   _setupRoutes() {
