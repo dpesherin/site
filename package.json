@@ -10,7 +10,7 @@
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
     "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage"
   },
- "jest": {
+  "jest": {
     "testEnvironment": "node",
     "transform": {},
     "moduleNameMapper": {
