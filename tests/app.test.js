@@ -22,4 +22,16 @@ describe('Check health test', () => {
       .get('/check/health')
       .expect(200);
   });
+
+   test('GET /auth/login should return 200 status', async () => {
+    await request(appInstance._app)
+      .get('/auth/login')
+      .expect(200);
+  });
+
+   test('GET /auth/register should return 200 status', async () => {
+    await request(appInstance._app)
+      .get('/auth/register')
+      .expect(200);
+  });
 });
