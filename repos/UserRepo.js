@@ -42,14 +42,14 @@ export class UserRepo
         let sqlStatement = `INSERT INTO users
         (login, email, active, name, lastname, password, role)
         VALUES
-        ($1, $2, $3, $4, $5, $6)
-        )`
+        ($1, $2, $3, $4, $5, $6, $7)`
         try
         {
             await this._db.query(sqlStatement, [userModel.login, userModel.email, true, userModel.name, userModel.lastname, userModel.pass, userModel.role])
             return true
         }catch(e)
         {
+            console.log(e.message)
             return false
         }
     }
@@ -85,7 +85,8 @@ export class UserRepo
         }
     }
 
-    async changePass(id, pass){
+    async changePass(id, pass)
+    {
         let sqlStatement = `UPDATE users
         SET
         password=$1
@@ -99,5 +100,21 @@ export class UserRepo
         {
             return false
         }
+    }
+    
+    async checkDuplicates(login, email)
+    {
+        let sqlStatement = `SELECT *
+        FROM users
+        WHERE
+        login=$1
+        OR
+        email=$2`
+        let cand = await this._db.query(sqlStatement, [login, email])
+        if(cand.length == 0)
+        {
+            return true
+        }
+        return false
     }
 }
