@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
 
 export const AuthMiddleware = (req, res, next)=>{
+    console.log(req.path)
     const isAuthPage = req.path === '/auth/login' || req.path === '/auth/register'
     try
     {
