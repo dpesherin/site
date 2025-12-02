@@ -6,7 +6,8 @@ export class UserModel
     email
     name
     lastname
-    pass
+    password
+    role
     date_create
 
     constructor(data = {})

@@ -15,7 +15,8 @@ export class UserRepo
     {
         let sqlStatement = `SELECT id, login, email, active, name, lastname, role, date_create
         FROM users
-        WHEREid=$1`
+        WHERE
+        id=$1`
         let cand = await this._db.query(sqlStatement, [id])
         if(cand.length > 0)
         {
@@ -26,9 +27,10 @@ export class UserRepo
 
     async getByLogin(login)
     {
-        let sqlStatement = `SELECT id, login, email, active, name, lastname, role, date_create
+        let sqlStatement = `SELECT id, login, email, active, name, lastname, role, date_create, password
         FROM users
-        WHERElogin=$1`
+        WHERE
+        login=$1`
         let cand = await this._db.query(sqlStatement, [login])
         if(cand.length > 0)
         {
@@ -45,11 +47,10 @@ export class UserRepo
         ($1, $2, $3, $4, $5, $6, $7)`
         try
         {
-            await this._db.query(sqlStatement, [userModel.login, userModel.email, true, userModel.name, userModel.lastname, userModel.pass, userModel.role])
+            await this._db.query(sqlStatement, [userModel.login, userModel.email, true, userModel.name, userModel.lastname, userModel.password, userModel.role])
             return true
         }catch(e)
         {
-            console.log(e.message)
             return false
         }
     }
@@ -116,5 +117,19 @@ export class UserRepo
             return true
         }
         return false
+    }
+
+    async delete(id)
+    {
+        let sqlStatement = `DELETE
+        FROM users
+        WHERE
+        id=$1`
+        try {
+            await this._db.query(sqlStatement, [id])
+            return true
+        } catch (e) {
+            return false
+        }
     }
 }
