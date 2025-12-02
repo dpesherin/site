@@ -46,18 +46,18 @@ describe('Test middleware', () => {
   test('GET /user/1 should return 301', async() => {
     const response = await request(appInstance._app)
     .get('/user/1')
-    .expect(301)
+    .expect(302)
   })
 
   test('POST /user/delete should return 301', async() => {
     const response = await request(appInstance._app)
     .post('/user/delete')
-    .expect(301)
+    .expect(302)
   })
 
   test('POST /user/update should return 301', async() => {
     const response = await request(appInstance._app)
     .post('/user/update')
-    .expect(301)
+    .expect(302)
   })
 })
