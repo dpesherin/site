@@ -72,14 +72,14 @@ export class UserRepo
         }
     }
 
-    async update(id, userModel)
+    async update(userModel)
     {
         let sqlStatement = `Update users
         SET
         email=$1, name=$2, lastname=$3
         WHERE id=$4`
         try {
-            await this._db.query(sqlStatement, [userModel.email, userModel.name, userModel.lastname, id])
+            await this._db.query(sqlStatement, [userModel.email, userModel.name, userModel.lastname, userModel.id])
             return true
         } catch (e) {
             return false
