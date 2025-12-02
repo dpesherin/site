@@ -37,7 +37,7 @@ export const AuthMiddleware = (req, res, next)=>{
             next()
         }catch(e)
         {
-            return res.status(302).redirect("/auth/login")
+            return res.redirect(301, "/auth/login")
         }
     }
 }
