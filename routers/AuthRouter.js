@@ -1,19 +1,19 @@
 import { Router } from "express"
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
 import { AuthService } from "../services/AuthService.js"
+import { AuthMiddleware } from "../middlewares/AuthMiddleware.js" 
+import { AccessCodeService } from "../services/AccessCodeService.js"
 
 export const AuthRouter = Router()
 
-AuthRouter.get("/login", (req, res)=>{
+AuthRouter.get("/login", AuthMiddleware, (req, res)=>{
     return res.status(200).json({page: "Login Page"})
 })
 
-AuthRouter.get("/register", (req, res)=>{
+AuthRouter.get("/register", AuthMiddleware, (req, res)=>{
     return res.status(200).json({page: "Register Page"})
 })
 
-AuthRouter.post("/login", async (req, res)=>{
+AuthRouter.post("/login", AuthMiddleware, async (req, res)=>{
     let authService = new AuthService()
     let result = await authService.authUser(req.body)
     if(result.status){
@@ -32,13 +32,24 @@ AuthRouter.post("/login", async (req, res)=>{
     return res.status(401).json(result)
 })
 
-AuthRouter.post("/register", async (req, res)=>{
+AuthRouter.post("/register", AuthMiddleware, async (req, res)=>{
     let authService = new AuthService()
     let result = await authService.createUser(req.body)
     if(result.status){
         return res.status(201).json(result)
     }else if(result.type == "DUP"){
         return res.status(400).json(result)
+    }
+    return res.status(500).json(result)
+})
+
+AuthRouter.post("/forgot", async (req, res)=>{
+    let accessService = new AccessCodeService()
+    let result = await accessService.createLinkCode(req.body)
+    if(result.status){
+        return res.status(201).json(result)
+    }else if(result.type == "NOT_FOUND"){
+        return res.status(404).json(result)
     }
     return res.status(500).json(result)
 })

@@ -24,7 +24,7 @@ export class App {
     this._app.use(MainRouter)
     this._app.use("/check", CheckRouter)
     this._app.use("/user", AuthMiddleware, UserRouter)
-    this._app.use("/auth", AuthMiddleware, AuthRouter)
+    this._app.use("/auth", AuthRouter)
   }
 
   getApp() {
