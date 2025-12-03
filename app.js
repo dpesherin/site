@@ -18,13 +18,16 @@ export class App {
     this._app.use(cors())
     this._app.use(express.json())
     this._app.use(cookieParser())
+    this._app.set("view engine", "ejs")
+    this._app.set("views", "./views")
+    this._app.use(express.static("static"))
   }
 
   _setupRoutes() {
     this._app.use(MainRouter)
     this._app.use("/check", CheckRouter)
     this._app.use("/user", AuthMiddleware, UserRouter)
-    this._app.use("/auth", AuthMiddleware, AuthRouter)
+    this._app.use("/auth", AuthRouter)
   }
 
   getApp() {

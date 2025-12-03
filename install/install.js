@@ -79,6 +79,19 @@ import bcrypt from "bcrypt"
     await db.query(installPhoteSessionsTable)
     console.log("\x1b[32m✅ PHOTOSESSIONS TABLE SUCCESSFULLY IMPORTED\x1b[0m")
 
+    console.log("ℹ️  ACCESSCODES TABLE IMPORTING....")
+    const installAccessCodesTable = `
+    CREATE TABLE IF NOT EXISTS access_codes (
+        id SERIAL PRIMARY KEY,
+        guid TEXT NOT NULL,
+        code TEXT NOT NULL,
+        expires_at TIMESTAMP NOT NULL,
+        user_id INTEGER
+    );
+    `
+    await db.query(installAccessCodesTable)
+    console.log("\x1b[32m✅ ACCESSCODES TABLE SUCCESSFULLY IMPORTED\x1b[0m")
+
     console.log("ℹ️  CREATING ADMIN USER....")
     const candUserQuery = `
     SELECT * 
