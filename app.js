@@ -18,6 +18,9 @@ export class App {
     this._app.use(cors())
     this._app.use(express.json())
     this._app.use(cookieParser())
+    this._app.set("view engine", "ejs")
+    this._app.set("views", "./views")
+    this._app.use(express.static("static"))
   }
 
   _setupRoutes() {
