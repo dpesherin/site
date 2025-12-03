@@ -2,6 +2,7 @@ import { Util } from "../core/utils/Util.js"
 import { AccessCodeRepo } from "../repos/AccessCodeRepo.js"
 import { UserRepo } from "../repos/UserRepo.js"
 import { Mailer } from "../core/Mailer.js"
+import bcrypt from "bcrypt"
 
 export class AccessCodeService
 {
@@ -20,7 +21,7 @@ export class AccessCodeService
             const util = new Util
             let path = util.generateRandomString(32)
             let code = util.generateSecureNumericString(6)
-            let result = this._repo.createAccessCode({path: path, code: code, user_id: cand.id})
+            let result = this._repo.createAccessCode(path, code, cand.id)
             if(result){
                 let mail = new Mailer()
                 let mailResult = await mail.sendMessageFromTemplate({
@@ -59,5 +60,36 @@ export class AccessCodeService
         }
     }
 
+    async valudateQuery(obj)
+    {
+        const isSuccess = await this._repo.validateCode(obj.guid, obj.code)
+        if(isSuccess){
+            return {
+                status: true
+            }
+        }
+        return {
+            status: false,
+            type: "NOT_FOUND",
+            msg: "Pair of guid and key wasn't found"
+        }
+    }
 
+    async changePass(obj)
+    {
+        const userRepo = new UserRepo()
+        const codeInfo = await this._repo.getInfoByCode(obj.guid)
+        let enc = bcrypt.hashSync(obj.password, parseInt(process.env.BCRYPT_SALT_LEN))
+        let isSuccess = userRepo.changePass(codeInfo.user_id, enc)
+        if(isSuccess){
+            return {
+                status: true
+            }
+        }
+        return {
+            status: false,
+            type: "INT_ERR",
+            msg: "Error while updating pass"
+        }
+    }
 }
