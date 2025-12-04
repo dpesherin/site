@@ -43,9 +43,10 @@ button.modern:disabled{
     border-radius: 12px;
     box-shadow: 0 0 8px rgba(103, 103, 103, 0.81);
     padding: 18px;
-    background-color: #fff;
+    background-color: #181818b8;
 }
 .alert-msg{
     font-size: 14px;
     font-weight: 600;
+    color: #fff;
 }

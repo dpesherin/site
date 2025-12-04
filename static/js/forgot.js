@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 body: JSON.stringify(data),
             });
             const result = await res.json();
+            send.removeAttribute("disabled")
             Alert(result.msg)
         }
     })
