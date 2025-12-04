@@ -3,6 +3,7 @@ import { AccessCodeRepo } from "../repos/AccessCodeRepo.js"
 import { UserRepo } from "../repos/UserRepo.js"
 import { Mailer } from "../core/Mailer.js"
 import bcrypt from "bcrypt"
+import { AccessCodesModel } from "../models/AccessCodesModel.js"
 
 export class AccessCodeService
 {
@@ -21,7 +22,12 @@ export class AccessCodeService
             const util = new Util
             let path = util.generateRandomString(32)
             let code = util.generateSecureNumericString(6)
-            let result = this._repo.createAccessCode(path, code, cand.id)
+            let accessCodesModel = new AccessCodesModel({
+                guid: path,
+                code: code,
+                user_id: cand.id
+            })
+            let result = this._repo.createAccessCode(accessCodesModel)
             if(result){
                 let mail = new Mailer()
                 let mailResult = await mail.sendMessageFromTemplate({
