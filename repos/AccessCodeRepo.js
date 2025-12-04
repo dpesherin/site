@@ -58,6 +58,7 @@ export class AccessCodeRepo
             AND 
             expires_at > NOW()`
             let cand = await this._db.query(sqlStatement, [accessCodesModel.guid, accessCodesModel.code])
+            console.log(cand)
             if(cand.length > 0){
                 return true
             }
