@@ -47,7 +47,6 @@ export class AccessCodeRepo
 
     async validateCode(accessCodesModel)
     {
-        console.log(accessCodesModel.guid, accessCodesModel.code)
         try {
             let sqlStatement = `SELECT * 
             FROM access_codes
@@ -58,7 +57,6 @@ export class AccessCodeRepo
             AND 
             expires_at > NOW()`
             let cand = await this._db.query(sqlStatement, [accessCodesModel.guid, accessCodesModel.code])
-            console.log(cand)
             if(cand.length > 0){
                 return true
             }
