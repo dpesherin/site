@@ -1,0 +1,21 @@
+.content{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.row{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.form{
+    padding: 36px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    box-shadow: 0 0 5px rgba(128, 128, 128, 0.551);
+}

@@ -36,7 +36,7 @@ export class AccessCodeService
                 if(mailResult.status){
                      return {
                         status: true,
-                        link: `${process.env.DOMAIN}/auth/forgot/${path}`
+                        msg: "Код и ссылка на восстановления пароля высланы на почту"
                     }
                 }else{
                     return {
