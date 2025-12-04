@@ -68,7 +68,12 @@ export class AccessCodeService
 
     async valudateQuery(obj)
     {
-        let accessCodesModel = new AccessCodesModel(obj)
+        let accessCodesModel = new AccessCodesModel(
+            {
+                guid: obj.guid,
+                code: obj.code
+            }
+        )
         const isSuccess = await this._repo.validateCode(accessCodesModel)
         if(isSuccess){
             return {
