@@ -47,6 +47,7 @@ export class AccessCodeRepo
 
     async validateCode(accessCodesModel)
     {
+        console.log(accessCodesModel)
         try {
             let sqlStatement = `SELECT * 
             FROM access_codes
