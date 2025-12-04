@@ -1,4 +1,5 @@
 import {DB} from "../db/db.js"
+import { AccessCodesModel } from "../models/AccessCodesModel.js"
 
 export class AccessCodeRepo
 {
@@ -9,7 +10,7 @@ export class AccessCodeRepo
         this._db = new DB()
     }
 
-    async createAccessCode(guid, code, user_id)
+    async createAccessCode(accessCodesModel)
     {
         try {
             let sqlStatement = `INSERT INTO access_codes
@@ -18,7 +19,7 @@ export class AccessCodeRepo
             ($1, $2, $3, $4)
             `
             let ts = new Date(Date.now() + 15 * 60 * 1000) //15 min
-            await this._db.query(sqlStatement, [guid, code, ts, user_id])
+            await this._db.query(sqlStatement, [accessCodesModel.guid, accessCodesModel.code, ts, accessCodesModel.user_id])
             return true
         } catch (error) {
             console.log(error)
@@ -36,7 +37,7 @@ export class AccessCodeRepo
             let info = await this._db.query(sqlStatement, [guid])
             if(info.length > 0)
             {
-                return info[0]
+                return new AccessCodesModel(info[0])
             }
             return false
         } catch (error) {
