@@ -54,9 +54,9 @@ export class AccessCodeRepo
             WHERE
             guid=$1
             AND
-            code=$2
-            AND 
-            expires_at > NOW()`
+            code=$2`
+            // AND 
+            // expires_at > NOW()`
             let cand = await this._db.query(sqlStatement, [accessCodesModel.guid, accessCodesModel.code])
             if(cand.length > 0){
                 return true
