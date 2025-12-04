@@ -6,11 +6,29 @@ import { AccessCodeService } from "../services/AccessCodeService.js"
 export const AuthRouter = Router()
 
 AuthRouter.get("/login", AuthMiddleware, (req, res)=>{
-    return res.status(200).json({page: "Login Page"})
+    const data = {
+        title: "Авторизация",
+        hfEnabled: false,
+        headerData: {},
+        page: "login",
+        pageData: {
+            prefix: "login"
+        }
+    }
+    return res.render("frame", data)
 })
 
 AuthRouter.get("/register", AuthMiddleware, (req, res)=>{
-    return res.status(200).json({page: "Register Page"})
+    const data = {
+        title: "Регистрация",
+        hfEnabled: false,
+        headerData: {},
+        page: "register",
+        pageData: {
+            prefix: "register"
+        }
+    }
+    return res.render("frame", data)
 })
 
 AuthRouter.post("/login", AuthMiddleware, async (req, res)=>{
@@ -78,7 +96,9 @@ AuthRouter.get('/forgot/:guid', (req, res)=>{
         hfEnabled: false,
         headerData: {},
         page: "restore",
-        pageData: {}
+        pageData: {
+            prefix: "restore"
+        }
     }
     return res.render("frame", data)
 })
@@ -89,7 +109,9 @@ AuthRouter.get('/forgot', (req, res)=>{
         hfEnabled: false,
         headerData: {},
         page: "forgot",
-        pageData: {}
+        pageData: {
+            prefix: "forgot"
+        }
     }
     return res.render("frame", data)
 })
