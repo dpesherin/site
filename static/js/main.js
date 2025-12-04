@@ -10,3 +10,16 @@ const Alert = (msg)=>{
         alert.remove()
     }, 5000)
 }
+
+const checkReq = ()=>{
+    let list = document.querySelectorAll(".req")
+    let send = true
+    list.forEach((item)=>{
+        if(!item.value){
+            send = false
+            console.log("NOT SEND")
+            item.classList.add("wrong")
+        }
+    })
+    return send
+}

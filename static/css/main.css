@@ -6,7 +6,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 body{
-    background-image: url("/media/bg.jpg");
+    background-image: url("/media/bg.png");
     background-size: cover;
 }
 p.modern{
@@ -42,7 +42,7 @@ button.modern:disabled{
     outline: none;
 }
 .wrong{
-    border: 1px solid red;
+    border: 1px solid red !important;
 }
 .alert{
     position: absolute;
@@ -93,4 +93,8 @@ a.modern{
 }
 .center{
     justify-content: center;
+}
+span.red{
+    color: red;
+    font-weight: 800;
 }
