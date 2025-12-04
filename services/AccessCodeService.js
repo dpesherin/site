@@ -66,7 +66,7 @@ export class AccessCodeService
         }
     }
 
-    async valudateQuery(obj)
+    async validateQuery(obj)
     {
         let accessCodesModel = new AccessCodesModel(
             {

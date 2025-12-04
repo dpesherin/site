@@ -73,8 +73,9 @@ AuthRouter.post("/forgot", async (req, res)=>{
 })
 
 AuthRouter.post("/checkcode", async (req, res)=>{
+    console.log(req.body)
     let accessService = new AccessCodeService()
-    let result = await accessService.valudateQuery(req.body)
+    let result = await accessService.validateQuery(req.body)
     if(result.status){
         return res.status(200).json(result)
     }
