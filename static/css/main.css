@@ -1,0 +1,51 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    color: rgba(40, 39, 39, 0.81);
+}
+p.modern{
+    font-size: 12px;
+}
+select.modern,
+textarea.modern,
+input.modern{
+    width: 400px;
+    padding: 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+}
+button.modern{
+    padding: 12px 24px;
+    color: white;
+    font-size: 16px;
+    font-weight: 800;
+    background-color: darkblue;
+    border-radius: 7px;
+    cursor: pointer;
+    outline: none;
+}
+button.modern:disabled{
+    color: black;
+    background-color: lightslategray;
+    outline: none;
+}
+.wrong{
+    border: 1px solid red;
+}
+.alert{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    min-height: 75px;
+    width: 300px;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(103, 103, 103, 0.81);
+    padding: 18px;
+    background-color: #fff;
+}
+.alert-msg{
+    font-size: 14px;
+    font-weight: 600;
+}

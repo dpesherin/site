@@ -67,7 +67,29 @@ AuthRouter.post("/changepass", async (req, res)=>{
     let accessService = new AccessCodeService()
     let result = await accessService.changePass(req.body)
     if(result.status){
-        return res.redirect(301, "/auth/login")
+        return res.status(200).json(result)
     }
     return res.status(500).json(result)
+})
+
+AuthRouter.get('/forgot/:guid', (req, res)=>{
+    const data = {
+        title: "Проверка кода",
+        hfEnabled: false,
+        headerData: {},
+        page: "restore",
+        pageData: {}
+    }
+    return res.render("frame", data)
+})
+
+AuthRouter.get('/forgot', (req, res)=>{
+    const data = {
+        title: "Восстановление пароля",
+        hfEnabled: false,
+        headerData: {},
+        page: "forgot",
+        pageData: {}
+    }
+    return res.render("frame", data)
 })
