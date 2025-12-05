@@ -21,6 +21,7 @@ export class App {
     this._app.set("view engine", "ejs")
     this._app.set("views", "./views")
     this._app.use(express.static("static"))
+    this._app.set('trust proxy', true)
   }
 
   _setupRoutes() {

@@ -24,10 +24,10 @@ export class Util
 
     getIPInfo(req)
     {
-        return req.headers['x-forwarded-for']?.split(',')[0] 
-        || req.headers['x-real-ip'] 
-        || req.connection.remoteAddress 
-        || req.socket.remoteAddress 
-        || req.connection.socket?.remoteAddress;
+        return req.headers['x-real-ip'] ||
+           req.headers['x-forwarded-for']?.split(',')[0].trim() ||
+           req.ip ||
+           req.connection.remoteAddress ||
+           req.socket.remoteAddress;
     }
 }
