@@ -38,6 +38,7 @@ export class AccessCodeService
                 {
                     code: code,
                     link: `${process.env.DOMAIN}/auth/forgot/${path}`,
+                    revoke: `${process.env.DOMAIN}/auth/revoke/${path}`,
                     ip: ipInfoModel.ip,
                     country: ipInfoModel.country,
                     city: ipInfoModel.city
@@ -105,6 +106,21 @@ export class AccessCodeService
             status: false,
             type: "INT_ERR",
             msg: "Error while updating pass"
+        }
+    }
+
+    async revokeCodeByGuid(guid)
+    {
+        const isSuccess = await this._repo.revokeCode(guid)
+         if(isSuccess){
+            return {
+                status: true
+            }
+        }
+        return {
+            status: false,
+            type: "SQL",
+            msg: "Error while delete code"
         }
     }
 }

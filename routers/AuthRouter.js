@@ -121,3 +121,21 @@ AuthRouter.get('/forgot', async (req, res)=>{
     }
     return res.render("frame", data)
 })
+
+AuthRouter.get("/revoke/:guid", async (req, res) => {
+    let accessService = new AccessCodeService()
+    let result = await accessService.revokeCodeByGuid(req.params.guid)
+    if(result.status){
+        const data = {
+        title: "Отзыв восстановление пароля",
+        hfEnabled: false,
+        headerData: {},
+        page: "revoke",
+        pageData: {
+            prefix: "revoke"
+        }
+    }
+    return res.render("frame", data)
+    }
+    return res.status(500).json(result)
+})
