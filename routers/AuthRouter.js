@@ -66,9 +66,8 @@ AuthRouter.post("/register", AuthMiddleware, async (req, res)=>{
 AuthRouter.post("/forgot", async (req, res)=>{
     let util = new Util
     let ip = util.getIPInfo(req)
-    console.log(ip)
-    let ipIntegration = new TwoIPIntegration()
-    let ipInfoModel = await ipIntegration.getGeoInfo(ip)
+    let ipIntegration = new TwoIPIntegration(ip)
+    let ipInfoModel = await ipIntegration.getGeoInfo()
     let accessService = new AccessCodeService()
     let result = await accessService.createLinkCode(req.body, ipInfoModel)
     if(result.status){
