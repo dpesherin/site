@@ -1,14 +1,14 @@
 export class IPInfoModel
 {
-    ip
-    city
-    region
-    country
-    code
-    emoji
-    lat
-    lon
-    timezone
+    ip="127.0.0.1"
+    city="Locahost"
+    region="Locahost"
+    country="Locahost"
+    code="Locahost"
+    emoji="Locahost"
+    lat="Locahost"
+    lon="Locahost"
+    timezone="Locahost"
 
     constructor(data = {})
     {
