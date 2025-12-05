@@ -70,6 +70,11 @@
             font-size: 12px;
             cursor: pointer;
         }
+        .block{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
     </style>
     <div class="wrapper">
         <div class="content">
@@ -93,8 +98,10 @@
             <p class="code">
                 <%= code %>
             </p>
-            <a class="modern" href="<%= link %>">Восстановить пароль</a>
-            <a href="<%= revoke %>" class="revoke">Я не запрашивал (Требуется отозвать)</a>
+            <div class="block">
+                <a class="modern" href="<%= link %>">Восстановить пароль</a>
+                <a href="<%= revoke %>" class="revoke">Я не запрашивал (Требуется отозвать)</a>
+            </div>
         </div>
     </div>
 </body>
