@@ -2,6 +2,8 @@ import { Router } from "express"
 import { AuthService } from "../services/AuthService.js"
 import { AuthMiddleware } from "../middlewares/AuthMiddleware.js" 
 import { AccessCodeService } from "../services/AccessCodeService.js"
+import { Util } from "../core/utils/Util.js"
+import { TwoIPIntegration } from "../integration/TwoIPIntegration.js"
 
 export const AuthRouter = Router()
 
@@ -62,8 +64,12 @@ AuthRouter.post("/register", AuthMiddleware, async (req, res)=>{
 })
 
 AuthRouter.post("/forgot", async (req, res)=>{
+    let util = new Util
+    let ip = util.getIPInfo(req)
+    let ipIntegration = new TwoIPIntegration()
+    let ipInfoModel = await ipIntegration.getGeoInfo(ip)
     let accessService = new AccessCodeService()
-    let result = await accessService.createLinkCode(req.body)
+    let result = await accessService.createLinkCode(req.body, ipInfoModel)
     if(result.status){
         return res.status(201).json(result)
     }else if(result.type == "NOT_FOUND"){
@@ -103,7 +109,7 @@ AuthRouter.get('/forgot/:guid', (req, res)=>{
     return res.render("frame", data)
 })
 
-AuthRouter.get('/forgot', (req, res)=>{
+AuthRouter.get('/forgot', async (req, res)=>{
     const data = {
         title: "Восстановление пароля",
         hfEnabled: false,
