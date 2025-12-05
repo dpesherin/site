@@ -5,20 +5,29 @@ export class Util
     generateRandomString(length = 10) {
         return crypto.randomBytes(Math.ceil(length / 2))
             .toString('hex')
-            .slice(0, length);
+            .slice(0, length)
     }
 
     generateSecureNumericString(length = 6) {
-        let result = '';
-        const max = 10;
+        let result = ''
+        const max = 10
         
         while (result.length < length) {
-            const byte = crypto.randomBytes(1)[0];
+            const byte = crypto.randomBytes(1)[0]
             if (byte < 250) {
-                result += byte % max;
+                result += byte % max
             }
         }
         
-        return result.slice(0, length);
+        return result.slice(0, length)
+    }
+
+    getIPInfo(req)
+    {
+        return req.headers['x-forwarded-for']?.split(',')[0] 
+        || req.headers['x-real-ip'] 
+        || req.connection.remoteAddress 
+        || req.socket.remoteAddress 
+        || req.connection.socket?.remoteAddress;
     }
 }

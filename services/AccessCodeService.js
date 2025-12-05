@@ -14,7 +14,7 @@ export class AccessCodeService
         this._repo = new AccessCodeRepo()
     }
 
-    async createLinkCode(obj)
+    async createLinkCode(obj, ipInfoModel = {})
     {
         const userRepo = new UserRepo()
         let cand = await userRepo.getByLogin(obj.login)
@@ -37,7 +37,10 @@ export class AccessCodeService
                 }, 
                 {
                     code: code,
-                    link: `${process.env.DOMAIN}/auth/forgot/${path}`
+                    link: `${process.env.DOMAIN}/auth/forgot/${path}`,
+                    ip: ipInfoModel.ip,
+                    country: ipInfoModel.country,
+                    city: ipInfoModel.city
                 })
                 if(mailResult.status){
                      return {
