@@ -65,4 +65,18 @@ export class AccessCodeRepo
             return false
         }
     }
+    
+    async revokeCode(guid)
+    {
+        try {
+            let sqlStatement = `DELETE 
+            FROM access_codes
+            WHERE
+            guid=$1`
+            await this._db.query(sqlStatement, [guid])
+            return true
+        } catch (error) {
+            return false
+        }
+    }
 }
