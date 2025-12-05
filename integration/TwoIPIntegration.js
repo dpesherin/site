@@ -22,6 +22,7 @@ export class TwoIPIntegration
                 'Content-Type': 'application/json',
             }
         })
-        return new IPInfoModel(await response.json())
+        let res = await response.json()
+        return new IPInfoModel(res)
     }
 }
