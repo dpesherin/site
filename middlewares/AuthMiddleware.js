@@ -7,10 +7,10 @@ export const AuthMiddleware = (req, res, next)=>{
     {
         let decoded = jwt.verify(req.cookies.access_token, process.env.JWTSALT)
         req.userInfo = decoded
-        if (isAuthPage) {
-            const redirectTo = req.headers.referer || '/'
-            return res.redirect(redirectTo)
-        }
+        // if (isAuthPage) {
+        //     const redirectTo = req.headers.referer || '/'
+        //     return res.redirect(redirectTo)
+        // }
         next()
     } catch (error)
     {
