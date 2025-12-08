@@ -1,0 +1,10 @@
+<div id="header">
+    <span class="logo">
+        HEADER
+    </span>
+    <%- if(userData) {%>
+        <a href="#" class="profile"><%= userData.login %</a>
+    <%- }else{ %>
+        <button class="modern">Войти</button>
+    <%- } %>
+</div>
