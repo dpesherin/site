@@ -15,16 +15,17 @@ export class App {
   }
 
   _setupMiddleware() {
+    this._app.set('trust proxy', true)
     this._app.use(cors({
-      origin: [process.env.DOMAIN, 'http://localhost:3000'],
-      credentials: true
+      origin: 'http://109.196.103.161',
+      credentials: true,
+      exposedHeaders: ['set-cookie']
     }))
     this._app.use(express.json())
     this._app.use(cookieParser())
     this._app.set("view engine", "ejs")
     this._app.set("views", "./views")
     this._app.use(express.static("static"))
-    this._app.set('trust proxy', true)
   }
 
   _setupRoutes() {

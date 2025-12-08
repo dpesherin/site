@@ -34,14 +34,14 @@ export const AuthMiddleware = (req, res, next)=>{
                 httpOnly: true,
                 maxAge: 60 * 60 * 1000,
                 secure: false,
-                sameSite: 'none',
+                sameSite: 'lax',
                 path: '/'
             });
             res.cookie('refresh_token', refresh, {
                 httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000,
                 secure: false,
-                sameSite: 'none',
+                sameSite: 'lax',
                 path: '/'
             });
             req.userInfo = decoded

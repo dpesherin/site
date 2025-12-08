@@ -34,14 +34,14 @@ UserRouter.post("/update", async (req, res)=>{
             httpOnly: true,
             maxAge: 60 * 60 * 1000,
             secure: false,
-            sameSite: 'none',
+            sameSite: 'lax',
             path: '/'
         });
         res.cookie('refresh_token', result.tokens.refresh, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
             secure: false,
-            sameSite: 'none',
+            sameSite: 'lax',
             path: '/'
         });
         return res.status(200).json({status: true})
