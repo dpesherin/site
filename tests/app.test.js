@@ -40,9 +40,9 @@ describe('Test middleware', () => {
     appInstance = new App();
   })
 
-  test('GET /user/1/info should return 301', async() => {
+  test('GET /user/1/profile should return 301', async() => {
     const response = await request(appInstance._app)
-    .get('/user/1/info')
+    .get('/user/1/profile')
     .expect(301)
   })
 
