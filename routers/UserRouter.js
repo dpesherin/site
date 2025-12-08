@@ -3,7 +3,7 @@ import { UserService } from "../services/UserService.js";
 
 export const UserRouter = Router()
 
-UserRouter.get("/:id", async(req, res)=>{
+UserRouter.get("/:id/info", async(req, res)=>{
     let userService = new UserService()
     let result = await userService.getUserInfo(req.params.id, req.userInfo)
     if(result.status){

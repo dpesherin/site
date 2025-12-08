@@ -31,7 +31,7 @@ export class App {
   _setupRoutes() {
     this._app.use(MainRouter)
     this._app.use("/check", CheckRouter)
-    this._app.use("/user", UserRouter)
+    this._app.use("/user", AuthMiddleware, UserRouter)
     this._app.use("/auth", AuthRouter)
   }
 
