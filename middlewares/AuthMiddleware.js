@@ -1,16 +1,19 @@
 import jwt from "jsonwebtoken"
 
 export const AuthMiddleware = (req, res, next)=>{
-    console.log(req.path)
-    // const isAuthPage = req.path === '/login' || req.path === '/register'
+    console.log(req.baseUrl)
+     let isAuthPage = false
+     if(req.baseUrl === "/auth"){
+        isAuthPage = true
+     }
     try
     {
         let decoded = jwt.verify(req.cookies.access_token, process.env.JWTSALT)
         req.userInfo = decoded
-        // if (isAuthPage) {
-        //     const redirectTo = req.headers.referer || '/'
-        //     return res.redirect(redirectTo)
-        // }
+        if (isAuthPage) {
+            const redirectTo = req.headers.referer || '/'
+            return res.redirect(redirectTo)
+        }
         next()
     } catch (error)
     {
@@ -47,18 +50,18 @@ export const AuthMiddleware = (req, res, next)=>{
                 path: '/'
             });
             req.userInfo = decoded
-            //  if (isAuthPage) {
-            //     const redirectTo = req.headers.referer || '/'
-            //     return res.redirect(redirectTo)
-            // }
+             if (isAuthPage) {
+                const redirectTo = req.headers.referer || '/'
+                return res.redirect(redirectTo)
+            }
             next()
         }catch(e)
         {
-            // if (isAuthPage) {
-            //     next()
-            // } else {
+            if (isAuthPage) {
+                next()
+            } else {
                 return res.redirect(301, `/auth/login?returnTo=${encodeURIComponent(req.originalUrl)}`)
-            // }
+            }
         }
     }
 }
