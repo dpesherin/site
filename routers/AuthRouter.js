@@ -46,7 +46,7 @@ AuthRouter.post("/login", AuthMiddleware, async (req, res)=>{
         });
         res.cookie('refresh_token', result.tokens.refresh, {
             httpOnly: true,
-            maxAge: 60 * 60 * 1000,
+            maxAge: 24 * 60 * 60 * 1000,
             secure: false,
             sameSite: 'lax',
             path: '/'

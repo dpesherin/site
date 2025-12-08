@@ -5,6 +5,7 @@ export const AuthMiddleware = (req, res, next)=>{
     try
     {
         let decoded = jwt.verify(req.cookies.access_token, process.env.JWTSALT)
+        console.log(decoded)
         req.userInfo = decoded
         if (isAuthPage) {
             const redirectTo = req.headers.referer || '/'
@@ -13,6 +14,7 @@ export const AuthMiddleware = (req, res, next)=>{
         next()
     } catch (error)
     {
+        console.log("NOT DECODED")
         try
         {
             let decoded = jwt.verify(req.cookies.refresh_token, process.env.JWTSALT)
