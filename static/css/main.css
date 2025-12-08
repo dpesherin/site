@@ -12,6 +12,9 @@ body{
 p.modern{
     font-size: 12px;
 }
+.wrapper{
+    width: 1200px;
+}
 select.modern,
 textarea.modern,
 input.modern{

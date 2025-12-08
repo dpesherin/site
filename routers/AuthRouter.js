@@ -39,11 +39,13 @@ AuthRouter.post("/login", AuthMiddleware, async (req, res)=>{
     if(result.status){
         res.cookie('access_token', result.tokens.access, {
             httpOnly: true,
+            domain: process.env.COOKIE_DOMAIN,
             maxAge: 60 * 60 * 1000,
             secure: true
         });
         res.cookie('refresh_token', result.tokens.refresh, {
             httpOnly: true,
+            domain: process.env.COOKIE_DOMAIN,
             maxAge: 24 * 60 * 60 * 1000,
             secure: true
         });

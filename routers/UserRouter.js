@@ -33,11 +33,13 @@ UserRouter.post("/update", async (req, res)=>{
         res.cookie('access_token', result.tokens.access, {
             httpOnly: true,
             maxAge: 60 * 60 * 1000,
+            domain: process.env.COOKIE_DOMAIN,
             secure: true
         });
         res.cookie('refresh_token', result.tokens.refresh, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
+            domain: process.env.COOKIE_DOMAIN,
             secure: true
         });
         return res.status(200).json({status: true})
