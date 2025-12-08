@@ -7,7 +7,7 @@ import { TwoIPIntegration } from "../integration/TwoIPIntegration.js"
 
 export const AuthRouter = Router()
 
-AuthRouter.get("/login", (req, res)=>{
+AuthRouter.get("/login", AuthMiddleware, (req, res)=>{
     const data = {
         title: "Авторизация",
         hfEnabled: false,
@@ -20,7 +20,7 @@ AuthRouter.get("/login", (req, res)=>{
     return res.render("frame", data)
 })
 
-AuthRouter.get("/register", (req, res)=>{
+AuthRouter.get("/register", AuthMiddleware, (req, res)=>{
     const data = {
         title: "Регистрация",
         hfEnabled: false,
@@ -100,7 +100,7 @@ AuthRouter.post("/changepass", async (req, res)=>{
     return res.status(500).json(result)
 })
 
-AuthRouter.get('/forgot/:guid', (req, res)=>{
+AuthRouter.get('/forgot/:guid', AuthMiddleware, (req, res)=>{
     const data = {
         title: "Проверка кода",
         hfEnabled: false,
@@ -113,7 +113,7 @@ AuthRouter.get('/forgot/:guid', (req, res)=>{
     return res.render("frame", data)
 })
 
-AuthRouter.get('/forgot', async (req, res)=>{
+AuthRouter.get('/forgot', AuthMiddleware, async (req, res)=>{
     const data = {
         title: "Восстановление пароля",
         hfEnabled: false,
