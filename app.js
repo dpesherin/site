@@ -15,7 +15,12 @@ export class App {
   }
 
   _setupMiddleware() {
-    this._app.use(cors())
+    this._app.use(cors({
+      origin: ['http://localhost:3000', 'http://109.196.103.161'],
+      credentials: true, // Разрешаем отправку кук
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
+    }))
     this._app.use(express.json())
     this._app.use(cookieParser())
     this._app.set("view engine", "ejs")

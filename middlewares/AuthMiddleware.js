@@ -34,13 +34,15 @@ export const AuthMiddleware = (req, res, next)=>{
                 httpOnly: true,
                 domain: process.env.COOKIE_DOMAIN,
                 maxAge: 60 * 60 * 1000,
-                secure: true
+                secure: false,
+                sameSite: "lax"
             });
             res.cookie('refresh_token', refresh, {
                 httpOnly: true,
                 domain: process.env.COOKIE_DOMAIN,
                 maxAge: 24 * 60 * 60 * 1000,
-                secure: true
+                secure: false,
+                sameSite: "lax"
             });
             req.userInfo = decoded
              if (isAuthPage) {
