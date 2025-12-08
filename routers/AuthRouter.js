@@ -7,7 +7,7 @@ import { TwoIPIntegration } from "../integration/TwoIPIntegration.js"
 
 export const AuthRouter = Router()
 
-AuthRouter.get("/login", AuthMiddleware, (req, res)=>{
+AuthRouter.get("/login", (req, res)=>{
     const data = {
         title: "Авторизация",
         hfEnabled: false,
@@ -20,7 +20,7 @@ AuthRouter.get("/login", AuthMiddleware, (req, res)=>{
     return res.render("frame", data)
 })
 
-AuthRouter.get("/register", AuthMiddleware, (req, res)=>{
+AuthRouter.get("/register", (req, res)=>{
     const data = {
         title: "Регистрация",
         hfEnabled: false,
@@ -33,7 +33,7 @@ AuthRouter.get("/register", AuthMiddleware, (req, res)=>{
     return res.render("frame", data)
 })
 
-AuthRouter.post("/login", AuthMiddleware, async (req, res)=>{
+AuthRouter.post("/login", async (req, res)=>{
     let authService = new AuthService()
     let result = await authService.authUser(req.body)
     if(result.status){
@@ -56,7 +56,7 @@ AuthRouter.post("/login", AuthMiddleware, async (req, res)=>{
     return res.status(401).json(result)
 })
 
-AuthRouter.post("/register", AuthMiddleware, async (req, res)=>{
+AuthRouter.post("/register", async (req, res)=>{
     let authService = new AuthService()
     let result = await authService.createUser(req.body)
     if(result.status){
