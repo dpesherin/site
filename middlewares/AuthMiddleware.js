@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken"
 
 export const AuthMiddleware = (req, res, next)=>{
-    console.log(req.baseUrl)
      let isAuthPage = false
      if(req.baseUrl === "/auth"){
         isAuthPage = true
@@ -17,7 +16,6 @@ export const AuthMiddleware = (req, res, next)=>{
         next()
     } catch (error)
     {
-        console.log("NOT DECODED")
         try
         {
             let decoded = jwt.verify(req.cookies.refresh_token, process.env.JWTSALT)

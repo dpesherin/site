@@ -33,28 +33,28 @@ describe('Check health test', () => {
   })
 })
 
-// describe('Test middleware', () => {
-//   let appInstance
+describe('Test middleware', () => {
+  let appInstance
 
-//   beforeEach(() => {
-//     appInstance = new App();
-//   })
+  beforeEach(() => {
+    appInstance = new App();
+  })
 
-//   test('GET /user/1 should return 301', async() => {
-//     const response = await request(appInstance._app)
-//     .get('/user/1')
-//     .expect(200)
-//   })
+  test('GET /user/1/info should return 301', async() => {
+    const response = await request(appInstance._app)
+    .get('/user/1/info')
+    .expect(301)
+  })
 
-//   test('POST /user/delete should return 301', async() => {
-//     const response = await request(appInstance._app)
-//     .post('/user/delete')
-//     .expect(200)
-//   })
+  test('POST /user/delete should return 301', async() => {
+    const response = await request(appInstance._app)
+    .post('/user/delete')
+    .expect(301)
+  })
 
-//   test('POST /user/update should return 301', async() => {
-//     const response = await request(appInstance._app)
-//     .post('/user/update')
-//     .expect(200)
-//   })
-// })
+  test('POST /user/update should return 301', async() => {
+    const response = await request(appInstance._app)
+    .post('/user/update')
+    .expect(301)
+  })
+})
