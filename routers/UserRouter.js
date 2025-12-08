@@ -34,13 +34,15 @@ UserRouter.post("/update", async (req, res)=>{
             httpOnly: true,
             maxAge: 60 * 60 * 1000,
             domain: process.env.COOKIE_DOMAIN,
-            secure: true
+            secure: false,
+            sameSite: "lax"
         });
         res.cookie('refresh_token', result.tokens.refresh, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
             domain: process.env.COOKIE_DOMAIN,
-            secure: true
+            secure: false,
+            sameSite: "lax"
         });
         return res.status(200).json({status: true})
     }else if(result.type === "PERM_DENIED"){
