@@ -10,14 +10,13 @@
 </head>
 <body>
     <% if(hfEnabled){ %>
-            <%- include("header", headerData) %>
-        <% } %>
+        <%- include("header", headerData) %>
+    <% } %>
     <div class="wrapper main-width">
         <%- include(page, pageData) %>
-
-        <% if(hfEnabled){ %>
-            <%- include("footer", {}) %>
-        <% } %>
     </div>
+    <% if(hfEnabled){ %>
+        <%- include("footer") %>
+    <% } %>
 </body>
 </html>
