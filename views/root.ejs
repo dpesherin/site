@@ -22,35 +22,35 @@
         </div>
         <div class="d-flex between g-50">
             <div class="row">
-                <label class="modern" for="name">Ваше имя:</label>
+                <label class="modern" for="name">Ваше имя <span class="red">*</span></label>
                 <% if(userData){ %>
-                    <input type="text" name="name" id="name" class="modern" value="<%= userData.name %>">
+                    <input type="text" name="name" id="name" class="modern req" value="<%= userData.name %>">
                 <% }else { %>
-                    <input type="text" name="name" id="name" class="modern" value="">
+                    <input type="text" name="name" id="name" class="modern req" value="">
                 <% } %>
                 
             </div>
             <div class="row">
-                <label class="modern" for="email">Ваш email:</label>
+                <label class="modern" for="email">Ваш email <span class="red">*</span></label>
                 <% if(userData){ %>
-                    <input type="email" name="email" id="email" class="modern" value="<%= userData.email %>">
+                    <input type="email" name="email" id="email" class="modern req" value="<%= userData.email %>">
                 <% }else { %>
-                    <input type="email" name="email" id="email" class="modern" value="">
+                    <input type="email" name="email" id="email" class="modern req" value="">
                 <% } %>
             </div>
         </div>
         <div class="d-flex between g-50">
             <div class="row">
-                <label class="modern" for="link">Как с вами связаться:</label>
-                <input type="text" name="link" id="link" class="modern" >
+                <label class="modern" for="link">Как с вами связаться <span class="red">*</span></label>
+                <input type="text" name="link" id="link" class="modern req" >
             </div>
             <div class="row">
-                <label class="modern" for="date">Предпочитаемая дата:</label>
+                <label class="modern" for="date">Предпочитаемая дата</label>
                 <input type="date" name="date" id="date" class="modern">
             </div>
         </div>
         <div class="row">
-            <label class="modern" for="desc">Дополнительная информация:</label>
+            <label class="modern" for="desc">Дополнительная информация</label>
             <textarea class="modern" name="desc" id="desc"></textarea>
         </div>
         <div class="d-flex start full">
