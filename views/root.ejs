@@ -1,5 +1,63 @@
 <link rel="stylesheet" href="/css/<%= prefix %>.css">
 <div class="content">
-    
+    <div class="banner-with-text">
+        <div class="img-wrapper">
+            <img src="/media/banner.jpeg" alt="banner">
+        </div>
+        <div class="d-flex column center align-center">
+            <h2 class="modern big-header white">Каждый момент важен</h2>
+            <p class="big-text white">
+                пусть твоя история будет запечатлена красиво
+            </p>
+        </div>
+    </div>
+    <div class="empty">
+
+    </div>
+    <div class="form">
+        <div class="form-name">
+            <h2 class="modern big-header white">
+                Заказать фотосессию
+            </h2>
+        </div>
+        <div class="d-flex between g-50">
+            <div class="row">
+                <label class="modern" for="name">Ваше имя:</label>
+                <% if(userData){ %>
+                    <input type="text" name="name" id="name" class="modern" value="<%= userData.name %>">
+                <% }else { %>
+                    <input type="text" name="name" id="name" class="modern" value="">
+                <% } %>
+                
+            </div>
+            <div class="row">
+                <label class="modern" for="email">Ваш email:</label>
+                <% if(userData){ %>
+                    <input type="email" name="email" id="email" class="modern" value="<%= userData.email %>">
+                <% }else { %>
+                    <input type="email" name="email" id="email" class="modern" value="">
+                <% } %>
+            </div>
+        </div>
+        <div class="d-flex between g-50">
+            <div class="row">
+                <label class="modern" for="link">Как с вами связаться:</label>
+                <input type="text" name="link" id="link" class="modern" >
+            </div>
+            <div class="row">
+                <label class="modern" for="date">Предпочитаемая дата:</label>
+                <input type="date" name="date" id="date" class="modern">
+            </div>
+        </div>
+        <div class="row">
+            <label class="modern" for="desc">Дополнительная информация:</label>
+            <textarea class="modern" name="desc" id="desc"></textarea>
+        </div>
+        <div class="d-flex start full">
+            <input type="checkbox" name="agreement" id="agreement">
+            <label class="modern" for="agreement">Я предоставляю согласие на обработку персональных данных</label>
+        </div>
+        <button class="orange-btn full">Отправить</button>
+    </div>
 </div>
 <script src="/js/<%= prefix %>.js"></script>

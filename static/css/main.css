@@ -1,12 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
 *{
     box-sizing: border-box;
     padding: 0;
     margin: 0;
     color: rgba(40, 39, 39, 0.81);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Onest", sans-serif;
 }
 body{
-    background-image: url("/media/bg.png");
+    /* background-image: url("/media/bg.png"); */
     background-size: cover;
     display: flex;
     flex-direction: column;
@@ -17,7 +18,14 @@ p.modern{
     font-size: 12px;
 }
 .wrapper{
-    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 24px;
+    align-items: center;
+}
+.main-width{
+    width: 1400px;
 }
 select.modern,
 textarea.modern,
@@ -85,6 +93,23 @@ button.modern:disabled{
     box-shadow: 0 0 8px rgba(128, 128, 128, 0.551);
     background-color: #fff;
 }
+.ico{
+    width: 25px;
+}
+.align-center{
+    align-items: center;
+}
+.big-header{
+    font-size: 61px !important;
+    font-weight: 300 !important;
+}
+.big-text{
+    font-size: 28px !important;
+    font-weight: 400;
+}
+.column{
+    flex-direction: column;
+}
 label.modern{
     color: rgba(37, 37, 37, 0.719);
     font-size: 12px;
@@ -94,15 +119,38 @@ label.modern{
 a.modern{
     text-decoration: none;
     color: #FF6B00;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 400;
     cursor: pointer;
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    text-transform: capitalize;
 }
 .d-flex{
     display: flex;
 }
+.g-50{
+    gap: 50px;
+}
 .center{
     justify-content: center;
+}
+.around{
+    justify-content: space-around;
+}
+.between{
+    justify-content: space-between;
+}
+.start{
+    justify-content: flex-start;
+}
+.end{
+    justify-content: flex-end;
+}
+.w-33{
+    position: relative;
+    width: 33%;
 }
 span.red{
     color: red;
@@ -121,6 +169,10 @@ span.red{
     text-decoration: none;
     text-transform: capitalize;
     text-align: center;
+}
+img{
+    position: relative;
+    width: 100%;
 }
 .orange-btn {
     /* Основные стили */
@@ -185,4 +237,24 @@ span.red{
         transform: scale(1, 1) translate(-50%);
         transform-origin: 50% 50%;
     }
+}
+.liquid-glass{
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(180, 180, 190, 0.05) 50%,
+        rgba(120, 120, 130, 0.05) 100%
+    );
+  
+    /* Очень сильное размытие */
+    backdrop-filter: blur(5px) brightness(95%) contrast(120%);
+    -webkit-backdrop-filter: blur(5px) brightness(95%) contrast(120%);
+  
+    /* Объемные тени */
+    box-shadow:
+        inset 2px 2px 5px rgba(0, 0, 0, 0.09),
+        inset -2px -2px 5px rgba(0, 0, 0, 0.1),
+        inset 0 0 30px rgba(255, 255, 255, 0.25);
+    
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
