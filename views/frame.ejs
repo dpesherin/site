@@ -9,11 +9,10 @@
     <title><%= title %></title>
 </head>
 <body>
-    <div class="wrapper">
-        <% if(hfEnabled){ %>
+    <% if(hfEnabled){ %>
             <%- include("header", headerData) %>
         <% } %>
-        
+    <div class="wrapper main-width">
         <%- include(page, pageData) %>
 
         <% if(hfEnabled){ %>

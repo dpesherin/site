@@ -12,7 +12,8 @@ MainRouter.get("/", GetUserInfoMiddleware, (req, res)=>{
         },
         page: "root",
         pageData: {
-            prefix: "root"
+            prefix: "root",
+            userData: req.userInfo
         }
     }
     return res.render("frame", data)
