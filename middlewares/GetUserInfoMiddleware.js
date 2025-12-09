@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
-export const AuthMiddleware = (req, res, next)=>{
+export const GetUserInfoMiddleware = (req, res, next)=>{
     try
     {
         let decoded = jwt.decode(req.cookies.access_token, process.env.JWTSALT)
@@ -8,6 +8,7 @@ export const AuthMiddleware = (req, res, next)=>{
         next()
     } catch (error)
     {
+        req.userInfo = {}
         next()
     }
 }

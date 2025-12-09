@@ -1,8 +1,19 @@
 import { Router } from "express";
+import {GetUserInfoMiddleware} from "../middlewares/GetUserInfoMiddleware.js"
 
 export const MainRouter = Router()
 
-MainRouter.get("/", (req, res)=>{
-    
-    return res.status(200).json({ msg: "HELLO FROM SERVER" });
+MainRouter.get("/", GetUserInfoMiddleware, (req, res)=>{
+    const data = {
+        title: "Главная",
+        hfEnabled: true,
+        headerData: {
+            userData: req.userInfo
+        },
+        page: "root",
+        pageData: {
+            prefix: "root"
+        }
+    }
+    return res.render("frame", data)
 })

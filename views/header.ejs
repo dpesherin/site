@@ -1,10 +1,11 @@
+<link rel="stylesheet" href="/css/header.css">
 <div id="header">
     <span class="logo">
         HEADER
     </span>
-    <%- if(userData) {%>
-        <a href="#" class="profile"><%= userData.login %</a>
-    <%- }else{ %>
-        <button class="modern">Войти</button>
-    <%- } %>
+    <% if(userData) {%>
+        <a class="orange-btn" href="/user/<%= userData.id %>/profile" class="profile"><%= userData.login %></a>
+    <% }else{ %>
+        <a class="orange-btn" href="/auth/login">Войти</a>
+    <% } %>
 </div>
