@@ -8,6 +8,10 @@
 body{
     background-image: url("/media/bg.png");
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 p.modern{
     font-size: 12px;
@@ -24,6 +28,9 @@ input.modern{
     border-radius: 5px;
     border: 1px solid rgba(128, 128, 128, 0.3);
     color: gray;
+    &:focus{
+        outline: solid 1px #FF6B00;
+    }
 }
 h2.modern{
     font-weight: 200;
@@ -86,7 +93,7 @@ label.modern{
 }
 a.modern{
     text-decoration: none;
-    color: darkblue;
+    color: #FF6B00;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -100,4 +107,82 @@ a.modern{
 span.red{
     color: red;
     font-weight: 800;
+}
+.btn{
+    padding: 8px 16px;
+    min-width: 100px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: darkblue;
+    border-radius: 7px;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    text-transform: capitalize;
+    text-align: center;
+}
+.orange-btn {
+    /* Основные стили */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    text-transform: capitalize;
+    padding: 8px 32px;
+    border-radius: 9px;
+    border: none;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    
+    /* Градиент оранжевого */
+    background: linear-gradient(
+        135deg,
+        #FF6B00 0%,
+        #FF8C00 50%,
+        #FFA500 100%
+    );
+    
+    color: white;
+    letter-spacing: 0.5px;
+    text-transform: capitalize;
+    box-shadow: 
+        0 4px 20px rgba(255, 107, 0, 0.3),
+        0 2px 4px rgba(255, 107, 0, 0.2);
+    
+    /* Активное состояние */
+    &:active {
+        transform: translateY(-1px);
+        box-shadow: 
+        0 2px 10px rgba(255, 107, 0, 0.3);
+    }
+    
+    /* Фокус состояние */
+    &:focus {
+        outline: none;
+        box-shadow: 
+        0 0 0 3px rgba(255, 107, 0, 0.3),
+        0 8px 30px rgba(255, 107, 0, 0.4);
+    }
+    
+    /* Эффект пульсации */
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+    }
 }
