@@ -7,18 +7,11 @@
             </div>
         </div>
         <div class="w-33 d-flex around">
-            <div class="menu-item">
-                <a href="#" class="modern gray">О фотографе</a>
-            </div>
-            <div class="menu-item">
-                <a href="#" class="modern gray">Портфолио</a>
-            </div>
-            <div class="menu-item">
-                <a href="#" class="modern gray">FAQ</a>
-            </div>
-            <div class="menu-item">
-                <a href="#" class="modern gray">Хочу фотосессию</a>
-            </div>
+            <% menuItems.forEach(item => { %>
+                <div class="menu-item">
+                    <a href="<%= item.href %>" class="modern gray"><%= item.name %></a>
+                </div>
+            <% }); %>
         </div>
         <div class="w-33 d-flex end">
             <% if(userData) {%>

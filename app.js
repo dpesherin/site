@@ -42,6 +42,7 @@ export class App {
   async start() {
     this._app.listen(process.env.PORT, () => {
       console.log(`SERVER STARTED ON ${process.env.PORT} PORT`)
+      console.log(`${process.env.DOMAIN}/`)
     });
   }
 }

@@ -32,12 +32,18 @@ textarea.modern,
 input.modern{
     width: 400px;
     padding: 12px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: 1px solid rgba(128, 128, 128, 0.3);
-    color: gray;
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #FF6B00;
+    border-radius: 0;
+    color: #FF6B00;
+    -webkit-appearance: none; /* Для Safari */
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
     &:focus{
-        outline: solid 1px #FF6B00;
+        outline: none;
     }
 }
 h2.modern{
@@ -93,8 +99,8 @@ button.modern:disabled{
     flex-direction: column;
     gap: 20px;
     align-items: center;
-    box-shadow: 0 0 8px rgba(128, 128, 128, 0.551);
-    background-color: #fff;
+    background-color: #fecc86b3;
+    box-shadow: 0 0 5px #fecc86;
 }
 .ico{
     width: 25px;
@@ -260,4 +266,10 @@ img{
         inset 0 0 30px rgba(255, 255, 255, 0.25);
     
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.bc-leather{
+    background-color: #fffdf4 !important;
+}
+.bc-dark-leather{
+    background-color: #fecb86 !important;
 }

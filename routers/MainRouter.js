@@ -8,7 +8,25 @@ MainRouter.get("/", GetUserInfoMiddleware, (req, res)=>{
         title: "Главная",
         hfEnabled: true,
         headerData: {
-            userData: req.userInfo
+            userData: req.userInfo,
+            menuItems: [
+                {
+                    href: "#",
+                    name: "О фотографе"
+                },
+                {
+                    href: "#",
+                    name: "Портфолио"
+                },
+                {
+                    href: "#faq",
+                    name: "FAQ"
+                },
+                {
+                    href: "#form",
+                    name: "Хочу фотосессию"
+                }
+            ]
         },
         page: "root",
         pageData: {
