@@ -1,16 +1,15 @@
 footer{
     margin-top: 50px;
-    background-color: #fecb86;
     height: 75px;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0px 24px;
+    background-color: #f5eedf;
 }
 .year,
 .photographer{
     font-size: 18px;
     font-weight: 600;
-    color: #FF6B00;
 }
