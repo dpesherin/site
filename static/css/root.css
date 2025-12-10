@@ -11,7 +11,8 @@
 }
 .banner-with-text{
     border-radius: 25px;
-    background-color: #fecb86;
+    background-color: #fecc86b3;
+    box-shadow: 0 0 5px #fecc86;
     padding-bottom: 25px;
     overflow: hidden;
 }
@@ -31,27 +32,12 @@
 select.modern,
 textarea.modern,
 input.modern{
-    width: 500px;
-    padding: 12px;
-    font-size: 16px;
-    background-color: #fecb86;
-    border: none;
-    border-bottom: 2px solid #FF6B00;
-    border-radius: 0;
-    color: #FF6B00;
-    &:focus{
-        outline: none;
-    }
+    width: 500px !important;
 }
 textarea.modern{
-    border-bottom: 2px solid #FF6B00;
-    border-radius: 0;
-    color: #FF6B00;
     width: 1050px !important;
 }
 .form{
-    background-color: #fecb86;
-    box-shadow: none;
     border-radius: 25px;
     gap: 35px;
 }
@@ -63,4 +49,44 @@ textarea.modern{
 }
 .full{
     width: 1050px;
+}
+.banner-btn-place{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.banner-btn-place>a.orange-btn{
+    width: 300px;
+    height: 75px;
+    font-size: 24px;
+}
+.cards{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.card{
+    position: relative;
+    border-radius: 16px;
+    background-color: #f5eedf;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 24%;
+    margin-bottom: 24px;
+    padding: 24px 14px;
+    box-shadow: 0 0 5px #fecb86;
+}
+.card-header{
+    font-size: 18px;
+    font-weight: 600;
+}
+.card-text{
+    font-size: 12px;
 }
