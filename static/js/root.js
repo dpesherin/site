@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         currentIndex = parseInt(this.dataset.index);
                         updateCarouselPosition();
                         updateDots();
-                        updateCounter();
                     });
                     carouselDots.appendChild(dot);
                 }

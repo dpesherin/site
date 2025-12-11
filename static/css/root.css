@@ -105,8 +105,8 @@ textarea.modern{
     background-color: #f5eedf;
     color: #FF6B00;
     border: none;
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     font-size: 1.2rem;
     cursor: pointer;
@@ -138,4 +138,10 @@ textarea.modern{
 
 .dot.active {
     background-color: #FF6B00;
+}
+.card-desc{
+    width: 100%;
+    height: 400px;
+    background-color: #f5eedf;
+    border-radius: 15px;
 }
