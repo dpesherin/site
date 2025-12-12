@@ -273,3 +273,6 @@ img{
 .bc-dark-leather{
     background-color: #fecb86 !important;
 }
+.hidden{
+    display: none;
+}

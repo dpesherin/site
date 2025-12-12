@@ -14,43 +14,133 @@
             </p>
         </div>
     </div>
+    <div class="form" id="about">
+        <div class="form-name">
+            <h2 class="modern big-header white">
+                О фотографе
+            </h2>
+        </div>
+        <div class="about-area">
+            <div class="avatar-area">
+                <img src="/media/avatar.jpg" alt="avatar">
+            </div>
+            <div class="about-text">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere mi non sem maximus, a hendrerit augue rutrum. Quisque accumsan venenatis quam, commodo vehicula mauris commodo ac. Morbi ut ex vel est accumsan bibendum vitae ac sem. Fusce bibendum libero sed risus scelerisque, at tincidunt tellus vehicula. Sed vitae magna hendrerit, aliquet nunc in, dapibus nunc. Nulla rhoncus, nibh id rutrum bibendum, nunc lectus congue lacus, quis elementum urna urna ac risus. Praesent aliquet vehicula dui sed vulputate. Nam finibus nec erat quis rutrum. Praesent ac consectetur odio. Curabitur venenatis, ex sit amet scelerisque accumsan, purus ante mollis massa, eget auctor massa turpis a tortor. Duis ullamcorper sem eu elementum blandit. Mauris quis accumsan ante, eget luctus purus. Phasellus dignissim pellentesque felis egestas efficitur. Praesent quis dictum metus. Quisque porttitor scelerisque sapien, id fermentum nunc pharetra non. Nullam non diam commodo, eleifend erat in, dapibus risus.
+
+Quisque et elit malesuada, accumsan est at, condimentum nisi. Mauris enim sem, egestas quis aliquam nec, lacinia eget augue. Proin elementum pellentesque consequat. In eget felis ligula. Fusce egestas, nisl id consectetur egestas, lectus enim placerat nunc, nec fermentum orci risus non sem. Suspendisse malesuada orci augue, id vulputate nulla suscipit sed. Donec faucibus libero vitae libero suscipit, in vestibulum felis rhoncus. Nulla maximus lacus viverra, semper quam tincidunt, euismod ipsum. Proin quis hendrerit ipsum. Suspendisse potenti. Praesent ullamcorper, lacus in vestibulum tincidunt, magna dui commodo tellus, in ullamcorper nisi sem vitae nibh. Vivamus cursus accumsan diam id sagittis. Integer sagittis viverra tincidunt.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="portfolio">
+        <img src="/media/portfolio.jpeg" alt="portfolio">
+        <div class="portfolio-btn-place">
+            <a href="#" class="orange-btn">Посмотреть портфолио</a>
+        </div>
+    </div>
     <div class="form" id="faq">
         <div class="form-name">
             <h2 class="modern big-header white">
                 FAQ
             </h2>
         </div>
-        <div class="cards">
-            <div class="card">
+        <div class="cards-area">
+            <div class="carousel-nav">
+                <button class="nav-btn" id="prev-btn">
+                    <img class="ico" src="/media/prev.svg" alt="prev">
+                </button>
+                
+                <div class="carousel-dots" id="carousel-dots">
+                    <!-- Точки навигации будут сгенерированы через JavaScript -->
+                </div>
+                
+                <button class="nav-btn" id="next-btn">
+                    <img class="ico" src="/media/next.svg" alt="next">
+                </button>
+            </div>
+            <div class="cards-row">
+                <div class="cards">
+                    <div class="card" data-index="1">
+                        <h4 class="card-header">
+                            Сколько стоит фотосессия
+                        </h4>
+                    </div>
+                    <div class="card" data-index="2">
+                        <h4 class="card-header">
+                            На каких видах фотосессий специализируюсь
+                        </h4>
+                    </div>
+                    <div class="card" data-index="3">
+                        <h4 class="card-header">
+                            Можно ли арендовать студию, реквизит
+                        </h4>
+                    </div>
+                    <div class="card" data-index="4">
+                        <h4 class="card-header">
+                            Что я получу после фотосессии
+                        </h4>
+                    </div>
+                    <div class="card" data-index="5">
+                        <h4 class="card-header">
+                            Возможные геолокации съемок
+                        </h4>
+                    </div>
+                    <div class="card" data-index="6">
+                        <h4 class="card-header">
+                            Как подготовиться к фотосессии
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-desc">
+            <div class="card-content" data-index="1">
                 <h4 class="card-header">
-                    Card Header
+                    Сколько стоит фотосессия
                 </h4>
                 <p class="card-text">
-                    Card Text Template
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere mi non sem maximus, a hendrerit augue rutrum. Quisque accumsan venenatis quam, commodo vehicula mauris commodo ac. Morbi ut ex vel est accumsan bibendum vitae ac sem. Fusce bibendum libero sed risus scelerisque, at tincidunt tellus vehicula. Sed vitae magna hendrerit, aliquet nunc in, dapibus nunc. Nulla rhoncus, nibh id rutrum bibendum, nunc lectus congue lacus, quis elementum urna urna ac risus. Praesent aliquet vehicula dui sed vulputate. Nam finibus nec erat quis rutrum. Praesent ac consectetur odio. Curabitur venenatis, ex sit amet scelerisque accumsan, purus ante mollis massa, eget auctor massa turpis a tortor. Duis ullamcorper sem eu elementum blandit. Mauris quis accumsan ante, eget luctus purus. Phasellus dignissim pellentesque felis egestas efficitur. Praesent quis dictum metus. Quisque porttitor scelerisque sapien, id fermentum nunc pharetra non. Nullam non diam commodo, eleifend erat in, dapibus risus.
                 </p>
             </div>
-            <div class="card">
+            <div class="card-content hidden" data-index="2">
                 <h4 class="card-header">
-                    Card Header
+                    На каких видах фотосессий специализируюсь
                 </h4>
                 <p class="card-text">
-                    Card Text Template
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere mi non sem maximus, a hendrerit augue rutrum. Quisque accumsan venenatis quam, commodo vehicula mauris commodo ac. Morbi ut ex vel est accumsan bibendum vitae ac sem. Fusce bibendum libero sed risus scelerisque, at tincidunt tellus vehicula. Sed vitae magna hendrerit, aliquet nunc in, dapibus nunc. Nulla rhoncus, nibh id rutrum bibendum, nunc lectus congue lacus, quis elementum urna urna ac risus. Praesent aliquet vehicula dui sed vulputate. Nam finibus nec erat quis rutrum. Praesent ac consectetur odio. Curabitur venenatis, ex sit amet scelerisque accumsan, purus ante mollis massa, eget auctor massa turpis a tortor. Duis ullamcorper sem eu elementum blandit. Mauris quis accumsan ante, eget luctus purus. Phasellus dignissim pellentesque felis egestas efficitur. Praesent quis dictum metus. Quisque porttitor scelerisque sapien, id fermentum nunc pharetra non. Nullam non diam commodo, eleifend erat in, dapibus risus.
                 </p>
             </div>
-            <div class="card">
+            <div class="card-content hidden" data-index="3">
                 <h4 class="card-header">
-                    Card Header
+                    Можно ли арендовать студию, реквизит
                 </h4>
                 <p class="card-text">
-                    Card Text Template
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere mi non sem maximus, a hendrerit augue rutrum. Quisque accumsan venenatis quam, commodo vehicula mauris commodo ac. Morbi ut ex vel est accumsan bibendum vitae ac sem. Fusce bibendum libero sed risus scelerisque, at tincidunt tellus vehicula. Sed vitae magna hendrerit, aliquet nunc in, dapibus nunc. Nulla rhoncus, nibh id rutrum bibendum, nunc lectus congue lacus, quis elementum urna urna ac risus. Praesent aliquet vehicula dui sed vulputate. Nam finibus nec erat quis rutrum. Praesent ac consectetur odio. Curabitur venenatis, ex sit amet scelerisque accumsan, purus ante mollis massa, eget auctor massa turpis a tortor. Duis ullamcorper sem eu elementum blandit. Mauris quis accumsan ante, eget luctus purus. Phasellus dignissim pellentesque felis egestas efficitur. Praesent quis dictum metus. Quisque porttitor scelerisque sapien, id fermentum nunc pharetra non. Nullam non diam commodo, eleifend erat in, dapibus risus.
                 </p>
             </div>
-            <div class="card">
+            <div class="card-content hidden" data-index="4">
                 <h4 class="card-header">
-                    Card Header
+                    Что я получу после фотосессии
                 </h4>
                 <p class="card-text">
-                    Card Text Template
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere mi non sem maximus, a hendrerit augue rutrum. Quisque accumsan venenatis quam, commodo vehicula mauris commodo ac. Morbi ut ex vel est accumsan bibendum vitae ac sem. Fusce bibendum libero sed risus scelerisque, at tincidunt tellus vehicula. Sed vitae magna hendrerit, aliquet nunc in, dapibus nunc. Nulla rhoncus, nibh id rutrum bibendum, nunc lectus congue lacus, quis elementum urna urna ac risus. Praesent aliquet vehicula dui sed vulputate. Nam finibus nec erat quis rutrum. Praesent ac consectetur odio. Curabitur venenatis, ex sit amet scelerisque accumsan, purus ante mollis massa, eget auctor massa turpis a tortor. Duis ullamcorper sem eu elementum blandit. Mauris quis accumsan ante, eget luctus purus. Phasellus dignissim pellentesque felis egestas efficitur. Praesent quis dictum metus. Quisque porttitor scelerisque sapien, id fermentum nunc pharetra non. Nullam non diam commodo, eleifend erat in, dapibus risus.
+                </p>
+            </div>
+            <div class="card-content hidden" data-index="5">
+                <h4 class="card-header">
+                    Возможные геолокации съемок
+                </h4>
+                <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere mi non sem maximus, a hendrerit augue rutrum. Quisque accumsan venenatis quam, commodo vehicula mauris commodo ac. Morbi ut ex vel est accumsan bibendum vitae ac sem. Fusce bibendum libero sed risus scelerisque, at tincidunt tellus vehicula. Sed vitae magna hendrerit, aliquet nunc in, dapibus nunc. Nulla rhoncus, nibh id rutrum bibendum, nunc lectus congue lacus, quis elementum urna urna ac risus. Praesent aliquet vehicula dui sed vulputate. Nam finibus nec erat quis rutrum. Praesent ac consectetur odio. Curabitur venenatis, ex sit amet scelerisque accumsan, purus ante mollis massa, eget auctor massa turpis a tortor. Duis ullamcorper sem eu elementum blandit. Mauris quis accumsan ante, eget luctus purus. Phasellus dignissim pellentesque felis egestas efficitur. Praesent quis dictum metus. Quisque porttitor scelerisque sapien, id fermentum nunc pharetra non. Nullam non diam commodo, eleifend erat in, dapibus risus.
+                </p>
+            </div>
+            <div class="card-content hidden" data-index="6">
+                <h4 class="card-header">
+                    Как подготовиться к фотосессии
+                </h4>
+                <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere mi non sem maximus, a hendrerit augue rutrum. Quisque accumsan venenatis quam, commodo vehicula mauris commodo ac. Morbi ut ex vel est accumsan bibendum vitae ac sem. Fusce bibendum libero sed risus scelerisque, at tincidunt tellus vehicula. Sed vitae magna hendrerit, aliquet nunc in, dapibus nunc. Nulla rhoncus, nibh id rutrum bibendum, nunc lectus congue lacus, quis elementum urna urna ac risus. Praesent aliquet vehicula dui sed vulputate. Nam finibus nec erat quis rutrum. Praesent ac consectetur odio. Curabitur venenatis, ex sit amet scelerisque accumsan, purus ante mollis massa, eget auctor massa turpis a tortor. Duis ullamcorper sem eu elementum blandit. Mauris quis accumsan ante, eget luctus purus. Phasellus dignissim pellentesque felis egestas efficitur. Praesent quis dictum metus. Quisque porttitor scelerisque sapien, id fermentum nunc pharetra non. Nullam non diam commodo, eleifend erat in, dapibus risus.
                 </p>
             </div>
         </div>

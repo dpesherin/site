@@ -42,7 +42,7 @@ textarea.modern{
     gap: 35px;
 }
 .form-name{
-    margin-bottom: 45px;
+    margin-bottom: 15px;
 }
 .empty{
     height: 700px;
@@ -61,32 +61,167 @@ textarea.modern{
     height: 75px;
     font-size: 24px;
 }
-.cards{
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-.card{
-    position: relative;
-    border-radius: 16px;
-    background-color: #f5eedf;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    width: 24%;
-    margin-bottom: 24px;
-    padding: 24px 14px;
-    box-shadow: 0 0 5px #fecb86;
-}
 .card-header{
     font-size: 18px;
     font-weight: 600;
 }
 .card-text{
-    font-size: 12px;
+    font-size: 16px;
+    font-weight: 200;
+    line-height: 32px;
+    margin-top: 15px;
+}
+.cards-area{
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+.cards-row {
+    position: relative;
+    overflow: hidden;
+    padding: 20px 0;
+    width: 100%;
+}
+.cards {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 25px;
+    padding: 10px;
+}
+.card {
+    flex: 0 0 300px;
+    background-color: #f5eedf;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+/* Навигационные кнопки */
+.carousel-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    gap: 20px;
+}
+
+.nav-btn {
+    background-color: #f5eedf;
+    color: #FF6B00;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.nav-btn:hover {
+    background-color: #FF6B00;
+    color: #f5eedf;
+}
+
+/* Индикаторные точки */
+.carousel-dots {
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #f5eedf;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: #FF6B00;
+}
+.card-desc{
+    width: 100%;
+    padding: 24px;
+    background-color: #f5eedf;
+    border-radius: 15px;
+}
+.about-area{
+    display: flex;
+    gap: 65px;
+    width: 100%;
+    padding: 24px;
+}
+.avatar-area{
+    position: relative;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.avatar-area>img{
+    position: relative;
+    width: 100%;
+    scale: 2.1;
+}
+.about-text {
+    width: calc(100% - 365px);
+    padding: 24px;
+    background-color: #f5eedf;
+    border-radius: 15px;
+}
+.about-text>p {
+    white-space: initial;
+    font-size: 16px;
+    font-weight: 200;
+    line-height: 32px;
+}
+.portfolio{
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+}
+.portfolio>img{
+    filter: brightness(0.65);
+}
+.portfolio-btn-place{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.portfolio-btn-place>a.orange-btn{
+    height: 75px;
+    font-size: 24px;
+}
+@media (max-width: 768px) {
+    .card {
+        flex: 0 0 280px;
+    }
+    
+    h1 {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        flex: 0 0 260px;
+        padding: 20px;
+    }
+    
+    .card-header {
+        font-size: 1.3rem;
+    }
+    
+    .nav-btn {
+        width: 45px;
+        height: 45px;
+    }
 }
