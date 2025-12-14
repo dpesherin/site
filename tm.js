@@ -7,12 +7,13 @@ import { Mailer } from "./core/Mailer.js"
 
     let mail = new Mailer()
     console.log(await mail.sendMessageFromTemplate({
-        template: "forgotpass",
+        template: "newapplication",
         to: "pesherind@yandex.ru",
         subject: "TEST TEMPLATE"
     }, 
     {
-        code: 123123123123123,
-        link: "https://yandex.ru"
+        priorityContact: "+7 777 777 77 77",
+        date: '24.12.2025',
+        comment: "TEST TEST TEST TEST" 
     }))
 })()
