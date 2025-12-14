@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Application</title>
+</head>
+<body>
+    <style>
+        a{
+            display: flex;
+            margin-right: 12px !important;
+        }
+        .wrapper{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #fff;
+            padding: 24px;
+        }
+        .content{
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            padding: 24px;
+        }
+        h4.modern{
+            color: #FF6B00;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        h5.modern{
+            color: #FF6B00;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 5px;
+            margin-bottom: 8px;
+        }
+        p.modern{
+            color: rgba(128, 128, 128, 0.45);
+            font-size: 12px;
+            white-space: initial;
+        }
+        p.code{
+            color: #FF6B00;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        a.modern{
+            color: rgba(128, 128, 128, 0.45);
+            padding: 12px 24px;
+            background-color: #FF6B00;
+            border-radius: 5px;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .d-flex{
+            display: flex;
+            justify-content: flex-start;
+        }
+        .info-label{
+            color: rgba(128, 128, 128, 0.85);
+            font-weight: 600;
+            font-size: 10px;
+        }
+        .info-text{
+            color: rgba(128, 128, 128, 0.65);
+            font-size: 10px;
+        }
+        .block{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .notify{
+            font-size: 10px;
+            color: rgb(174, 0, 0);
+            font-weight: 600;
+        }
+        .footer{
+            margin-top: 15px;
+        }
+        .footer-text{
+            white-space: initial;
+            color: #FF6B00;
+            font-size: 14px;
+        }
+    </style>
+    <div class="wrapper">
+         <div class="block">
+            <h4 class="modern">
+                Ваша заявка принята
+            </h4>
+            <p class="modern">
+                В ближайшее время с Вами свяжутся для уточнения деталей.
+            </p>
+            <p class="modern">
+                Информация по вашей заявке:
+            </p>
+            <div class="d-flex">
+                <span class="info-label">Удобный способ связи: </span>
+                <span class="info-text"><%= priorityContact %></span>
+            </div>
+            <div class="d-flex">
+                <span class="info-label">Выбранная дата: </span>
+                <span class="info-text"><%= date %></span>
+            </div>
+            <div class="d-flex">
+                <span class="info-label">Комментарий: </span>
+                <span class="info-text"><%= comment %></span>
+            </div>
+        </div>
+        <div class="footer">
+            <p class="footer-text">
+                С уважением
+            </p>
+            <p class="footer-text">
+                Александра Кенециус
+            </p>
+        </div>
+    </div>
+</body>
+</html>
