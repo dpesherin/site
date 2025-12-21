@@ -12,7 +12,7 @@ ApplicationRouter.post("/add", GetUserInfoMiddleware, async (req, res) => {
         data.user_id = req.userInfo.id
     }
     let applicationService = new ApplicationService()
-    let result = await applicationService.createApplication(data)
+    let result = await applicationService.createApplication(data, req.userInfo)
     if(result.status){
         return res.status(200).json(result)
     }else if (result.type == 'BAD_RQ')

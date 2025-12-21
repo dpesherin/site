@@ -147,4 +147,43 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         })
     })
+
+    let name = document.getElementById("name")
+    let email = document.getElementById("email")
+    let link = document.getElementById("link")
+    let date = document.getElementById("date")
+    let desc = document.getElementById("desc")
+    let agreement = document.getElementById("agreement")
+    let send = document.getElementById("send")
+
+    send.addEventListener("click", async (e)=>{
+        e.preventDefault()
+        let status = checkReq()
+        if(!agreement.checked){
+            status = false
+            Alert("Для отправки заявки необходимо подтвердить свое согласие на обработку персональных данных")
+        }
+        if(status){
+            send.setAttribute("disabled", "disabled")
+            let body = {
+                name: name.value,
+                email: email.value,
+                priority_contact: link.value,
+                description: desc.value,
+                date: date.value,
+                agreement_confirmed: agreement.checked
+            }
+
+            let response = await fetch("/application/add",{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            })
+            let result = await response.json()
+            Alert(result.msg)
+            send.removeAttribute("disabled")
+        }
+    })
 });

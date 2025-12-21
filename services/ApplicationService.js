@@ -10,9 +10,18 @@ export class ApplicationService
         this._repo = new ApplicationRepo()
     }
 
-    async createApplication(data)
+    async createApplication(data, userData)
     {
         let model = new ApplicationModel(data)
+        if(model.date){
+            model.date = new Date(model.date)
+        }else{
+            model.date = null
+        }
+        if(userData){
+            model.lastname = userData.lastname
+            model.user_id = userData.id 
+        }
         if(model.agreement_confirmed){
             let result = await this._repo.createApplication(model)
             if(result){
