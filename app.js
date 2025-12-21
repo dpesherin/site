@@ -6,6 +6,7 @@ import {MainRouter} from "./routers/MainRouter.js"
 import { UserRouter } from "./routers/UserRouter.js"
 import { AuthMiddleware } from "./middlewares/AuthMiddleware.js"
 import { AuthRouter } from "./routers/AuthRouter.js"
+import { ApplicationRouter } from "./routers/ApplicationRouter.js"
 
 export class App {
   constructor() {
@@ -33,6 +34,7 @@ export class App {
     this._app.use("/check", CheckRouter)
     this._app.use("/user", AuthMiddleware, UserRouter)
     this._app.use("/auth", AuthRouter)
+    this._app.use("/application", ApplicationRouter)
   }
 
   getApp() {

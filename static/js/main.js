@@ -17,7 +17,6 @@ const checkReq = ()=>{
     list.forEach((item)=>{
         if(!item.value){
             send = false
-            console.log("NOT SEND")
             item.classList.add("wrong")
         }
     })

@@ -8,7 +8,7 @@ export class ApplicationModel
     date
     user_id
     agreement_confirmed
-    date_creates
+    date_create
 
     constructor(data = {})
     {
