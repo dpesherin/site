@@ -186,4 +186,53 @@ document.addEventListener('DOMContentLoaded', function() {
             send.removeAttribute("disabled")
         }
     })
+
+    const words = [
+        'Элегантность', '✦',
+        'Современность', '✦',
+        'Чувственность', '✦',
+        'Профессионализм', '✦',
+        'Креативность', '✦',
+        'Индивидуальность', '✦',
+        'Контент', '✦'
+    ];
+    
+    const container = document.querySelector('.marquee-container');
+    const track = document.getElementById('marqueeTrack');
+    
+    // Создаем контент
+    let content = '';
+    words.forEach(word => {
+        content += `<div class="marquee-item">${word}</div>`;
+    });
+    
+    // Дублируем для бесшовности
+    track.innerHTML = content + content;
+    
+    // Анимация
+    let position = 0;
+    const speed = 0.8;
+    let paused = false;
+    
+    function animate() {
+        if (!paused) {
+            position -= speed;
+            
+            const trackWidth = track.scrollWidth / 2;
+            if (Math.abs(position) >= trackWidth) {
+                position = 0;
+            }
+            
+            track.style.transform = `translateX(${position}px)`;
+        }
+        
+        requestAnimationFrame(animate);
+    }
+    
+    // Пауза при наведении
+    container.addEventListener('mouseenter', () => paused = true);
+    container.addEventListener('mouseleave', () => paused = false);
+    
+    // Запуск анимации
+    animate();
 });

@@ -39,7 +39,6 @@ textarea.modern{
 }
 .form{
     border-radius: 25px;
-    gap: 35px;
 }
 .form-name{
     margin-bottom: 15px;
@@ -62,11 +61,11 @@ textarea.modern{
     font-size: 24px;
 }
 .card-header{
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 600;
 }
 .card-text{
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 200;
     line-height: 32px;
     margin-top: 15px;
@@ -184,7 +183,7 @@ textarea.modern{
 }
 .about-text>p {
     white-space: initial;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 200;
     line-height: 32px;
 }
@@ -206,6 +205,77 @@ textarea.modern{
 .portfolio-btn-place>a.orange-btn{
     height: 75px;
     font-size: 24px;
+}
+
+.marquee-container {
+    width: 100%;
+    max-width: 1400px;
+    height: 150px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.marquee-track {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    position: absolute;
+    white-space: nowrap;
+    will-change: transform;
+}
+
+.marquee-item {
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    height: 100%;
+    font-size: 48px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    color: #FF6B00;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.marquee-item:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.marquee-star {
+    color: #e74c3c;
+    font-size: 1.8rem;
+    margin: 0 25px;
+    opacity: 0.9;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* Эффект градиента по краям */
+.marquee-container::before,
+.marquee-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.marquee-container::before {
+    left: 0;
+    background: linear-gradient(to right, #fffdf4, rgba(255, 255, 255, 0));
+}
+
+.marquee-container::after {
+    right: 0;
+    background: linear-gradient(to left, #fffdf4, rgba(255, 255, 255, 0));
 }
 @media (max-width: 768px) {
     .card {
