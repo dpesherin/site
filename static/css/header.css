@@ -1,18 +1,20 @@
 #header{
-    margin-bottom: 15px;
-    height: 60px;
-    width: 100%;
+    margin-top: 5px;
+    height: 70px;
+    width: 1400px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0px 24px;
-    background-color: #f5eedf;
+    padding: 0px 5px;
+    background-color: #f0f0f0d7;
+    position: fixed;
+    z-index: 999;
+    border-radius: 35px;
 }
 .header-area{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0px 24px;
 }
 .logo{
     width: 200px;
@@ -21,4 +23,9 @@
     border: 1px solid #FF6B00;
     border-radius: 8px;
     padding: 6px 14px;
+}
+#header-btn{
+    height: 60px;
+    border-radius: 30px;
+    font-size: 18px;
 }

@@ -15,12 +15,12 @@
         </div>
         <div class="w-33 d-flex end">
             <% if(userData) {%>
-                <a class="modern profile" href="/user/<%= userData.id %>/profile">
+                <a class="modern profile" id="header-btn" href="/user/<%= userData.id %>/profile">
                     <img src="/media/userico.svg" alt="userico" class="ico">
                     <%= userData.login %>
                 </a>
             <% }else{ %>
-                <a class="orange-btn" href="/auth/login">Войти</a>
+                <a class="orange-btn" id="header-btn" href="/auth/login">Войти</a>
             <% } %>
         </div>
     </div>

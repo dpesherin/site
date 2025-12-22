@@ -9,14 +9,15 @@
     <title><%= title %></title>
 </head>
 <body>
-    <% if(hfEnabled){ %>
-        <%- include("header", headerData) %>
-    <% } %>
+    
     <div class="wrapper main-width">
+        <% if(hfEnabled){ %>
+            <%- include("header", headerData) %>
+        <% } %>
         <%- include(page, pageData) %>
+        <% if(hfEnabled){ %>
+            <%- include("footer") %>
+        <% } %>
     </div>
-    <% if(hfEnabled){ %>
-        <%- include("footer") %>
-    <% } %>
 </body>
 </html>
