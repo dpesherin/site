@@ -97,7 +97,7 @@ button.modern:disabled{
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
     align-items: center;
     background-color: #fecc86b3;
     box-shadow: 0 0 5px #fecc86;
@@ -109,7 +109,7 @@ button.modern:disabled{
     align-items: center;
 }
 .big-header{
-    font-size: 61px !important;
+    font-size: 72px !important;
     font-weight: 300 !important;
 }
 .big-text{
