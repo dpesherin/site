@@ -8,108 +8,100 @@ on:
 jobs:
   check-existing-pr:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     outputs:
       pr_exists: ${{ steps.check.outputs.pr_exists }}
       pr_number: ${{ steps.check.outputs.pr_number }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Setup GitHub CLI
-        run: |
-          # Установка GitHub CLI если не установлен
-          if ! command -v gh &> /dev/null; then
-            type -p curl >/dev/null || sudo apt-get update && sudo apt-get install curl -y
-            curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-            sudo apt-get update && sudo apt-get install gh -y
-          fi
-          
-          # Авторизация GitHub CLI
-          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-
-      - name: Check for existing PR
+      - name: Check for existing PR via API
         id: check
         run: |
           # Получаем имя ветки
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           echo "Checking PR for branch: $BRANCH_NAME"
           
-          # Проверяем существующие PR через API (более надежный способ)
-          PR_JSON=$(gh api \
+          # Используем GitHub API для проверки существующих PR
+          RESPONSE=$(curl -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
-            "/repos/${{ github.repository }}/pulls?head=${{ github.repository_owner }}:$BRANCH_NAME&state=open" \
-            --jq '.[0]')
+            "https://api.github.com/repos/${{ github.repository }}/pulls?head=${{ github.repository_owner }}:$BRANCH_NAME&state=open")
           
-          if [ "$PR_JSON" != "null" ] && [ -n "$PR_JSON" ]; then
-            PR_NUMBER=$(echo "$PR_JSON" | jq -r '.number // empty')
-            if [ -n "$PR_NUMBER" ]; then
-              echo "PR already exists for branch $BRANCH_NAME"
-              echo "PR number: $PR_NUMBER"
-              echo "pr_exists=true" >> $GITHUB_OUTPUT
-              echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
-            else
-              echo "No existing PR found for branch $BRANCH_NAME"
-              echo "pr_exists=false" >> $GITHUB_OUTPUT
-              echo "pr_number=0" >> $GITHUB_OUTPUT
-            fi
+          # Отладка
+          echo "API Response: $RESPONSE"
+          
+          # Проверяем ответ
+          PR_COUNT=$(echo "$RESPONSE" | jq 'length')
+          
+          if [ "$PR_COUNT" -gt 0 ]; then
+            PR_NUMBER=$(echo "$RESPONSE" | jq '.[0].number')
+            echo "PR already exists for branch $BRANCH_NAME"
+            echo "PR number: $PR_NUMBER"
+            echo "pr_exists=true" >> $GITHUB_OUTPUT
+            echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
           else
             echo "No existing PR found for branch $BRANCH_NAME"
             echo "pr_exists=false" >> $GITHUB_OUTPUT
             echo "pr_number=0" >> $GITHUB_OUTPUT
           fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   create-pr:
     needs: check-existing-pr
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     if: needs.check-existing-pr.outputs.pr_exists == 'false'
     steps:
-      - name: Create Pull Request
-        uses: repo-sync/pull-request@v2
-        with:
-          destination_branch: "master"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_title: "Release PR: ${{ github.ref_name }}"
-          pr_body: |
-            ## Автоматически созданный Release PR
+      - name: Create Pull Request via API
+        run: |
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          
+          # Создаем PR через GitHub API
+          RESPONSE=$(curl -s -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Content-Type: application/json" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls" \
+            -d "{
+              \"title\": \"Release PR: $BRANCH_NAME\",
+              \"body\": \"## Автоматически созданный Release PR\\n\\n**Ветка:** $BRANCH_NAME\\n**Коммит:** [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }})\\n**Автор:** ${{ github.event.head_commit.author.name }}\\n**Дата:** ${{ github.event.head_commit.timestamp }}\\n\\n**Сообщение коммита:**\\n\\\`\\\`\\\`\\n${{ github.event.head_commit.message }}\\n\\\`\\\`\\\`\\n\\n---\\n*Создано автоматически при пуше в ветку release*\",
+              \"head\": \"$BRANCH_NAME\",
+              \"base\": \"master\"
+            }")
+          
+          # Проверяем результат
+          PR_URL=$(echo "$RESPONSE" | jq -r '.html_url // empty')
+          if [ -n "$PR_URL" ]; then
+            echo "✅ Pull Request created successfully: $PR_URL"
             
-            **Ветка:** ${{ github.ref_name }}
-            **Коммит:** [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }})
-            **Автор:** ${{ github.event.head_commit.author.name }}
-            **Дата:** ${{ github.event.head_commit.timestamp }}
-            
-            **Сообщение коммита:**
-            ```
-            ${{ github.event.head_commit.message }}
-            ```
-            
-            ---
-            *Создано автоматически при пуше в ветку release*
-          pr_label: "release,auto-pr"
-          pr_draft: false
+            # Добавляем label
+            PR_NUMBER=$(echo "$RESPONSE" | jq -r '.number')
+            curl -s -X POST \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -H "Content-Type: application/json" \
+              "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/labels" \
+              -d '{"labels":["release", "auto-pr"]}'
+          else
+            echo "❌ Failed to create PR"
+            echo "Response: $RESPONSE"
+            exit 1
+          fi
 
   update-existing-pr:
     needs: check-existing-pr
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     if: needs.check-existing-pr.outputs.pr_exists == 'true'
     steps:
-      - name: Setup GitHub CLI
-        run: |
-          # Установка и авторизация GitHub CLI
-          if ! command -v gh &> /dev/null; then
-            type -p curl >/dev/null || sudo apt-get update && sudo apt-get install curl -y
-            curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-            sudo apt-get update && sudo apt-get install gh -y
-          fi
-          
-          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-
-      - name: Update existing PR
+      - name: Add comment to existing PR
         run: |
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           PR_NUMBER="${{ needs.check-existing-pr.outputs.pr_number }}"
@@ -129,5 +121,11 @@ jobs:
           ${{ github.event.head_commit.message }}
           \`\`\`"
           
-          echo "Adding comment to PR #$PR_NUMBER"
-          echo "$COMMENT_BODY" | gh pr comment "$PR_NUMBER" --body-file -
+          curl -s -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Content-Type: application/json" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments" \
+            -d "{\"body\": \"$COMMENT_BODY\"}"
+          
+          echo "✅ Comment added to PR #$PR_NUMBER"
