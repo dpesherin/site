@@ -1,0 +1,67 @@
+name: Auto Create PR on Push
+
+on:
+  push:
+    branches:
+      - 'release'
+
+jobs:
+  check-existing-pr:
+    runs-on: ubuntu-latest
+    outputs:
+      pr_exists: ${{ steps.check.outputs.pr_exists }}
+    steps:
+      - name: Check for existing PR
+        id: check
+        run: |
+          # Проверяем, существует ли уже открытый PR для этой ветки
+          pr_list=$(gh pr list --head "${{ github.ref_name }}" --state open --json number --jq length)
+          if [ "$pr_list" -gt 0 ]; then
+            echo "PR already exists for branch ${{ github.ref_name }}"
+            echo "pr_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "No existing PR found for branch ${{ github.ref_name }}"
+            echo "pr_exists=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  create-pr:
+    needs: check-existing-pr
+    runs-on: ubuntu-latest
+    if: needs.check-existing-pr.outputs.pr_exists == 'false'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "master"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_title: "Auto PR: ${{ github.ref_name }}"
+          pr_body: |
+            Автоматически созданный PR из ${{ github.ref_name }}
+            
+            Создано: ${{ github.event.head_commit.timestamp }}
+            Коммит: ${{ github.event.head_commit.id }}
+            Автор: ${{ github.event.head_commit.author.name }}
+          pr_label: "auto-pr"
+          pr_draft: false
+          pr_assignee: ""  # Можно указать логин
+          pr_reviewer: ""  # Можно указать логины через запятую
+
+  update-existing-pr:
+    needs: check-existing-pr
+    runs-on: ubuntu-latest
+    if: needs.check-existing-pr.outputs.pr_exists == 'true'
+    steps:
+      - name: Update existing PR
+        run: |
+          echo "PR already exists for ${{ github.ref_name }}. Skipping creation."
+          echo "Last commit: ${{ github.event.head_commit.message }}"
+          # Можно добавить комментарий в существующий PR
+          pr_number=$(gh pr list --head "${{ github.ref_name }}" --state open --json number --jq '.[0].number')
+          gh pr comment $pr_number --body "📝 Новые изменения добавлены: ${{ github.event.head_commit.message }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
