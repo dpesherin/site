@@ -81,6 +81,7 @@ button.modern:disabled{
     box-shadow: 0 0 8px rgba(103, 103, 103, 0.81);
     padding: 18px;
     background-color: #181818b8;
+    z-index: 9999;
 }
 .alert-msg{
     font-size: 14px;
