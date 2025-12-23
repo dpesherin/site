@@ -187,10 +187,3 @@ jobs:
             echo "⚠️ Не удалось добавить комментарий (код: $http_code)"
             echo "Ответ: $response_body"
           fi
-          
-          # Опционально: обновляем PR (синхронизируем ветку)
-          echo "🔄 Синхронизация ветки PR..."
-          curl -s -X PUT \
-            -H "Authorization: token $GITHUB_TOKEN_PAT" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/update-branch"
