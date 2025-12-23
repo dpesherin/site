@@ -26,12 +26,6 @@
     flex-direction: column;
     gap: 16px;
 }
-.white{
-    color: #FFF;
-}
-.orange{
-    color: #FF6B00;
-}
 select.modern,
 textarea.modern,
 input.modern{

@@ -1,32 +1,17 @@
 import { Router } from "express";
 import {GetUserInfoMiddleware} from "../middlewares/GetUserInfoMiddleware.js"
+import { Menu } from "../core/menu/Menu.js";
 
 export const MainRouter = Router()
 
 MainRouter.get("/", GetUserInfoMiddleware, (req, res)=>{
+    const menu = new Menu()
     const data = {
-        title: "Главная",
+        title: "Александра Кенециус. Частный фотограф",
         hfEnabled: true,
         headerData: {
             userData: req.userInfo,
-            menuItems: [
-                {
-                    href: "#",
-                    name: "О фотографе"
-                },
-                {
-                    href: "#",
-                    name: "Портфолио"
-                },
-                {
-                    href: "#faq",
-                    name: "FAQ"
-                },
-                {
-                    href: "#form",
-                    name: "Хочу фотосессию"
-                }
-            ]
+            menuItems: menu.buildMenu()
         },
         page: "root",
         pageData: {

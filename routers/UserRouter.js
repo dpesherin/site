@@ -7,11 +7,48 @@ UserRouter.get("/:id/profile", async(req, res)=>{
     let userService = new UserService()
     let result = await userService.getUserInfo(req.params.id, req.userInfo)
     if(result.status){
-        return res.status(200).json(result)
+         const data = {
+            title: `Профиль пользователя ${result.user.login}`,
+            hfEnabled: true,
+            headerData: {
+                userData: req.userInfo,
+                menuItems: []
+            },
+            page: "profile",
+            pageData: {
+                prefix: "profile",
+                userData: result.user
+            }
+        }
+        return res.render("frame", data)
     }else if(result.type === "PERM_DENIED"){
-        return res.status(403).json(result)
+         const data = {
+            title: "Отказано в доступе",
+            hfEnabled: true,
+            headerData: {
+                userData: req.userInfo,
+                menuItems: []
+            },
+            page: "forbidden",
+            pageData: {
+                prefix: "forbidden"
+            }
+        }
+        return res.render("frame", data)
     }
-    return res.status(404).json(result)
+    const data = {
+            title: "Не найдено",
+            hfEnabled: true,
+            headerData: {
+                userData: req.userInfo,
+                menuItems: []
+            },
+            page: "nf",
+            pageData: {
+                prefix: "nf"
+            }
+        }
+        return res.render("frame", data)
 })
 
 UserRouter.post("/delete", async (req, res)=>{

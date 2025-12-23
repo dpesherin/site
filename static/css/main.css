@@ -6,6 +6,14 @@
     color: rgba(40, 39, 39, 0.81);
     font-family: "Onest", sans-serif;
 }
+.content{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 75px;
+    padding: 24px;
+    min-height: calc(100vh - 169px);
+}
 body{
     background-color: #fffdf4;
     display: flex;
@@ -144,7 +152,7 @@ a.modern{
     gap: 50px;
 }
 .center{
-    justify-content: center;
+    justify-content: center !important;
 }
 .around{
     justify-content: space-around;
@@ -183,6 +191,12 @@ span.red{
 img{
     position: relative;
     width: 100%;
+}
+.white{
+    color: #FFF;
+}
+.orange{
+    color: #FF6B00;
 }
 .orange-btn {
     /* Основные стили */
@@ -289,4 +303,12 @@ img{
 .wo-bc{
     background-color: transparent;
     box-shadow: none;
+}
+.status-code{
+    font-size: 150px;
+    font-weight: 600;
+}
+.status-desc{
+    font-size: 36px;
+    font-weight: 200;
 }
