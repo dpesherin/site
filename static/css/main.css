@@ -285,3 +285,7 @@ img{
 .g-32{
     gap: 32px !important;
 }
+.wo-bc{
+    background-color: transparent;
+    box-shadow: none;
+}
