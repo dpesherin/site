@@ -5,46 +5,46 @@ on:
     branches:
       - 'release'
 
+env:
+  # Используем PAT вместо GITHUB_TOKEN
+  GITHUB_TOKEN_PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  REPO_OWNER: ${{ github.repository_owner }}
+  REPO_NAME: ${{ github.event.repository.name }}
+
 jobs:
   check-existing-pr:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: read
     outputs:
-      pr_exists: ${{ steps.check.outputs.pr_exists }}
-      pr_number: ${{ steps.check.outputs.pr_number }}
+      pr_exists: ${{ steps.check-pr.outputs.pr_exists }}
+      pr_number: ${{ steps.check-pr.outputs.pr_number }}
     steps:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Check for existing PR via API
-        id: check
+      - name: Check for existing PR
+        id: check-pr
         run: |
-          # Получаем имя ветки
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           echo "Checking PR for branch: $BRANCH_NAME"
           
-          # Используем GitHub API для проверки существующих PR
-          RESPONSE=$(curl -s \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          # Получаем список существующих PR через API
+          API_URL="https://api.github.com/repos/${{ github.repository }}/pulls"
+          
+          response=$(curl -s \
+            -H "Authorization: token $GITHUB_TOKEN_PAT" \
             -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${{ github.repository }}/pulls?head=${{ github.repository_owner }}:$BRANCH_NAME&state=open")
+            "$API_URL?head=$REPO_OWNER:$BRANCH_NAME&state=open")
           
-          # Отладка
-          echo "API Response: $RESPONSE"
+          echo "API Response: $response"
           
-          # Проверяем ответ
-          PR_COUNT=$(echo "$RESPONSE" | jq 'length')
-          
-          if [ "$PR_COUNT" -gt 0 ]; then
-            PR_NUMBER=$(echo "$RESPONSE" | jq '.[0].number')
-            echo "PR already exists for branch $BRANCH_NAME"
-            echo "PR number: $PR_NUMBER"
+          # Парсим JSON ответ
+          if echo "$response" | jq -e '.[0]' > /dev/null 2>&1; then
+            pr_num=$(echo "$response" | jq '.[0].number')
+            echo "✅ PR already exists: #$pr_num"
             echo "pr_exists=true" >> $GITHUB_OUTPUT
-            echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+            echo "pr_number=$pr_num" >> $GITHUB_OUTPUT
           else
-            echo "No existing PR found for branch $BRANCH_NAME"
+            echo "ℹ️ No existing PR found"
             echo "pr_exists=false" >> $GITHUB_OUTPUT
             echo "pr_number=0" >> $GITHUB_OUTPUT
           fi
@@ -52,80 +52,146 @@ jobs:
   create-pr:
     needs: check-existing-pr
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
     if: needs.check-existing-pr.outputs.pr_exists == 'false'
     steps:
-      - name: Create Pull Request via API
+      - name: Create Pull Request
         run: |
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           
-          # Создаем PR через GitHub API
-          RESPONSE=$(curl -s -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          # Формируем тело PR
+          PR_BODY=$(cat << EOF
+          ## 🚀 Автоматически созданный Release PR
+          
+          ### 📋 Информация
+          - **Ветка:** \`$BRANCH_NAME\`
+          - **Коммит:** [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }})
+          - **Автор:** ${{ github.event.head_commit.author.name }}
+          - **Дата:** ${{ github.event.head_commit.timestamp }}
+          
+          ### 📝 Сообщение коммита
+          \`\`\`
+          ${{ github.event.head_commit.message }}
+          \`\`\`
+          
+          ---
+          *Создано автоматически при пуше в ветку \`release\`*
+          EOF
+          )
+          
+          # JSON для создания PR
+          PR_DATA=$(cat << EOF
+          {
+            "title": "Release PR: $BRANCH_NAME",
+            "body": $(echo "$PR_BODY" | jq -Rs .),
+            "head": "$BRANCH_NAME",
+            "base": "master",
+            "maintainer_can_modify": true
+          }
+          EOF
+          )
+          
+          echo "Creating PR with data: $PR_DATA"
+          
+          # Создаем PR
+          response=$(curl -s -w "\n%{http_code}" \
+            -X POST \
+            -H "Authorization: token $GITHUB_TOKEN_PAT" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Content-Type: application/json" \
             "https://api.github.com/repos/${{ github.repository }}/pulls" \
-            -d "{
-              \"title\": \"Release PR: $BRANCH_NAME\",
-              \"body\": \"## Автоматически созданный Release PR\\n\\n**Ветка:** $BRANCH_NAME\\n**Коммит:** [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }})\\n**Автор:** ${{ github.event.head_commit.author.name }}\\n**Дата:** ${{ github.event.head_commit.timestamp }}\\n\\n**Сообщение коммита:**\\n\\\`\\\`\\\`\\n${{ github.event.head_commit.message }}\\n\\\`\\\`\\\`\\n\\n---\\n*Создано автоматически при пуше в ветку release*\",
-              \"head\": \"$BRANCH_NAME\",
-              \"base\": \"master\"
-            }")
+            -d "$PR_DATA")
           
-          # Проверяем результат
-          PR_URL=$(echo "$RESPONSE" | jq -r '.html_url // empty')
-          if [ -n "$PR_URL" ]; then
-            echo "✅ Pull Request created successfully: $PR_URL"
+          # Разделяем response и HTTP код
+          http_code=$(echo "$response" | tail -n1)
+          response_body=$(echo "$response" | sed '$d')
+          
+          echo "HTTP Code: $http_code"
+          echo "Response: $response_body"
+          
+          if [ "$http_code" = "201" ]; then
+            pr_url=$(echo "$response_body" | jq -r '.html_url')
+            pr_number=$(echo "$response_body" | jq -r '.number')
             
-            # Добавляем label
-            PR_NUMBER=$(echo "$RESPONSE" | jq -r '.number')
+            echo "✅ Pull Request создан успешно: $pr_url"
+            
+            # Добавляем labels
             curl -s -X POST \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Authorization: token $GITHUB_TOKEN_PAT" \
               -H "Accept: application/vnd.github.v3+json" \
               -H "Content-Type: application/json" \
-              "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/labels" \
-              -d '{"labels":["release", "auto-pr"]}'
+              "https://api.github.com/repos/${{ github.repository }}/issues/$pr_number/labels" \
+              -d '{"labels":["release", "auto-generated"]}'
+            
+            echo "✅ Labels добавлены"
           else
-            echo "❌ Failed to create PR"
-            echo "Response: $RESPONSE"
+            echo "❌ Ошибка при создании PR"
+            echo "Подробности: $response_body"
             exit 1
           fi
 
   update-existing-pr:
     needs: check-existing-pr
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
     if: needs.check-existing-pr.outputs.pr_exists == 'true'
     steps:
-      - name: Add comment to existing PR
+      - name: Update existing PR
         run: |
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           PR_NUMBER="${{ needs.check-existing-pr.outputs.pr_number }}"
           
-          echo "PR #$PR_NUMBER already exists for $BRANCH_NAME"
-          echo "Last commit: ${{ github.event.head_commit.message }}"
+          echo "📌 Существующий PR #$PR_NUMBER для ветки: $BRANCH_NAME"
+          echo "📝 Последний коммит: ${{ github.event.head_commit.message }}"
           
-          # Добавляем комментарий в существующий PR
-          COMMENT_BODY="📝 **Новые изменения добавлены в ветку release:**
+          # Формируем комментарий
+          COMMENT_BODY=$(cat << EOF
+          ### 🔄 Обновление ветки release
+          
+          Добавлены новые изменения в ветку \`$BRANCH_NAME\`:
           
           **Коммит:** [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }})
           **Автор:** ${{ github.event.head_commit.author.name }}
-          **Дата:** ${{ github.event.head_commit.timestamp }}
+          **Время:** ${{ github.event.head_commit.timestamp }}
           
-          **Сообщение:**
+          **Сообщение коммита:**
           \`\`\`
           ${{ github.event.head_commit.message }}
-          \`\`\`"
+          \`\`\`
           
-          curl -s -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          ---
+          *Комментарий добавлен автоматически*
+          EOF
+          )
+          
+          # JSON для комментария
+          COMMENT_DATA=$(cat << EOF
+          {
+            "body": $(echo "$COMMENT_BODY" | jq -Rs .)
+          }
+          EOF
+          )
+          
+          # Добавляем комментарий в существующий PR
+          response=$(curl -s -w "\n%{http_code}" \
+            -X POST \
+            -H "Authorization: token $GITHUB_TOKEN_PAT" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Content-Type: application/json" \
             "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments" \
-            -d "{\"body\": \"$COMMENT_BODY\"}"
+            -d "$COMMENT_DATA")
           
-          echo "✅ Comment added to PR #$PR_NUMBER"
+          http_code=$(echo "$response" | tail -n1)
+          response_body=$(echo "$response" | sed '$d')
+          
+          if [ "$http_code" = "201" ]; then
+            echo "✅ Комментарий добавлен в PR #$PR_NUMBER"
+          else
+            echo "⚠️ Не удалось добавить комментарий (код: $http_code)"
+            echo "Ответ: $response_body"
+          fi
+          
+          # Опционально: обновляем PR (синхронизируем ветку)
+          echo "🔄 Синхронизация ветки PR..."
+          curl -s -X PUT \
+            -H "Authorization: token $GITHUB_TOKEN_PAT" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/update-branch"
