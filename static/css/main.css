@@ -97,7 +97,7 @@ button.modern:disabled{
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 35px;
     align-items: center;
     background-color: #fecc86b3;
     box-shadow: 0 0 5px #fecc86;
@@ -275,4 +275,13 @@ img{
 }
 .hidden{
     display: none;
+}
+.g-8{
+    gap: 8px !important;
+}
+.g-16{
+    gap: 16px !important;
+}
+.g-32{
+    gap: 32px !important;
 }
