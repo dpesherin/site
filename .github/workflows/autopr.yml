@@ -6,7 +6,6 @@ on:
       - 'release'
 
 env:
-  # Используем PAT вместо GITHUB_TOKEN
   GITHUB_TOKEN_PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
   REPO_OWNER: ${{ github.repository_owner }}
   REPO_NAME: ${{ github.event.repository.name }}
