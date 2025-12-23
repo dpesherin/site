@@ -10,18 +10,45 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       pr_exists: ${{ steps.check.outputs.pr_exists }}
+      pr_number: ${{ steps.check.outputs.pr_number }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Получаем всю историю для работы с git
+
+      - name: Setup GitHub CLI
+        run: |
+          # Установка GitHub CLI
+          type -p curl >/dev/null || sudo apt-get update && sudo apt-get install curl -y
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+          sudo apt-get update && sudo apt-get install gh -y
+          
+          # Конфигурация GitHub CLI
+          gh auth setup-git --hostname github.com
+
       - name: Check for existing PR
         id: check
         run: |
+          # Получаем имя ветки из контекста GitHub
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          echo "Checking PR for branch: $BRANCH_NAME"
+          
           # Проверяем, существует ли уже открытый PR для этой ветки
-          pr_list=$(gh pr list --head "${{ github.ref_name }}" --state open --json number --jq length)
-          if [ "$pr_list" -gt 0 ]; then
-            echo "PR already exists for branch ${{ github.ref_name }}"
+          PR_DATA=$(gh pr list --head "$BRANCH_NAME" --state open --json number,title || echo "[]")
+          PR_COUNT=$(echo "$PR_DATA" | jq 'length')
+          
+          if [ "$PR_COUNT" -gt 0 ]; then
+            echo "PR already exists for branch $BRANCH_NAME"
+            PR_NUM=$(echo "$PR_DATA" | jq '.[0].number')
+            echo "PR number: $PR_NUM"
             echo "pr_exists=true" >> $GITHUB_OUTPUT
+            echo "pr_number=$PR_NUM" >> $GITHUB_OUTPUT
           else
-            echo "No existing PR found for branch ${{ github.ref_name }}"
+            echo "No existing PR found for branch $BRANCH_NAME"
             echo "pr_exists=false" >> $GITHUB_OUTPUT
+            echo "pr_number=0" >> $GITHUB_OUTPUT
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -31,37 +58,76 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.check-existing-pr.outputs.pr_exists == 'false'
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
       - name: Create Pull Request
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: "master"
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_title: "Auto PR: ${{ github.ref_name }}"
+          pr_title: "Release PR: ${{ github.ref_name }}"
           pr_body: |
-            Автоматически созданный PR из ${{ github.ref_name }}
+            ## Автоматически созданный Release PR
             
-            Создано: ${{ github.event.head_commit.timestamp }}
-            Коммит: ${{ github.event.head_commit.id }}
-            Автор: ${{ github.event.head_commit.author.name }}
-          pr_label: "auto-pr"
+            **Ветка:** ${{ github.ref_name }}
+            **Коммит:** [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }})
+            **Автор:** ${{ github.event.head_commit.author.name }}
+            **Дата:** ${{ github.event.head_commit.timestamp }}
+            
+            **Сообщение коммита:**
+            ```
+            ${{ github.event.head_commit.message }}
+            ```
+            
+            ---
+            *Создано автоматически при пуше в ветку release*
+          pr_label: "release,auto-pr"
           pr_draft: false
-          pr_assignee: ""  # Можно указать логин
-          pr_reviewer: ""  # Можно указать логины через запятую
+          pr_assignee: ""
+          pr_reviewer: ""
+          pr_milestone: ""
+          pr_template: ""
 
   update-existing-pr:
     needs: check-existing-pr
     runs-on: ubuntu-latest
     if: needs.check-existing-pr.outputs.pr_exists == 'true'
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup GitHub CLI
+        run: |
+          type -p curl >/dev/null || sudo apt-get update && sudo apt-get install curl -y
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+          sudo apt-get update && sudo apt-get install gh -y
+
       - name: Update existing PR
         run: |
-          echo "PR already exists for ${{ github.ref_name }}. Skipping creation."
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          echo "PR already exists for $BRANCH_NAME. Skipping creation."
           echo "Last commit: ${{ github.event.head_commit.message }}"
-          # Можно добавить комментарий в существующий PR
-          pr_number=$(gh pr list --head "${{ github.ref_name }}" --state open --json number --jq '.[0].number')
-          gh pr comment $pr_number --body "📝 Новые изменения добавлены: ${{ github.event.head_commit.message }}"
+          
+          # Получаем номер существующего PR
+          PR_NUMBER=$(gh pr list --head "$BRANCH_NAME" --state open --json number --jq '.[0].number')
+          echo "PR number: $PR_NUMBER"
+          
+          # Добавляем комментарий в существующий PR
+          if [ -n "$PR_NUMBER" ] && [ "$PR_NUMBER" != "null" ]; then
+            COMMENT_BODY="📝 **Новые изменения добавлены в ветку release:**
+            
+            **Коммит:** [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }})
+            **Автор:** ${{ github.event.head_commit.author.name }}
+            **Дата:** ${{ github.event.head_commit.timestamp }}
+            
+            **Сообщение:**
+            \`\`\`
+            ${{ github.event.head_commit.message }}
+            \`\`\`"
+            
+            echo "Adding comment to PR #$PR_NUMBER"
+            echo "$COMMENT_BODY" | gh pr comment "$PR_NUMBER" --body-file -
+          else
+            echo "Could not find PR number for branch $BRANCH_NAME"
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
