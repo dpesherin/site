@@ -29,6 +29,9 @@
 .white{
     color: #FFF;
 }
+.orange{
+    color: #FF6B00;
+}
 select.modern,
 textarea.modern,
 input.modern{
@@ -91,7 +94,6 @@ textarea.modern{
     flex: 0 0 300px;
     background-color: #f5eedf;
     padding: 25px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     cursor: pointer;
@@ -130,7 +132,7 @@ textarea.modern{
 }
 
 .nav-btn:hover {
-    background-color: #FF6B00;
+    background-color: #ff6a008b;
     color: #f5eedf;
 }
 
