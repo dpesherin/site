@@ -4,22 +4,27 @@
       onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="<%= getJsAsset(prefix+'.js') %>" as="script">
 <div class="content">
-    <div class="form g-32">
-        <h2 class="modern">Авторизация</h2>
-        <div class="row">
-            <label for="login" class="modern">Логин <span class="red">*</span></label>
-            <input class="modern req" type="text" name="login" id="login">
+    <div class="form-w-img">
+        <div class="form-fields">
+            <h1 class="modern">Авторизация</h1>
+            <div class="row">
+                <label for="login" class="modern">Логин <span class="red">*</span></label>
+                <input class="modern req" type="text" name="login" id="login">
+            </div>
+            <div class="row">
+                <label for="pass" class="modern">Пароль <span class="red">*</span></label>
+                <input class="modern req" type="password" name="pass" id="pass">
+            </div>
+            <button class="orange-btn w-100" id="send">Войти</button>
+            <div class="d-flex center">
+                <a href="/auth/register" class="modern">Регистрация</a>
+            </div>
+            <div class="d-flex center">
+                <a href="/auth/forgot" class="modern">Забыли пароль</a>
+            </div>
         </div>
-        <div class="row">
-            <label for="pass" class="modern">Пароль <span class="red">*</span></label>
-            <input class="modern req" type="password" name="pass" id="pass">
-        </div>
-        <button class="orange-btn" id="send">Войти</button>
-        <div class="d-flex center">
-            <a href="/auth/register" class="modern">Регистрация</a>
-        </div>
-        <div class="d-flex center">
-            <a href="/auth/forgot" class="modern">Забыли пароль</a>
+        <div class="form-img-wrapper">
+            <img src="/media/formbc.webp" alt="Фотостудия" fetchpriority="high">
         </div>
     </div>
 </div>

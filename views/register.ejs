@@ -4,35 +4,40 @@
       onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="<%= getJsAsset(prefix+'.js') %>" as="script">
 <div class="content">
-    <div class="form g-32">
-        <h2 class="modern">Регистрация</h2>
-        <div class="row">
-            <label for="login" class="modern">Логин <span class="red">*</span></label>
-            <input class="modern req" type="text" name="login" id="login">
+    <div class="form-w-img">
+        <div class="form-img-wrapper">
+            <img src="/media/formbc.webp" alt="Фотостудия" fetchpriority="high">
         </div>
-        <div class="row">
-            <label for="email" class="modern">Email <span class="red">*</span></label>
-            <input class="modern req" type="email" name="email" id="email">
-        </div>
-        <div class="row">
-            <label for="name" class="modern">Имя <span class="red">*</span></label>
-            <input class="modern req" type="text" name="name" id="name">
-        </div>
-        <div class="row">
-            <label for="lastname" class="modern">Фамилия <span class="red">*</span></label>
-            <input class="modern req" type="text" name="lastname" id="lastname">
-        </div>
-        <div class="row">
-            <label for="pass" class="modern">Пароль <span class="red">*</span></label>
-            <input class="modern req" type="password" name="pass" id="pass">
-        </div>
-        <div class="row">
-            <label for="passCheck" class="modern">Повторите пароль <span class="red">*</span></label>
-            <input class="modern req" type="password" name="passCheck" id="passCheck">
-        </div>
-        <button class="orange-btn" id="send">Зарегистрироваться</button>
-        <div class="d-flex center">
-            <a href="/auth/login" class="modern">Авторизация</a>
+        <div class="form-fields">
+            <h1 class="modern">Регистрация</h1>
+            <div class="row">
+                <label for="login" class="modern">Логин <span class="red">*</span></label>
+                <input class="modern req" type="text" name="login" id="login">
+            </div>
+            <div class="row">
+                <label for="email" class="modern">Email <span class="red">*</span></label>
+                <input class="modern req" type="email" name="email" id="email">
+            </div>
+            <div class="row">
+                <label for="name" class="modern">Имя <span class="red">*</span></label>
+                <input class="modern req" type="text" name="name" id="name">
+            </div>
+            <div class="row">
+                <label for="lastname" class="modern">Фамилия <span class="red">*</span></label>
+                <input class="modern req" type="text" name="lastname" id="lastname">
+            </div>
+            <div class="row">
+                <label for="pass" class="modern">Пароль <span class="red">*</span></label>
+                <input class="modern req" type="password" name="pass" id="pass">
+            </div>
+            <div class="row">
+                <label for="passCheck" class="modern">Повторите пароль <span class="red">*</span></label>
+                <input class="modern req" type="password" name="passCheck" id="passCheck">
+            </div>
+            <button class="orange-btn w-100" id="send">Зарегистрироваться</button>
+            <div class="d-flex center">
+                <a href="/auth/login" class="modern">Авторизация</a>
+            </div>
         </div>
     </div>
 </div>
