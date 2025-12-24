@@ -330,9 +330,12 @@ img{
 .g-32{
     gap: 32px !important;
 }
-.wo-bc{
-    background-color: transparent;
-    box-shadow: none;
+.form-wo-bc{
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    align-items: center;
 }
 .status-code{
     font-size: 150px;
