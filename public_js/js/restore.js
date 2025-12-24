@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             if(res.status){
                 document.getElementById("form").remove()
                 let formChange = document.createElement("div")
-                formChange.classList.add("fields")
+                formChange.classList.add("form-fields")
                 let header = document.createElement("h1")
                 header.classList.add("modern")
                 header.innerText = "Смена пароля"
