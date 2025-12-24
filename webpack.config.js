@@ -51,5 +51,5 @@ export default {
     ],
   },
   
-  devtool: 'source-map',
+  devtool: false
 }
