@@ -1,4 +1,7 @@
-<link rel="stylesheet" href="/css/<%= prefix %>.css">
+<link rel="preload" 
+      href="/css/<%= prefix %>.css" 
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'">
 <div class="content">
     <div class="form g32">
         <h2 class="modern">Отзыв смены пароля</h2>
