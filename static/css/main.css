@@ -140,6 +140,27 @@ label.modern{
     font-weight: 600;
     margin-left: 15px;
 }
+.form-img-wrapper>img{
+    position: relative;
+    height: 100%;
+}
+.form-w-img{
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    border-radius: 25px;
+    overflow: hidden;
+    max-height: 750px;
+}
+.form-fields{
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
 a.modern{
     text-decoration: none;
     color: #FF6B00;
@@ -168,6 +189,9 @@ a.modern{
 }
 .start{
     justify-content: flex-start;
+}
+.w-100{
+    width: 100%;
 }
 .end{
     justify-content: flex-end;
