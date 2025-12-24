@@ -136,7 +136,7 @@ button.modern:disabled{
 }
 label.modern{
     color: rgba(37, 37, 37, 0.719);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     margin-left: 15px;
 }
@@ -212,7 +212,7 @@ img{
     text-align: center;
     text-decoration: none;
     text-transform: capitalize;
-    padding: 8px 32px;
+    padding: 18px 32px;
     border-radius: 9px;
     border: none;
     font-family: 'Inter', 'Segoe UI', sans-serif;

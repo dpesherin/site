@@ -227,7 +227,6 @@ textarea.modern{
     white-space: nowrap;
     will-change: transform;
 }
-
 .marquee-item {
     display: flex;
     align-items: center;
