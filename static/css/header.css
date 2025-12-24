@@ -20,6 +20,11 @@
     width: 200px;
     height: 60px;
 }
+.logo>a{
+    position: relative;
+    width: 200px;
+    height: 60px;
+}
 .logo>a>img{
     position: relative;
     height: 100% !important;
