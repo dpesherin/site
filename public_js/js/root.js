@@ -5,20 +5,41 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     let currentIndex = 0;
-    let cardWidth = cards[0].offsetWidth + 25;
-    let cardsVisible = 3;
+    let cardWidth = 0;
+    let cardsVisible = 0;
     let totalCards = cards.length;
-    
-    
-    // Функция для обновления количества видимых карточек в зависимости от ширины экрана
-    function updateCardsVisible() {
-        if (window.innerWidth <= 768) {
+
+    // Получение размера трека (контейнера)
+    function getTrackWidth() {
+        return cardsContainer.parentElement.offsetWidth;
+    }
+
+    // Расчет количества видимых карточек и их ширины
+    function updateCardsLayout() {
+        const trackWidth = getTrackWidth();
+        const computedStyle = getComputedStyle(cardsContainer);
+        const gap = parseInt(computedStyle.gap) || 25;
+        
+        // Для мобильных устройств
+        if (trackWidth <= 768) {
             cardsVisible = 1;
-        } else if (window.innerWidth <= 992) {
+            cardWidth = trackWidth - gap;
+        } 
+        // Для планшетов
+        else if (trackWidth <= 992) {
             cardsVisible = 2;
-        } else {
+            cardWidth = (trackWidth - gap) / 2;
+        } 
+        // Для десктопов
+        else {
             cardsVisible = 3;
+            cardWidth = (trackWidth - gap * (cardsVisible - 1)) / cardsVisible;
         }
+        
+        // Устанавливаем ширину каждой карточке
+        cards.forEach(card => {
+            card.style.width = `${cardWidth}px`;
+        });
         
         // Обновляем позицию карусели
         updateCarouselPosition();
@@ -26,16 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Обновляем точки навигации
         updateDots();
     }
-    
+
     // Генерация точек навигации
     function generateDots() {
         carouselDots.innerHTML = '';
-        const dotsCount = totalCards - cardsVisible + 1;
+        const dotsCount = Math.max(1, totalCards - cardsVisible + 1);
         
-        // Убедимся, что dotsCount не меньше 1
-        const actualDotsCount = Math.max(1, dotsCount);
-        
-        for (let i = 0; i < actualDotsCount; i++) {
+        for (let i = 0; i < dotsCount; i++) {
             const dot = document.createElement('div');
             dot.className = `dot ${i === 0 ? 'active' : ''}`;
             dot.dataset.index = i;
@@ -47,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
             carouselDots.appendChild(dot);
         }
     }
-    
+
     // Обновление активной точки
     function updateDots() {
         const dots = document.querySelectorAll('.dot');
@@ -67,13 +85,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     // Обновление позиции карусели
     function updateCarouselPosition() {
-        const translateX = -currentIndex * cardWidth;
+        const computedStyle = getComputedStyle(cardsContainer);
+        const gap = parseInt(computedStyle.gap) || 25;
+        const translateX = -currentIndex * (cardWidth + gap);
         cardsContainer.style.transform = `translateX(${translateX}px)`;
     }
-    
+
+    // Проверка, можно ли двигаться дальше
+    function canMoveNext() {
+        return currentIndex < Math.max(0, totalCards - cardsVisible);
+    }
+
+    // Проверка, можно ли двигаться назад
+    function canMovePrev() {
+        return currentIndex > 0;
+    }
+
     // Переход к следующей карточке
     function nextCard() {
         const maxIndex = Math.max(0, totalCards - cardsVisible);
@@ -87,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCarouselPosition();
         updateDots();
     }
-    
+
     // Переход к предыдущей карточке
     function prevCard() {
         const maxIndex = Math.max(0, totalCards - cardsVisible);
@@ -101,14 +131,23 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCarouselPosition();
         updateDots();
     }
+
+    // Автоматическое обновление при ресайзе
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
     // Инициализация
     function initCarousel() {
-        // Вычисляем ширину карточки с учетом gap
-        const computedStyle = getComputedStyle(cardsContainer);
-        const gap = parseInt(computedStyle.gap) || 25;
-        cardWidth = cards[0].offsetWidth + gap;
-        
-        updateCardsVisible();
+        updateCardsLayout();
         generateDots();
         
         // Обработчики событий
@@ -121,32 +160,35 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Обновление при изменении размера окна
-        window.addEventListener('resize', function() {
-            // Пересчитываем ширину карточки
-            cardWidth = cards[0].offsetWidth + 25;
-            updateCardsVisible();
-            updateCarouselPosition();
+        window.addEventListener('resize', debounce(function() {
+            updateCardsLayout();
+        }, 250));
+        
+        // Обновление при изменении ориентации устройства
+        window.addEventListener('orientationchange', function() {
+            setTimeout(updateCardsLayout, 100);
         });
     }
-    
+
     // Запуск карусели
     initCarousel();
 
-    cards.forEach( card =>{
-        card.addEventListener("click", (e)=>{
-            e.preventDefault()
-            let index = card.getAttribute("data-index")
-            let cardContent = document.querySelectorAll(".card-content")
+    // Обработка кликов по карточкам для показа контента
+    cards.forEach(card => {
+        card.addEventListener("click", (e) => {
+            e.preventDefault();
+            let index = card.getAttribute("data-index");
+            let cardContent = document.querySelectorAll(".card-content");
             cardContent.forEach(content => {
-                let contentIndex = content.getAttribute("data-index")
-                if(index == contentIndex){
-                    content.classList.remove("hidden")
-                }else{
-                    content.classList.add("hidden")
+                let contentIndex = content.getAttribute("data-index");
+                if (index == contentIndex) {
+                    content.classList.remove("hidden");
+                } else {
+                    content.classList.add("hidden");
                 }
             });
-        })
-    })
+        });
+    });
 
     let name = document.getElementById("name")
     let email = document.getElementById("email")
