@@ -114,7 +114,7 @@ input.modern{
 
 .nav-btn {
     background-color: #f5eedf;
-    color: #FF6B00;
+    color: #624129;
     border: none;
     width: 40px;
     height: 40px;
@@ -129,7 +129,7 @@ input.modern{
 }
 
 .nav-btn:hover {
-    background-color: #ff6a008b;
+    background-color: #624129ac;
     color: #f5eedf;
 }
 
@@ -148,7 +148,7 @@ input.modern{
 }
 
 .dot.active {
-    background-color: #FF6B00;
+    background-color: #624129;
 }
 .card-desc{
     width: 100%;
@@ -246,7 +246,7 @@ input.modern{
 }
 
 .marquee-star {
-    color: #e74c3c;
+    color: #624129;
     font-size: 1.8rem;
     margin: 0 25px;
     opacity: 0.9;
