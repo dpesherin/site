@@ -156,50 +156,49 @@ Quisque et elit malesuada, accumsan est at, condimentum nisi. Mauris enim sem, e
             </div>
         </div>
     </div>
-    <div class="form g-32" id="form">
-        <div class="form-name">
-            <h1 class="modern big-header white">
-                Заказать фотосессию
-            </h1>
+    <div class="form-w-img">
+        <div class="form-fields">
+        <h1 class="modern">
+            Заказать фотосессию
+        </h1>
+        <div class="row">
+            <label class="modern" for="name">Ваше имя <span class="red">*</span></label>
+            <% if(userData){ %>
+                <input type="text" name="name" id="name" class="modern req" value="<%= userData.name %>">
+            <% }else { %>
+                <input type="text" name="name" id="name" class="modern req" value="">
+            <% } %>
+            
+            </div>
+        <div class="row">
+            <label class="modern" for="email">Ваш email <span class="red">*</span></label>
+            <% if(userData){ %>
+                <input type="email" name="email" id="email" class="modern req" value="<%= userData.email %>">
+            <% }else { %>
+                <input type="email" name="email" id="email" class="modern req" value="">
+            <% } %>
         </div>
-        <div class="d-flex between g-50">
-            <div class="row">
-                <label class="modern" for="name">Ваше имя <span class="red">*</span></label>
-                <% if(userData){ %>
-                    <input type="text" name="name" id="name" class="modern req" value="<%= userData.name %>">
-                <% }else { %>
-                    <input type="text" name="name" id="name" class="modern req" value="">
-                <% } %>
-                
-            </div>
-            <div class="row">
-                <label class="modern" for="email">Ваш email <span class="red">*</span></label>
-                <% if(userData){ %>
-                    <input type="email" name="email" id="email" class="modern req" value="<%= userData.email %>">
-                <% }else { %>
-                    <input type="email" name="email" id="email" class="modern req" value="">
-                <% } %>
-            </div>
+        <div class="row">
+            <label class="modern" for="link">Как с вами связаться <span class="red">*</span></label>
+            <input type="text" name="link" id="link" class="modern req" >
         </div>
-        <div class="d-flex between g-50">
-            <div class="row">
-                <label class="modern" for="link">Как с вами связаться <span class="red">*</span></label>
-                <input type="text" name="link" id="link" class="modern req" >
-            </div>
-            <div class="row">
-                <label class="modern" for="date">Предпочитаемая дата</label>
-                <input type="date" name="date" id="date" class="modern">
-            </div>
+        <div class="row">
+            <label class="modern" for="date">Предпочитаемая дата</label>
+            <input type="date" name="date" id="date" class="modern">
         </div>
         <div class="row">
             <label class="modern" for="desc">Дополнительная информация</label>
             <textarea class="modern" name="desc" id="desc"></textarea>
         </div>
-        <div class="d-flex start full">
+        <div class="d-flex start">
             <input type="checkbox" name="agreement" id="agreement">
             <label class="modern" for="agreement">Я предоставляю согласие на обработку персональных данных</label>
         </div>
-        <button class="orange-btn full" id="send">Отправить</button>
+        <button class="orange-btn w-100" id="send">Отправить</button>
+        </div>
+        <div class="form-img-wrapper">
+            <img src="/media/formbc.webp" alt="Фотостудия" fetchpriority="high">
+        </div>
     </div>
 </div>
 <script src="<%= getJsAsset(prefix+'.js') %>"></script>

@@ -83,7 +83,7 @@ button.modern:disabled{
     outline: none;
 }
 .wrong{
-    border: 1px solid red !important;
+    border-bottom: 2px solid rgb(200, 0, 0) !important;
 }
 .alert{
     position: fixed;
@@ -147,7 +147,7 @@ label.modern{
 .form-w-img{
     display: flex;
     flex-direction: row;
-    background-color: #fff;
+    background-color: #f5eedf;
     border-radius: 25px;
     overflow: hidden;
     max-height: 750px;
