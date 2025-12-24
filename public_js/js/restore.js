@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 document.querySelector("div.content").append(formChange)
             }else{
                 send.removeAttribute("disabled")
-                Alert(res.msg)
+                window.AlertMsg(res.msg)
             }
         }else{
             code.classList.add("wrong")

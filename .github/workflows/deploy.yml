@@ -128,10 +128,60 @@ jobs:
           echo "   Branch: $(git branch --show-current)"
           echo "   Commit: $(git log -1 --oneline)"
           echo "   Date: $(date)"
-  restart_app:
+  build:
     runs-on: ubuntu-24.04
     needs: deploy
     if: needs.deploy.result == 'success'
+    timeout-minutes: 5
+    
+    steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '24'
+        
+    - name: Install dependencies and restart application
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SERVER_PORT || 22 }}
+        script: |
+          set -e
+          set -o pipefail
+          
+          echo "🚀 Starting application building process..."
+          
+          echo "📁 Switching to project directory..."
+          cd /var/www/site || {
+            echo "❌ Failed to change directory to /var/www/site"
+            exit 1
+          }
+          
+          echo "📦 Installing dependencies..."
+          
+          # Проверка существования package.json
+          if [ ! -f "package.json" ]; then
+            echo "❌ Error: package.json not found"
+            exit 1
+          fi
+          
+          npm install || {
+            echo "❌ npm install failed"
+            exit 1
+          }
+          
+          echo "✅ Dependencies installed successfully"
+          
+          npm run clean
+          npm run build
+          
+          echo "🎉 Build App completed successfully!"
+  restart_app:
+    runs-on: ubuntu-24.04
+    needs: build
+    if: needs.build.result == 'success'
     timeout-minutes: 5
     
     steps:

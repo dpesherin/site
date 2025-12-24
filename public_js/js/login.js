@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let login = document.getElementById("login")
     let pass = document.getElementById("pass")
     send.addEventListener("click", async (e)=>{
-        let canCand = checkReq()
+        let canCand = window.checkReq()
         if(canCand){
             send.setAttribute("disabled", "disabled")
             let data = {
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 window.location.href = "/"
             }else{
                 send.removeAttribute("disabled")
-                Alert(res.msg)
+                window.AlertMsg(res.msg)
             }
         }
     })
