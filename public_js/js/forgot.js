@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             });
             const result = await res.json();
             send.removeAttribute("disabled")
-            Alert(result.msg)
+            window.AlertMsg(result.msg)
         }
     })
 })

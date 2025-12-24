@@ -158,10 +158,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     send.addEventListener("click", async (e)=>{
         e.preventDefault()
-        let status = checkReq()
+        let status = window.checkReq()
         if(!agreement.checked){
             status = false
-            Alert("Для отправки заявки необходимо подтвердить свое согласие на обработку персональных данных")
+            window.AlertMsg("Для отправки заявки необходимо подтвердить свое согласие на обработку персональных данных")
         }
         if(status){
             send.setAttribute("disabled", "disabled")
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify(body),
             })
             let result = await response.json()
-            Alert(result.msg)
+            window.AlertMsg(result.msg)
             send.removeAttribute("disabled")
         }
     })

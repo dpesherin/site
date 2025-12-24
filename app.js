@@ -7,18 +7,20 @@ import { UserRouter } from "./routers/UserRouter.js"
 import { AuthMiddleware } from "./middlewares/AuthMiddleware.js"
 import { AuthRouter } from "./routers/AuthRouter.js"
 import { ApplicationRouter } from "./routers/ApplicationRouter.js"
+import { getJsAsset } from "./core/utils/assetHelper.js"
 
 export class App {
   constructor() {
     this._app = express()
     this._setupMiddleware()
     this._setupRoutes()
+    this._app.locals.getJsAsset = getJsAsset;
   }
 
   _setupMiddleware() {
     this._app.set('trust proxy', true)
     this._app.use(cors({
-      origin: 'http://109.196.103.161',
+      origin: 'https://kenecius.ru',
       credentials: true,
       exposedHeaders: ['set-cookie']
     }))
@@ -26,6 +28,12 @@ export class App {
     this._app.use(cookieParser())
     this._app.set("view engine", "ejs")
     this._app.set("views", "./views")
+    if(process.env.APP_MODE == "dev")
+    {
+      this._app.use(express.static("public_js"))
+    }else{
+      this._app.use(express.static("dist"))
+    }
     this._app.use(express.static("static"))
   }
 

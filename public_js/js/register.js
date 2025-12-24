@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     
     send.addEventListener("click", async (e)=>{
         e.preventDefault()
-        let canSend = checkReq()
+        let canSend = window.checkReq()
         if(pass.value !== passCheck.value){
             passCheck.classList.add("wrong")
             canSend = false
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 window.location.href = "/auth/login"
             }else{
                 send.removeAttribute("disabled")
-                Alert(res.msg)
+                window.AlertMsg(res.msg)
             }
         }
     })
