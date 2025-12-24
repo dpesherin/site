@@ -33,7 +33,7 @@ export class AccessCodeRepo
             let sqlStatement = `SELECT *
             FROM access_codes
             WHERE 
-            giud=$1`
+            guid=$1`
             let info = await this._db.query(sqlStatement, [guid])
             if(info.length > 0)
             {
