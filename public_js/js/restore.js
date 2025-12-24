@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             if(res.status){
                 document.getElementById("form").remove()
                 let formChange = document.createElement("div")
-                formChange.classList.add("form")
-                let header = document.createElement("h2")
+                formChange.classList.add("fields")
+                let header = document.createElement("h1")
                 header.classList.add("modern")
                 header.innerText = "Смена пароля"
                 formChange.append(header)
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 row.append(pass)
                 formChange.append(row)
                 let btn = document.createElement('button')
-                btn.classList.add("modern")
+                btn.classList.add("orange-btn", "w-100")
                 btn.id = "sendPass"
                 btn.innerText = "Сменить пароль"
                 btn.addEventListener("click", async (e)=>{
