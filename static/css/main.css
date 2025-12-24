@@ -227,6 +227,7 @@ img{
 }
 .orange{
     color: #624129;
+    margin-bottom: 0 !important;
 }
 .orange-btn {
     /* Основные стили */
