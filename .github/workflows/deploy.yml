@@ -174,9 +174,18 @@ jobs:
           
           echo "✅ Dependencies installed successfully"
           
-          npm run clean
-          npm run build
+          echo "🧹 Clean old distributive js bundle"
+          npm run clean || {
+            echo "❌ npm run clean failed"
+            exit 1
+          }
+          echo "✅ Clean old distributive js bundle success"
           
+          echo "⚒️ Build new distributive js bundle"
+          npm run build || {
+            echo "❌ npm run build failed"
+            exit 1
+          }
           echo "🎉 Build App completed successfully!"
   restart_app:
     runs-on: ubuntu-24.04
