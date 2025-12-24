@@ -29,13 +29,13 @@
     flex-direction: column;
     gap: 16px;
 }
+h1.modern{
+    margin-bottom: 36px;
+}
 select.modern,
 textarea.modern,
 input.modern{
     width: 500px !important;
-}
-textarea.modern{
-    width: 1050px !important;
 }
 .form{
     border-radius: 25px;
