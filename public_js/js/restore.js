@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     }
                 })
                 formChange.append(btn)
-                document.getElementById("#form-wrapper").append(formChange)
+                document.getElementById("form-wrapper").append(formChange)
             }else{
                 send.removeAttribute("disabled")
                 window.AlertMsg(res.msg)
