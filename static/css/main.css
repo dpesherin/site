@@ -60,6 +60,12 @@ input.modern{
         outline: none;
     }
 }
+select.modern:disabled,
+textarea.modern:disabled,
+input.modern:disabled{
+    color: #716c69;
+    border-bottom: 2px solid #9b9b9b;
+}
 h2.modern{
     font-weight: 200;
     font-size: 28px;
@@ -190,6 +196,9 @@ a.modern{
 .start{
     justify-content: flex-start;
 }
+.a-center{
+    align-items: center;
+}
 .w-100{
     width: 100%;
 }
@@ -292,4 +301,10 @@ img{
 .status-desc{
     font-size: 36px;
     font-weight: 200;
+}
+.col{
+    flex-direction: column;
+}
+.w-50{
+    width: 50%;
 }
