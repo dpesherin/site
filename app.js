@@ -8,6 +8,7 @@ import { AuthMiddleware } from "./middlewares/AuthMiddleware.js"
 import { AuthRouter } from "./routers/AuthRouter.js"
 import { ApplicationRouter } from "./routers/ApplicationRouter.js"
 import { getJsAsset } from "./core/utils/assetHelper.js"
+import { GetUserInfoMiddleware } from "./middlewares/GetUserInfoMiddleware.js"
 
 export class App {
   constructor() {
@@ -43,6 +44,21 @@ export class App {
     this._app.use("/user", AuthMiddleware, UserRouter)
     this._app.use("/auth", AuthRouter)
     this._app.use("/application", ApplicationRouter)
+    this._app.use(GetUserInfoMiddleware, (req, res) => {
+      const data = {
+          title: "Не найдено",
+          hfEnabled: true,
+          headerData: {
+              userData: req.userInfo,
+              menuItems: []
+          },
+          page: "nf",
+          pageData: {
+              prefix: "nf"
+          }
+      }
+      return res.render("frame", data)
+    })
   }
 
   getApp() {
