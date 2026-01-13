@@ -7,12 +7,21 @@ UserRouter.get("/:id/profile", async(req, res)=>{
     let userService = new UserService()
     let result = await userService.getUserInfo(req.params.id, req.userInfo)
     if(result.status){
-         const data = {
+        let menuitems = []
+        if(req.userInfo.role === "admin"){
+            menuitems.push(
+                {
+                    href: "/admin/applications",
+                    name: "Заявки"
+                }
+            )
+        }
+        const data = {
             title: `Профиль пользователя ${result.user.login}`,
             hfEnabled: true,
             headerData: {
                 userData: req.userInfo,
-                menuItems: []
+                menuItems: menuitems
             },
             page: "profile",
             pageData: {
