@@ -51,6 +51,7 @@ AuthRouter.post("/login", async (req, res)=>{
             sameSite: 'lax',
             path: '/'
         });
+        result.redirectTo = req.query.returnTo || req.headers.referer || '/'
         return res.status(200).json(result)
     }
     return res.status(401).json(result)
