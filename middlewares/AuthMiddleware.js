@@ -61,7 +61,7 @@ export const AuthMiddleware = async (req, res, next) => {
                 return next()
             }
             
-            return res.redirect(`/auth/login?returnTo=${encodeURIComponent(req.originalUrl)}`)
+            return res.redirect(301, `/auth/login?returnTo=${encodeURIComponent(req.originalUrl)}`)
         }
     }
 }
