@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", ()=>{
+    let redirectPath = "/"
+    if(window.getQueryParam("returnTo")){
+        redirectPath = window.getQueryParam("returnTo")
+    }
+    console.log(redirectPath)
     let send = document.getElementById("send")
     let login = document.getElementById("login")
     let pass = document.getElementById("pass")
@@ -18,12 +23,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 body: JSON.stringify(data),
             })
             let res = await response.json()
+            console.log(res)
             if(res.status){
-                if (res.redirectTo && !res.redirectTo.startsWith('/auth/')) {
-                    window.location.href = res.redirectTo
-                } else {
-                    window.location.href = '/'
-                }
+                setTimeout(() => {
+                    window.location.href = redirectPath
+                }, 500)
             }else{
                 send.removeAttribute("disabled")
                 window.AlertMsg(res.msg)
@@ -32,3 +36,4 @@ document.addEventListener("DOMContentLoaded", ()=>{
     })
     
 })
+
