@@ -19,7 +19,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
             })
             let res = await response.json()
             if(res.status){
-                window.location.href = res.redirectTo
+                if (res.redirectTo && !res.redirectTo.startsWith('/auth/')) {
+                    window.location.href = res.redirectTo
+                } else {
+                    window.location.href = '/'
+                }
             }else{
                 send.removeAttribute("disabled")
                 window.AlertMsg(res.msg)
