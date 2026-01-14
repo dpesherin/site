@@ -4,21 +4,21 @@
       onload="this.onload=null;this.rel='stylesheet'">
 <div id="header">
     <div class="header-area main-width">
-        <div class="w-33 d-flex start">
+        <div class="w-15 d-flex start">
             <div class="logo">
                 <a href="/">
                     <img src="/media/logo.webp" alt="logo">
                 </a>
             </div>
         </div>
-        <div class="w-33 d-flex around">
+        <div class="d-flex g-32 start">
             <% menuItems.forEach(item => { %>
                 <div class="menu-item">
-                    <a href="<%= item.href %>" class="modern gray"><%= item.name %></a>
+                    <a href="<%= item.href %>" class="modern gray menu-item-link"><%= item.name %></a>
                 </div>
             <% }); %>
         </div>
-        <div class="w-33 d-flex end">
+        <div class="w-15 d-flex end">
             <% if(userData) {%>
                 <a class="modern profile" id="header-btn" href="/user/<%= userData.id %>/profile">
                     <img src="/media/userico.svg" alt="userico" class="ico">

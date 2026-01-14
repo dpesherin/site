@@ -5,7 +5,12 @@
 <link rel="preload" href="<%= getJsAsset(prefix+'.js') %>" as="script">
 
 <div class="content">
-    <h1>APPLICATIONS</h1>
+    <div class="d-flex g-16 filter">
+        <div class="d-flex g-16" id="filter">
+
+        </div>
+        <button class="orange-btn" id="filter-btn">Найти</button>
+    </div>
 </div>
 
 <script src="<%= getJsAsset(prefix+'.js') %>"></script>

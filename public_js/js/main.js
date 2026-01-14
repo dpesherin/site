@@ -22,3 +22,13 @@ window.checkReq = () => {
     });
     return send;
 };
+
+const markActiveLink = ()=>{
+    let cand = document.querySelector(`a.menu-item-link[href="${window.location.pathname}"]`)
+    if(cand){
+        cand.classList.add("active")
+    }
+}
+document.addEventListener("DOMContentLoaded", ()=>{
+    markActiveLink()
+})
