@@ -253,7 +253,6 @@ img{
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
     
@@ -307,4 +306,23 @@ img{
 }
 .w-50{
     width: 50%;
+}
+#filter{
+    padding: 8px;
+    border-radius: 12px;
+    height: 50px;
+    width: 80%;
+    border: 1px solid #624129;
+    cursor: pointer;
+}
+#filter-btn{
+    width: 150px;
+}
+.menu-item-link{
+    padding: 5px 8px;
+}
+a.active{
+    color: white !important;
+    background-color: #624129;
+    border-radius: 8px;
 }
