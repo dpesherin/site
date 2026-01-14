@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             })
             let res = await response.json()
             if(res.status){
-                window.location.href = "/"
+                window.location.href = res.redirectTo
             }else{
                 send.removeAttribute("disabled")
                 window.AlertMsg(res.msg)

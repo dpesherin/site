@@ -1,38 +1,47 @@
 import jwt from "jsonwebtoken"
 
-export const AuthMiddleware = (req, res, next)=>{
-     let isAuthPage = false
-     if(req.baseUrl === "/auth"){
+export const AuthMiddleware = async (req, res, next) => {
+    let isAuthPage = false
+    if (req.baseUrl === "/auth") {
         isAuthPage = true
-     }
-    try
-    {
+    }
+    
+    try {
         let decoded = jwt.verify(req.cookies.access_token, process.env.JWTSALT)
         req.userInfo = decoded
         if (isAuthPage) {
-            const redirectTo = req.headers.referer || '/'
-            return res.redirect(redirectTo)
+            const returnTo = req.query.returnTo || req.headers.referer || '/'
+            return res.redirect(returnTo)
         }
         next()
-    } catch (error)
-    {
-        try
-        {
+    } catch (error) {
+        try {
             let decoded = jwt.verify(req.cookies.refresh_token, process.env.JWTSALT)
+            let userData = {
+                id: decoded.id,
+                login: decoded.login,
+                email: decoded.email,
+                name: decoded.name,
+                lastname: decoded.lastname,
+                role: decoded.role
+            }
+            // Генерируем новые токены
             let access = jwt.sign(
-                decoded,
+                userData,
                 process.env.JWTSALT, 
                 { 
                     expiresIn: '1h' 
                 }
             )
             let refresh = jwt.sign(
-                decoded,
+                userData,
                 process.env.JWTSALT,
                 {
                     expiresIn: '24h'
                 }
             )
+            
+            // Устанавливаем куки синхронно
             res.cookie('access_token', access, {
                 httpOnly: true,
                 maxAge: 60 * 60 * 1000,
@@ -47,14 +56,18 @@ export const AuthMiddleware = (req, res, next)=>{
                 sameSite: 'lax',
                 path: '/'
             });
+
             req.userInfo = decoded
-             if (isAuthPage) {
-                const redirectTo = req.headers.referer || '/'
-                return res.redirect(redirectTo)
+            
+            // Обратите внимание: куки будут установлены только после отправки заголовков
+            if (isAuthPage) {
+                const returnTo = req.query.returnTo || req.headers.referer || '/'
+                return res.redirect(returnTo)
             }
+            
             next()
-        }catch(e)
-        {
+            
+        } catch (e) {
             if (isAuthPage) {
                 next()
             } else {
