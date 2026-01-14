@@ -40,21 +40,21 @@ describe('Test middleware', () => {
     appInstance = new App();
   })
 
-  test('GET /user/1/profile should return 301', async() => {
+  test('GET /user/1/profile should return 302', async() => {
     const response = await request(appInstance._app)
     .get('/user/1/profile')
-    .expect(301)
+    .expect(302)
   })
 
-  test('POST /user/delete should return 301', async() => {
+  test('POST /user/delete should return 302', async() => {
     const response = await request(appInstance._app)
     .post('/user/delete')
-    .expect(301)
+    .expect(302)
   })
 
-  test('POST /user/update should return 301', async() => {
+  test('POST /user/update should return 302', async() => {
     const response = await request(appInstance._app)
     .post('/user/update')
-    .expect(301)
+    .expect(302)
   })
 })

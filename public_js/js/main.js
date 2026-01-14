@@ -22,6 +22,10 @@ window.checkReq = () => {
     });
     return send;
 };
+window.getQueryParam = (name) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
 
 const markActiveLink = ()=>{
     let cand = document.querySelector(`a.menu-item-link[href="${window.location.pathname}"]`)
