@@ -32,9 +32,9 @@ export class ApplicationRepo
         }
     }
 
-    async getList(select = [], filter = [], limit = null, offset = null){
+    async getList(select = [], filter = [], limit = 0, offset = 0, sort="ASC"){
         let selectVal = ""    
-        if(select.length > 0){
+        if(select.length == 0){
                 selectVal = "*"
             }else{
                 selectVal = select.join(", ")
@@ -52,6 +52,7 @@ export class ApplicationRepo
             if(filterArr.length > 0){
                 sqlStatement += ` WHERE ${filterArr.join(" AND ")}`
             }
+            sqlStatement+=` ORDER BY id ${sort}`
             if(limit){
                 sqlStatement += ` LIMIT ${limit}`
             }
@@ -61,7 +62,7 @@ export class ApplicationRepo
             let cands = await this._db.query(sqlStatement, vals)
             let result = []
             cands.forEach((c)=>{
-                result.push(new ScheduleModel(c))
+                result.push(new ApplicationModel(c))
             })
             return result
         }

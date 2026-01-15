@@ -3,40 +3,74 @@
       as="style"
       onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="<%= getJsAsset(prefix+'.js') %>" as="script">
+
 <div class="content">
-    <div class="d-flex col g-32">
-        <div class="d-flex between a-center">
-            <h2 class="modern"><%= userData.login %></h4>
-            <div class="d-flex end g-16">
-                <span class="modern">Дата регистрации:</span>
-                <span class="modern"><%= userData.date_create.toISOString().slice(0, 10); %></span>
+    <div class="profile-header">
+        <h2><%= userData.login %></h2>
+        <div class="registration-date">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>Дата регистрации:</span>
+            <span><%= formatToRussianDateTimeCustom(userData.date_create) %></span>
+        </div>
+    </div>
+
+    <div class="profile-content">
+        <!-- Аватар -->
+        <div>
+            <div class="avatar-wrapper">
+                <img src="/media/profile.png" alt="Аватар профиля">
             </div>
         </div>
-        <div class="d-flex between">
-            <div class="d-flex col g-32 w-50">
-                <div class="avatar-wrapper">
-                    <img src="/media/profile.png" alt="profile avatart">
-                </div>
-            </div>
-            <div class="d-flex col g-32 w-50">
-                <div class="profile-form d-flex col g-16">
-                    <div class="d-flex col g-8">
-                        <input type="hidden" name="id" id="id" value="<%= userData.id %>">
-                    </div>
-                    <div class="d-flex col g-8">
-                        <label for="email" class="modern">Email: </label>
-                        <input class="modern" type="email" name="email" id="email" disabled value="<%= userData.email %>">
-                    </div>
-                    <div class="d-flex col g-8">
-                        <label for="name" class="modern">Имя: </label>
-                        <input class="modern" type="text" name="name" id="name" disabled value="<%= userData.name  %>" placeholder="Не указано">
-                    </div>
-                    <div class="d-flex col g-8">
-                        <label for="lastname" class="modern">Фамилия: </label>
-                        <input class="modern" type="text" name="lastname" id="lastname" disabled value="<%= userData.lastname  %>" placeholder="Не указано">
+
+        <!-- Форма данных -->
+        <div>
+            <form class="profile-form">
+                <input type="hidden" name="id" value="<%= userData.id %>">
+                
+                <div class="form-group">
+                    <div class="form-input-wrapper" data-field="email">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" 
+                               disabled value="<%= userData.email %>"
+                               title="Email нельзя изменить">
                     </div>
                 </div>
-            </div>
+
+                <div class="form-group">
+                    <div class="form-input-wrapper" data-field="name">
+                        <label for="name">Имя</label>
+                        <input type="text" name="name" id="name" 
+                               disabled value="<%= userData.name || '' %>"
+                               placeholder="Не указано"
+                               data-original-value="<%= userData.name || '' %>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-input-wrapper" data-field="lastname">
+                        <label for="lastname">Фамилия</label>
+                        <input type="text" name="lastname" id="lastname" 
+                               disabled value="<%= userData.lastname || '' %>"
+                               placeholder="Не указано"
+                               data-original-value="<%= userData.lastname || '' %>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" id="editToggle" class="orange-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                        Редактировать профиль
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

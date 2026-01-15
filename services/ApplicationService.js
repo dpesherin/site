@@ -62,4 +62,21 @@ export class ApplicationService
             msg: "Application wasn't confirmed"
         }
     }
+
+    async getApplications(data){
+        let filter = []
+        try{
+            let result = await this._repo.getList([], filter, 50, 0, "DESC")
+            return {
+                status: true,
+                applications: result
+            }
+        }catch(sqlError){
+            return {
+                status: false,
+                type: "SQL",
+                msg: "Error while get applications"
+            }
+        }
+    }
 }
