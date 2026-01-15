@@ -8,6 +8,7 @@ import { AuthMiddleware } from "./middlewares/AuthMiddleware.js"
 import { AuthRouter } from "./routers/AuthRouter.js"
 import { ApplicationRouter } from "./routers/ApplicationRouter.js"
 import { getJsAsset } from "./core/utils/assetHelper.js"
+import { formatToRussianDateTimeCustom } from "./core/utils/assetHelper.js"
 import { GetUserInfoMiddleware } from "./middlewares/GetUserInfoMiddleware.js"
 import { CheckAdminMiddleware } from "./middlewares/CheckAdminMiddleware.js"
 import { AdminRouter } from "./routers/AdminRouter.js"
@@ -18,6 +19,7 @@ export class App {
     this._setupMiddleware()
     this._setupRoutes()
     this._app.locals.getJsAsset = getJsAsset;
+    this._app.locals.formatToRussianDateTimeCustom = formatToRussianDateTimeCustom
   }
 
   _setupMiddleware() {

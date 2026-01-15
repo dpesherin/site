@@ -326,3 +326,142 @@ a.active{
     background-color: #624129;
     border-radius: 8px;
 }
+/* Основные стили таблицы */
+table.modern {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(98, 65, 41, 0.1);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Заголовок таблицы */
+thead th.modern {
+    background: linear-gradient(135deg, #624129 0%, #8B5A3C 100%);
+    color: #fff;
+    padding: 18px 16px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    position: relative;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+thead th.modern:hover {
+    background: linear-gradient(135deg, #8B5A3C 0%, #A67C52 100%);
+}
+
+/* Ячейки таблицы */
+td.modern {
+    padding: 16px;
+    text-align: center;
+    color: #333;
+    font-size: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+}
+
+/* Чередование строк для лучшей читаемости */
+tbody tr.modern:nth-child(even) {
+    background-color: #faf9f7;
+}
+
+tbody tr.modern:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Эффект при наведении на строку */
+tbody tr.modern:hover {
+    background-color: #fff9f0;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(98, 65, 41, 0.1);
+}
+
+/* Стиль для первой колонки (ID заявки) */
+td.modern:first-child {
+    font-weight: 600;
+    color: #624129;
+}
+
+/* Стиль для статуса согласия */
+td.modern:nth-child(4) {
+    font-size: 20px;
+}
+
+/* Анимация появления строк */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+tbody tr.modern {
+    animation: fadeIn 0.4s ease forwards;
+}
+
+/* Улучшенная граница для последней строки */
+tbody tr.modern:last-child td {
+    border-bottom: none;
+}
+
+/* Стиль для даты */
+td.modern:last-child {
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Скругленные углы для таблицы */
+table.modern thead tr:first-child th:first-child {
+    border-top-left-radius: 12px;
+}
+
+table.modern thead tr:first-child th:last-child {
+    border-top-right-radius: 12px;
+}
+
+table.modern tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+}
+
+table.modern tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    table.modern {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    th.modern, td.modern {
+        padding: 12px 10px;
+        font-size: 13px;
+    }
+}
+
+/* Дополнительные украшения */
+thead th.modern::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: #FFD700;
+    border-radius: 2px;
+}
