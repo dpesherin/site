@@ -143,3 +143,15 @@ AuthRouter.get("/revoke/:guid", async (req, res) => {
     }
     return res.status(500).json(result)
 })
+
+AuthRouter.get("/logout", (req, res) => {
+    try{
+        res.clearCookie('access_token')
+        res.clearCookie('refresh_token')
+        setTimeout(()=>{
+            return res.redirect(301, "/")
+        }, 500)
+    }catch(error){
+        console.log(error.message)
+    }
+})

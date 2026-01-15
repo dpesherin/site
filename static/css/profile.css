@@ -148,7 +148,7 @@ svg.btn-icon{
     justify-content: center;
     gap: 10px;
     padding: 14px 28px;
-    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    background: linear-gradient(135deg, #600e0e 0%, #f80000 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -168,7 +168,7 @@ svg.btn-icon{
     justify-content: center;
     gap: 10px;
     padding: 14px 28px;
-    background: linear-gradient(135deg, #4a6cf7 0%, #6a11cb 100%);
+    background: linear-gradient(135deg, #382315 0%, #745239 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -208,7 +208,7 @@ svg.btn-icon{
 }
 
 .modal-content {
-    background: white;
+    background: #f5eedf;
     padding: 40px;
     border-radius: 20px;
     width: 90%;
@@ -305,7 +305,6 @@ svg.btn-icon{
 }
 
 .modal-btn.save {
-    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
     color: white;
 }
 

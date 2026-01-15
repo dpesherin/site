@@ -1,5 +1,7 @@
 import { UserModel } from "../models/UserModel.js"
 import { UserRepo } from "../repos/UserRepo.js"
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 export class UserService
 {
@@ -114,6 +116,32 @@ export class UserService
             msg: "Permission Denied"
         }
     } 
+
+    async changeUserPass(data, providedByUser)
+    {
+        if(this.checkRights(data.id, providedByUser)){
+            console.log(process.env.BCRYPT_SALT_LEN)
+            let crypted = bcrypt.hashSync(data.pass, parseInt(process.env.BCRYPT_SALT_LEN))
+            try{
+                await this._repo.changePass(data.id, crypted)
+                return {
+                    status: true,
+                    msg: "Пароль успешно обновлен"
+                }
+            }catch(error){
+                return {
+                    status: false,
+                    type: "SQL",
+                    msg: "Error while update user"
+                }
+            }
+        }
+        return {
+            status: false,
+            type: "PERM_DENIED",
+            msg: "Permission Denied"
+        }
+    }
 
     checkRights(id, providedByUser)
     {

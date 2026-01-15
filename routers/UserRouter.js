@@ -65,9 +65,9 @@ UserRouter.post("/delete", async (req, res)=>{
     return res.status(500).json(result)
 })
 
-UserRouter.post("/update", async (req, res)=>{
+UserRouter.post("/update/info", async (req, res)=>{
     let userService = new UserService()
-    let result = await userService.updateUserInfo(req.body)
+    let result = await userService.updateUserInfo(req.body, req.userInfo)
     if(result.status){
         res.cookie('access_token', result.tokens.access, {
             httpOnly: true,
@@ -84,6 +84,18 @@ UserRouter.post("/update", async (req, res)=>{
             path: '/'
         });
         return res.status(200).json({status: true})
+    }else if(result.type === "PERM_DENIED"){
+        return res.status(403).json(result)
+    }
+    return res.status(500).json(result)
+})
+
+UserRouter.post("/update/pass", async (req, res)=>{
+    let userService = new UserService()
+    let result = await userService.changeUserPass(req.body, req.userInfo)
+    if(result.status)
+    {
+        return res.status(200).json(result)
     }else if(result.type === "PERM_DENIED"){
         return res.status(403).json(result)
     }
