@@ -259,9 +259,9 @@ img{
     /* Градиент оранжевого */
     background: linear-gradient(
         135deg,
-        #69452b 0%,
+        #261509 0%,
         #443224 50%,
-        #624129 100%
+        #7b6c60 100%
     );
     
     color: white;
@@ -323,7 +323,7 @@ img{
 }
 a.active{
     color: white !important;
-    background-color: #624129;
+    background-color: #3c2d20;
     border-radius: 8px;
 }
 /* Основные стили таблицы */
@@ -340,7 +340,7 @@ table.modern {
 
 /* Заголовок таблицы */
 thead th.modern {
-    background: linear-gradient(135deg, #624129 0%, #8B5A3C 100%);
+    background: linear-gradient(135deg, #201811 0%, #493d35 100%);
     color: #fff;
     padding: 18px 16px;
     text-align: center;
@@ -351,10 +351,6 @@ thead th.modern {
     position: relative;
     transition: all 0.3s ease;
     border: none;
-}
-
-thead th.modern:hover {
-    background: linear-gradient(135deg, #8B5A3C 0%, #A67C52 100%);
 }
 
 /* Ячейки таблицы */

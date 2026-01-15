@@ -177,6 +177,14 @@ document.addEventListener('DOMContentLoaded', function() {
     cards.forEach(card => {
         card.addEventListener("click", (e) => {
             e.preventDefault();
+            cards.forEach(ci => {
+                ci.classList.remove("active_card")
+            });
+            let currentCard = e.target
+            if(currentCard.classList.contains("card-header")){
+                currentCard = e.target.parentNode
+            }
+            currentCard.classList.add("active_card")
             let index = card.getAttribute("data-index");
             let cardContent = document.querySelectorAll(".card-content");
             cardContent.forEach(content => {

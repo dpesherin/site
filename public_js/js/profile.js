@@ -1,66 +1,221 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const editToggle = document.getElementById('editToggle');
-    const editableFields = document.querySelectorAll('#name, #lastname');
-    const originalValues = {};
+    const userId = document.getElementById("userId").value
 
-    // Сохраняем оригинальные значения
-    editableFields.forEach(field => {
-        originalValues[field.id] = field.value || '';
-    });
-
-    editToggle.addEventListener('click', function() {
-        const isEditing = this.classList.toggle('editing');
-        
-        editableFields.forEach(field => {
-            field.disabled = !isEditing;
-            
-            if (isEditing) {
-                field.style.backgroundColor = '#fff';
-                field.style.borderColor = '#624129';
-                field.style.color = '#333';
-                if (field.value === 'Не указано') {
-                    field.value = '';
-                }
-                field.focus();
-            } else {
-                field.style.backgroundColor = '';
-                field.style.borderColor = '';
-                field.style.color = '';
-                
-                // Восстанавливаем оригинальное значение, если поле пустое
-                if (!field.value.trim()) {
-                    field.value = originalValues[field.id] || 'Не указано';
-                }
-            }
-        });
-
-        // Обновляем текст кнопки
-        if (isEditing) {
-            this.innerHTML = `
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-                Сохранить изменения
-            `;
-        } else {
-            this.innerHTML = `
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                </svg>
-                Редактировать профиль
-            `;
-        }
-    });
+    // Элементы DOM
+    const editProfileBtn = document.getElementById('editProfileBtn')
+    const changePasswordBtn = document.getElementById('changePasswordBtn')
     
-    // Обработка потери фокуса при редактировании
-    editableFields.forEach(field => {
-        field.addEventListener('blur', function() {
-            if (!editToggle.classList.contains('editing')) return;
-            
-            if (!this.value.trim()) {
-                this.value = originalValues[this.id] || 'Не указано';
+    // Модальные окна
+    const editProfileModal = document.getElementById('editProfileModal')
+    const passwordModal = document.getElementById('passwordModal')
+    
+    // Кнопки закрытия модалок
+    const closeEditModal = document.getElementById('closeEditModal')
+    const closePasswordModal = document.getElementById('closePasswordModal')
+    const cancelEdit = document.getElementById('cancelEdit')
+    const cancelPassword = document.getElementById('cancelPassword')
+    
+    // Формы
+    const editProfileForm = document.getElementById('editProfileForm')
+    const passwordForm = document.getElementById('passwordForm')
+    
+    // Поля для отображения
+    const emailDisplay = document.getElementById('email-display')
+    const nameDisplay = document.getElementById('name-display')
+    const lastnameDisplay = document.getElementById('lastname-display')
+
+    // Открытие модального окна редактирования профиля
+    editProfileBtn.addEventListener('click', function() {
+        openModal(editProfileModal)
+    })
+
+    // Открытие модального окна смены пароля
+    changePasswordBtn.addEventListener('click', function() {
+        openModal(passwordModal)
+    })
+
+    // Функция открытия модального окна
+    function openModal(modal) {
+        modal.classList.add('active')
+        document.body.style.overflow = 'hidden'
+    }
+
+    // Функция закрытия модального окна
+    function closeModal(modal) {
+        modal.classList.remove('active')
+        document.body.style.overflow = ''
+        
+        // Сбрасываем формы
+        if (modal === editProfileModal) {
+            editProfileForm.reset()
+        } else if (modal === passwordModal) {
+            passwordForm.reset()
+        }
+    }
+
+    // Закрытие модальных окон
+    closeEditModal.addEventListener('click', () => closeModal(editProfileModal))
+    cancelEdit.addEventListener('click', () => closeModal(editProfileModal))
+    
+    closePasswordModal.addEventListener('click', () => closeModal(passwordModal))
+    cancelPassword.addEventListener('click', () => closeModal(passwordModal))
+
+    // Закрытие по Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (editProfileModal.classList.contains('active')) {
+                closeModal(editProfileModal)
+            } else if (passwordModal.classList.contains('active')) {
+                closeModal(passwordModal)
             }
-        });
-    });
-});
+        }
+    })
+
+    // Обработка формы редактирования профиля
+    editProfileForm.addEventListener('submit', async function(e) {
+        e.preventDefault()
+        
+        const saveBtn = document.getElementById('saveProfileBtn')
+        const originalText = saveBtn.textContent
+        
+        // Получаем данные формы
+        const formData = {
+            email: document.getElementById('edit-email').value.trim(),
+            name: document.getElementById('edit-name').value.trim(),
+            lastname: document.getElementById('edit-lastname').value.trim(),
+            id: userId
+        }
+        
+        // Валидация
+        if (!formData.email) {
+            alert('Пожалуйста, введите email')
+            return
+        }
+        
+        // Блокируем кнопку
+        saveBtn.disabled = true
+        saveBtn.textContent = 'Сохранение...'
+        
+        try {
+            // Здесь должна быть отправка данных на сервер
+            // Например:
+            
+            const response = await fetch('/user/update/info', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            
+            const result = await response.json()
+            
+            if (result.status) {
+                // Обновляем данные на странице
+                updateDisplayedData(formData)
+                window.AlertMsg('Профиль успешно обновлен')
+                closeModal(editProfileModal)
+            } else {
+                window.AlertMsg(result.message || 'Ошибка при обновлении профиля')
+            }
+            
+            closeModal(editProfileModal)
+            
+        } catch (error) {
+            console.error('Ошибка:', error)
+            alert('Произошла ошибка при сохранении данных')
+        } finally {
+            // Разблокируем кнопку
+            saveBtn.disabled = false
+            saveBtn.textContent = originalText
+        }
+    })
+
+    // Функция обновления отображаемых данных
+    function updateDisplayedData(data) {
+        // Обновляем отображение
+        emailDisplay.textContent = data.email
+        
+        if (data.name) {
+            nameDisplay.textContent = data.name
+            nameDisplay.classList.remove('empty')
+        } else {
+            nameDisplay.textContent = 'Не указано'
+            nameDisplay.classList.add('empty')
+        }
+        
+        if (data.lastname) {
+            lastnameDisplay.textContent = data.lastname
+            lastnameDisplay.classList.remove('empty')
+        } else {
+            lastnameDisplay.textContent = 'Не указано'
+            lastnameDisplay.classList.add('empty')
+        }
+        
+        // Обновляем заголовок
+        document.querySelector('.profile-header h2').textContent = data.login
+    }
+
+    // Обработка формы смены пароля
+    passwordForm.addEventListener('submit', async function(e) {
+        e.preventDefault()
+        
+        const newPassword = document.getElementById('newPassword').value
+        const confirmPassword = document.getElementById('confirmPassword').value
+        
+        // Валидация
+        if (newPassword.length < 6) {
+            window.AlertMsg('Пароль должен содержать минимум 6 символов')
+            return
+        }
+        
+        if (newPassword !== confirmPassword) {
+            window.AlertMsg('Новый пароль и подтверждение не совпадают')
+            return
+        }
+        
+        try {
+            const response = await fetch('/user/update/pass', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: userId,
+                    pass: newPassword
+                })
+            })
+            
+            const result = await response.json()
+            
+            if (result.status) {
+                window.AlertMsg('Пароль успешно изменен')
+                closeModal(passwordModal)
+            } else {
+                window.AlertMsg(result.msg || 'Ошибка при смене пароля')
+            }
+        } catch (error) {
+            alert('Произошла ошибка при отправке запроса')
+        }
+        
+        closeModal(passwordModal)
+    })
+    
+    // Валидация пароля в реальном времени
+    const newPasswordInput = document.getElementById('newPassword')
+    const confirmPasswordInput = document.getElementById('confirmPassword')
+    
+    function validatePasswords() {
+        const newPassword = newPasswordInput.value
+        const confirmPassword = confirmPasswordInput.value
+        
+        if (confirmPassword && newPassword !== confirmPassword) {
+            confirmPasswordInput.style.borderColor = '#ff416c'
+        } else {
+            confirmPasswordInput.style.borderColor = ''
+        }
+    }
+    
+    newPasswordInput.addEventListener('input', validatePasswords)
+    confirmPasswordInput.addEventListener('input', validatePasswords)
+})

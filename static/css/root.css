@@ -245,6 +245,12 @@ input.modern{
     opacity: 1;
     transform: scale(1.05);
 }
+.active_card{
+    background-color: #2d2218 !important;
+}
+.active_card>.card-header{
+    color: #fff !important;
+}
 
 .marquee-star {
     color: #624129;

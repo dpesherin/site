@@ -27,6 +27,10 @@ window.getQueryParam = (name) => {
     return urlParams.get(name);
 }
 
+window.deleteCookie = (name) => {
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+}
+
 const markActiveLink = ()=>{
     let cand = document.querySelector(`a.menu-item-link[href="${window.location.pathname}"]`)
     if(cand){

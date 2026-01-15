@@ -5,7 +5,8 @@ export const AuthMiddleware = async (req, res, next) => {
     // Определяем тип страницы
     const isLoginPage = req.path.includes('/auth/login') || req.path === '/login'
     const isRegisterPage = req.path.includes('/auth/register') || req.path === '/register'
-    
+    const isForgotPage = req.path.includes('/forgot')
+
     // 1. Пытаемся получить пользователя из токенов
     let user = null
     let tokensRefreshed = false
@@ -76,7 +77,7 @@ export const AuthMiddleware = async (req, res, next) => {
     req.userInfo = user
     
     // 2. Логика для страниц авторизации
-    if (isLoginPage || isRegisterPage) {
+    if (isLoginPage || isRegisterPage || isForgotPage) {
         if (user) {
             // Пользователь уже авторизован
             const returnTo = req.query.returnTo || '/'
