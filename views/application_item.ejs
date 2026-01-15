@@ -1,0 +1,10 @@
+<link rel="preload" 
+      href="/css/<%= prefix %>.css" 
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="<%= getJsAsset(prefix+'.js') %>" as="script">
+
+<div class="content">
+    Item Application
+</div>
+<script src="<%= getJsAsset(prefix+'.js') %>"></script>
