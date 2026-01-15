@@ -20,14 +20,12 @@
     </div>
 
     <div class="profile-content">
-        <!-- Аватар -->
         <div>
             <div class="avatar-wrapper">
                 <img src="/media/profile.png" alt="Аватар профиля">
             </div>
         </div>
 
-        <!-- Информация профиля (только для чтения) -->
         <div>
             <div class="profile-info">
                 <input type="hidden" name="id" id="userId" value="<%= userData.id %>">
@@ -57,7 +55,6 @@
                     </div>
                 </div>
 
-                <!-- Кнопки действий -->
                 <div class="buttons-group">
                     <button type="button" id="editProfileBtn" class="edit-profile-btn">
                         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -90,7 +87,6 @@
     </div>
 </div>
 
-<!-- Модальное окно редактирования профиля -->
 <div class="modal-overlay" id="editProfileModal">
     <div class="modal-content">
         <button class="close-modal" id="closeEditModal">&times;</button>
@@ -136,7 +132,6 @@
     </div>
 </div>
 
-<!-- Модальное окно смены пароля -->
 <div class="modal-overlay" id="passwordModal">
     <div class="modal-content">
         <button class="close-modal" id="closePasswordModal">&times;</button>
