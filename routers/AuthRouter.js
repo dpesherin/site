@@ -145,15 +145,21 @@ AuthRouter.get("/revoke/:guid", async (req, res) => {
 })
 
 AuthRouter.get("/logout", (req, res) => {
-     const cookieOptions = {
+    res.cookie('access_token', '', {
+        expires: new Date(0), // Дата в прошлом
         httpOnly: true,
         secure: false,
         sameSite: 'lax',
         path: '/'
-    }
+    });
     
-    res.clearCookie('access_token', cookieOptions)
-    res.clearCookie('refresh_token', cookieOptions)
+    res.cookie('refresh_token', '', {
+        expires: new Date(0),
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax',
+        path: '/'
+    });
     
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
     res.setHeader('Pragma', 'no-cache')

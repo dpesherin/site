@@ -11,7 +11,6 @@ AdminRouter.get("/applications", async(req, res)=>{
     if(result.status){
         applications = result.applications
     }
-    console.log(applications)
     let menuitems = new Menu("authorized", req.userInfo).buildMenu()
     const data = {
         title: "Заявки от клиентов",
@@ -24,6 +23,24 @@ AdminRouter.get("/applications", async(req, res)=>{
         pageData: {
             prefix: "application",
             applications: applications
+        }
+    }
+    return res.render("frame", data)
+})
+
+AdminRouter.get("/applications/:id/item", async(req, res)=>{
+    let applicationService = new ApplicationService()
+    let menuitems = new Menu("authorized", req.userInfo).buildMenu()
+    const data = {
+        title: `Заявка №${req.params.id} от клиента`,
+        hfEnabled: true,
+        headerData: {
+            userData: req.userInfo,
+            menuItems: menuitems
+        },
+        page: "application_item",
+        pageData: {
+            prefix: "application_item",
         }
     }
     return res.render("frame", data)
