@@ -10,7 +10,7 @@ export class Menu
                     name: "О фотографе"
                 },
                 {
-                    href: "#",
+                    href: "/#portfolio",
                     name: "Портфолио"
                 },
                 {
