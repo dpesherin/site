@@ -1,0 +1,45 @@
+.application-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.application-header>h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.application-date {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f8f9fa;
+    padding: 12px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.application-date>span:first-child {
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.application-date>span:last-child {
+    color: #1a1a1a;
+    font-weight: 600;
+    font-size: 15px;
+}
+.application-data{
+    background-color: #f5eedf;
+    padding: 24px;
+    border-radius: 15px;
+}
+.info-group{
+    width: 49%;
+}

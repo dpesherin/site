@@ -1,3 +1,140 @@
 #applications{
     margin-top: 50px;
 }
+#paginator{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+.pagination-nav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#paginationNavigation{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+.nav-btn{
+    padding: 0px 8px;
+    border: 1px solid #2e2118;
+    background-color: transparent;
+    color: #624129;
+    font-size: 19px;
+    cursor: pointer;
+    font-weight: 800;
+    border-radius: 9px;
+}
+.nav-btn:disabled{
+    color: #3a2b206b;
+    border: none;
+}
+#total{
+    font-size: 19px;
+}
+
+.filter {
+    position: relative;
+    align-items: center;
+    width: 100%;
+}
+
+.filter-label {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.filter-line-container {
+    position: relative;
+    flex-grow: 1;
+}
+
+.filter-line {
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0px 12px;
+    cursor: pointer;
+    background: white;
+    width: 1200px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-badge {
+    display: inline-flex;
+    align-items: center;
+    background: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: 14px;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.badge-text {
+    white-space: nowrap;
+}
+
+.badge-remove {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.badge-remove:hover {
+    background-color: rgba(255, 68, 68, 0.1);
+    color: #ff4444;
+}
+
+.filter-modal {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+    min-width: 200px;
+}
+
+.filter-modal-content {
+    padding: 8px 0;
+}
+
+.filter-option {
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.filter-option:hover {
+    background: #f5f5f5;
+}
+
+.filter-option.selected {
+    background: #fff3e0;
+    color: #ff9800;
+    font-weight: 500;
+}
+
+.align-items-center {
+    align-items: center;
+}

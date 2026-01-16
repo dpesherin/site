@@ -6,8 +6,19 @@
 
 <div class="content">
     <div class="d-flex g-16 filter">
-        <div class="d-flex g-16" id="filter">
-
+        <div class="d-flex g-16 align-items-center">
+            <div class="d-flex g-16 filter-line-container">
+                <div class="d-flex g-8 filter-line" id="filter-line">
+                    <div class="d-flex g-8" id="filter"></div>
+                </div>
+                <div class="filter-modal" id="filter-modal">
+                    <div class="filter-modal-content">
+                        <div class="filter-option" data-value="new">Новые</div>
+                        <div class="filter-option" data-value="client_refused">Клиент отказался</div>
+                        <div class="filter-option" data-value="photo_session_created">Создана фотосессия</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <button class="orange-btn" id="filter-btn">Найти</button>
     </div>
@@ -62,6 +73,29 @@
                 <% }) %>
             </tbody>
         </table>
+        <div id="paginator">
+            <div class="part">
+                <span id="total">Всего <%= count %></span>
+            </div>
+            <div class="part pagination-nav">
+                <div id="paginationNavigation">
+                    <% if(parseInt(page) === 1){ %>
+                        <button class="nav-btn" id="prev" disabled><</button>
+                    <% }else{ %>
+                         <button class="nav-btn" id="prev" data-page="<%= parseInt(page)-1 %>"><</button>
+                    <% } %>
+                    <span id="page"><%= page %></span>
+                    <% if(parseInt(page) >= parseInt(maxPage)){ %>
+                        <button class="nav-btn" id="next" disabled>></button>
+                    <% }else{ %>
+                         <button class="nav-btn" id="next" data-page="<%= parseInt(page)+1 %>">></button>
+                    <% } %>
+                </div>
+            </div>
+            <div class="part">
+
+            </div>
+        </div>
     </div>
 </div>
 

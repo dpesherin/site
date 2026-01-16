@@ -63,19 +63,50 @@ export class ApplicationService
         }
     }
 
-    async getApplications(data){
+    async getApplications(data, page){
         let filter = []
+        let limit = 50
+        let offset = limit*(page-1)
         try{
-            let result = await this._repo.getList([], filter, 50, 0, "DESC")
+            let result = await this._repo.getList([], filter, limit, offset, "DESC")
+            let count = await this._repo.getCount(filter)
             return {
                 status: true,
-                applications: result
+                applications: result,
+                count: count,
+                page: page,
+                maxPages: Math.ceil(count/limit)
             }
         }catch(sqlError){
             return {
                 status: false,
                 type: "SQL",
                 msg: "Error while get applications"
+            }
+        }
+    }
+
+    async getApplication(id)
+    {
+        try{
+            let result = await this._repo.getByID(id)
+            if(result){
+                return {
+                    status: true,
+                    application: result
+                }
+            }else{
+                return {
+                    status: false,
+                    type: "NOT_FOUND",
+                    msg: "Application wasn't found"
+                }
+            }
+        }catch(sqlError){
+            return {
+                status: false,
+                type: "SQL",
+                msg: "Error while get application"
             }
         }
     }
