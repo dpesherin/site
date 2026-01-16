@@ -32,38 +32,75 @@ export class ApplicationRepo
         }
     }
 
-    async getList(select = [], filter = [], limit = 0, offset = 0, sort="ASC"){
+    async getList(select = [], filter = [], limit = 0, offset = 0, sort="ASC")
+    {
         let selectVal = ""    
         if(select.length == 0){
                 selectVal = "*"
-            }else{
-                selectVal = select.join(", ")
-            }
-            let sqlStatement = `SELECT ${selectVal} FROM applications`
-            let filterIndex = 1
-            let vals = []
-            let filterArr = []
-            filter.forEach(el => {
-                let a = `${el.column} ${el.type} $${filterIndex}`
-                filterIndex++
-                vals.push(el.value)
-                filterArr.push(a)
-            });
-            if(filterArr.length > 0){
-                sqlStatement += ` WHERE ${filterArr.join(" AND ")}`
-            }
-            sqlStatement+=` ORDER BY id ${sort}`
-            if(limit){
-                sqlStatement += ` LIMIT ${limit}`
-            }
-            if(offset){
-                sqlStatement+= ` OFFSET ${offset}`
-            }
-            let cands = await this._db.query(sqlStatement, vals)
-            let result = []
-            cands.forEach((c)=>{
-                result.push(new ApplicationModel(c))
-            })
-            return result
+        }else{
+            selectVal = select.join(", ")
         }
+        let sqlStatement = `SELECT ${selectVal} FROM applications`
+        let filterIndex = 1
+        let vals = []
+        let filterArr = []
+        filter.forEach(el => {
+            let a = `${el.column} ${el.type} $${filterIndex}`
+            filterIndex++
+            vals.push(el.value)
+            filterArr.push(a)
+        });
+        if(filterArr.length > 0){
+            sqlStatement += ` WHERE ${filterArr.join(" AND ")}`
+        }
+        sqlStatement+=` ORDER BY id ${sort}`
+        if(limit){
+            sqlStatement += ` LIMIT ${limit}`
+        }
+        if(offset){
+            sqlStatement+= ` OFFSET ${offset}`
+        }
+        let cands = await this._db.query(sqlStatement, vals)
+        let result = []
+        cands.forEach((c)=>{
+            result.push(new ApplicationModel(c))
+        })
+        return result
+    }
+    
+    async getCount(filter = [])
+    {
+        let selectVal = ""    
+        let sqlStatement = `SELECT COUNT(id) FROM applications`
+        let filterIndex = 1
+        let vals = []
+        let filterArr = []
+        filter.forEach(el => {
+            let a = `${el.column} ${el.type} $${filterIndex}`
+            filterIndex++
+            vals.push(el.value)
+            filterArr.push(a)
+        });
+        if(filterArr.length > 0){
+            sqlStatement += ` WHERE ${filterArr.join(" AND ")}`
+        }
+        let result = await this._db.query(sqlStatement, vals)
+        return result[0].count
+    }
+
+    async getByID(id)
+    {
+        try{
+            let sqlStatement = `SELECT * FROM applications WHERE id=$1`
+            let result = await this._db.query(sqlStatement, [id])
+            if(result.length > 0)
+            {
+                return result[0]
+            }else{
+                return false
+            }
+        }catch(sqlError){
+            console.log(sqlError)
+        }
+    }
 }
