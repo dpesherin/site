@@ -7,12 +7,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Тексты для отображения
     const optionTexts = {
         'new': 'Новые',
-        'client_refused': 'Клиент отказался',
-        'photo_session_created': 'Создана фотосессия'
+        'canceled': 'Клиент отказался',
+        'success': 'Создана фотосессия'
     };
 
-    // Текущий выбранный статус
-    let selectedStatus = null;
+     // Получаем текущий параметр из URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlType = urlParams.get('type');
+    let selectedStatus = urlType;
+
+    // Инициализация: показываем бадж если есть параметр в URL
+    if (selectedStatus && optionTexts[selectedStatus]) {
+        console.log(selectedStatus)
+        addBadge(selectedStatus);
+    }
 
     // Показываем модальное окно при клике на строку
     filterLine.addEventListener('click', function(e) {
@@ -91,10 +99,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Обработка кнопки "Найти"
     document.getElementById('filter-btn').addEventListener('click', function() {
         if (selectedStatus) {
-            alert(`Поиск по статусу: ${optionTexts[selectedStatus]}`);
-            // Здесь будет логика поиска
+            window.location.href = `?type=${selectedStatus}`
         } else {
-            alert('Выберите статус для поиска');
+            window.location.href="/admin/applications"   
         }
     });
 

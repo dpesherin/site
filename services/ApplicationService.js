@@ -1,6 +1,7 @@
 import { ApplicationRepo } from "../repos/ApplicationRepo.js"
 import { ApplicationModel } from "../models/ApplicationModel.js"
 import { Mailer } from "../core/Mailer.js"
+import { fileLoader } from "ejs"
 
 export class ApplicationService
 {
@@ -67,6 +68,13 @@ export class ApplicationService
         let filter = []
         let limit = 50
         let offset = limit*(page-1)
+        if(data.type){
+            filter.push({
+                column: "status",
+                type: "=",
+                value: data.type
+            })
+        }
         try{
             let result = await this._repo.getList([], filter, limit, offset, "DESC")
             let count = await this._repo.getCount(filter)
@@ -107,6 +115,31 @@ export class ApplicationService
                 status: false,
                 type: "SQL",
                 msg: "Error while get application"
+            }
+        }
+    }
+    async changeApplicationStatus(obj)
+    {
+        try{
+            let applicationModel = new ApplicationModel(obj)
+            let result = await this._repo.changeStatus(applicationModel)
+            if(result){
+                return {
+                    status: true,
+                    msg: "Status of application successfilly updated"
+                }
+            }else{
+                return {
+                    status: false,
+                    type: "NOT_FOUND",
+                    msg: "Application wasn't found"
+                }
+            }
+        }catch(sqlError){
+            return {
+                status: false,
+                type: "SQL",
+                msg: "Error while update status of application"
             }
         }
     }

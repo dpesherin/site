@@ -6,7 +6,7 @@
 
 <div class="content">
     <div class="application-header">
-        <h2>Заявка №<%= applicationData.id %></h2>
+        <h2>Заявка №<%= applicationData.id %> <span class="badge badge-<%= applicationData.status %>"><%= translateApplicationStatus(applicationData.status) %></span></h2>
         <div class="application-date">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -19,6 +19,8 @@
         </div>
     </div>
     <div class="application-data">
+        <input type="hidden" id="applicationID" value="<%= applicationData.id %>">
+        <input type="hidden" id="applicationStatus" value="<%= applicationData.status %>">
         <div class="d-flex g-32">
             <div class="info-group">
                 <label>Имя</label>
@@ -54,14 +56,17 @@
                 </div>
             </div>
     </div>
-    <div class="d-flex g-32 end btn-row">
-        <button id="cancelBtn" class="cancel-btn">
-            Клиент отказался
-        </button>
+    <% if(applicationData.status === "new"){ %>
+        <div class="d-flex g-32 end btn-row">
+            <button id="cancelBtn" class="cancel-btn">
+                Клиент отказался
+            </button>
 
-        <button class="process-btn" id="processBtn">
-            Создать фотосессию
-        </button>
-    </div>
+            <button class="process-btn" id="processBtn">
+                Создать фотосессию
+            </button>
+        </div>
+    <% } %>
+    
 </div>
 <script src="<%= getJsAsset(prefix+'.js') %>"></script>
