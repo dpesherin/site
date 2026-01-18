@@ -1,0 +1,32 @@
+name: Do migration
+
+on:
+  workflow_dispatch:    # Ручной триггер
+
+jobs:
+  install:
+    runs-on: ubuntu-24.04
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '24'
+        cache: 'npm'
+          
+    - name: Do migration
+      if: ${{ github.event_name == 'workflow_dispatch' }}
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SERVER_PORT || 22 }}
+        script: |
+          cd /var/www/site
+          ls -la
+          npm run do_migration
+          echo "✅ Migration was done via npm run do_migration"
