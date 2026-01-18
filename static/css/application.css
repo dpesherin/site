@@ -1,41 +1,6 @@
 #applications{
     margin-top: 50px;
 }
-#paginator{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 15px;
-}
-.pagination-nav{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-#paginationNavigation{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-}
-.nav-btn{
-    padding: 0px 8px;
-    border: 1px solid #2e2118;
-    background-color: transparent;
-    color: #624129;
-    font-size: 19px;
-    cursor: pointer;
-    font-weight: 800;
-    border-radius: 9px;
-}
-.nav-btn:disabled{
-    color: #3a2b206b;
-    border: none;
-}
-#total{
-    font-size: 19px;
-}
 
 .filter {
     position: relative;

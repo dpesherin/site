@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node index.js",
     "install_app": "node install/install.js",
+    "do_migration": "node migrations/migration.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
     "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",

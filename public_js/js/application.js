@@ -1,12 +1,4 @@
 document.addEventListener("DOMContentLoaded", ()=>{
-    document.querySelectorAll("button.nav-btn").forEach((btn)=>{
-        btn.addEventListener("click", (e)=>{
-            let page = e.target.getAttribute("data-page")
-            if(!e.target.disabled){
-                window.location.href = `/admin/applications?page=${page}`
-            }
-        })
-    })
     const filterLine = document.getElementById('filter-line');
     const filterContainer = document.getElementById('filter');
     const filterModal = document.getElementById('filter-modal');
