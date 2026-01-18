@@ -1,0 +1,29 @@
+<link rel="preload" 
+      href="/css/paginator.css" 
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="<%= getJsAsset('paginator.js') %>" as="script">
+<div id="paginator">
+    <div class="part">
+        <span id="total">Всего <%= count %></span>
+    </div>
+    <div class="part pagination-nav">
+        <div id="paginationNavigation">
+            <% if(parseInt(page) === 1){ %>
+                <button class="nav-btn" id="prev" disabled><</button>
+            <% }else{ %>
+                    <button class="nav-btn" id="prev" data-page="<%= parseInt(page)-1 %>"><</button>
+            <% } %>
+            <span id="page"><%= page %></span>
+            <% if(parseInt(page) >= parseInt(maxPage)){ %>
+                <button class="nav-btn" id="next" disabled>></button>
+            <% }else{ %>
+                    <button class="nav-btn" id="next" data-page="<%= parseInt(page)+1 %>">></button>
+            <% } %>
+        </div>
+    </div>
+    <div class="part">
+
+    </div>
+</div>
+<script src="<%= getJsAsset('paginator.js') %>"></script>
