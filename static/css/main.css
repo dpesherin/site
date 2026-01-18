@@ -360,6 +360,7 @@ td.modern {
     font-size: 15px;
     border-bottom: 1px solid #f0f0f0;
     transition: all 0.2s ease;
+    height: 60px;
 }
 
 /* Чередование строк для лучшей читаемости */
@@ -403,6 +404,7 @@ td.modern:nth-child(4) {
 
 tbody tr.modern {
     animation: fadeIn 0.4s ease forwards;
+    height: 60px;
 }
 
 /* Улучшенная граница для последней строки */
@@ -460,6 +462,7 @@ thead th.modern::after {
     background: #FFD700;
     border-radius: 2px;
 }
+
 .info-group {
     margin-bottom: 24px;
 }
@@ -535,4 +538,13 @@ thead th.modern::after {
 }
 .btn-row{
     margin: 25px 0px;
+}
+#tableWrapper{
+    height: 650px;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow-y: scroll;
+}
+#tableWrapper::-webkit-scrollbar{
+    width: 0px;
 }
