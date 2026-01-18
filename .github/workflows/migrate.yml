@@ -4,7 +4,7 @@ on:
   workflow_dispatch:    # Ручной триггер
 
 jobs:
-  install:
+  do_migration:
     runs-on: ubuntu-24.04
     
     steps:

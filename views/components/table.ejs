@@ -6,6 +6,7 @@
             <th class="modern">Фамилия</th>
             <th class="modern">Согласие</th>
             <th class="modern">Дата создания</th>
+            <th class="modern">Статус</th>
         </tr>
     </thead>
     <tbody>
@@ -44,6 +45,7 @@
                         <%= formatToRussianDateTimeCustom(apl.date_create) %>
                     </span>
                 </td>
+                <td class="modern"><%= translateApplicationStatus(apl.status) %></td>
             </tr>
         <% }) %>
     </tbody>

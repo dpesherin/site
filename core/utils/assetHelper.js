@@ -44,3 +44,17 @@ export function formatToRussianDateCustom(dateString) {
     
     return date.toLocaleString('ru-RU', options);
 }
+export function translateApplicationStatus(applicationStatus) {
+  let status
+  switch (applicationStatus){
+    case "canceled":
+      status = "Отклонено"
+      break
+    case "success":
+      status = "Создана фотосессия"
+      break
+    default:
+      status = "Новая"
+  }
+  return status
+}

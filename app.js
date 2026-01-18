@@ -13,6 +13,7 @@ import { GetUserInfoMiddleware } from "./middlewares/GetUserInfoMiddleware.js"
 import { CheckAdminMiddleware } from "./middlewares/CheckAdminMiddleware.js"
 import { AdminRouter } from "./routers/AdminRouter.js"
 import {formatToRussianDateCustom} from "./core/utils/assetHelper.js"
+import {translateApplicationStatus} from './core/utils/assetHelper.js'
 
 export class App {
   constructor() {
@@ -22,6 +23,7 @@ export class App {
     this._app.locals.getJsAsset = getJsAsset;
     this._app.locals.formatToRussianDateTimeCustom = formatToRussianDateTimeCustom
     this._app.locals.formatToRussianDateCustom = formatToRussianDateCustom
+    this._app.locals.translateApplicationStatus = translateApplicationStatus
   }
 
   _setupMiddleware() {
