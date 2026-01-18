@@ -15,7 +15,6 @@ export class TwoIPIntegration
 
     async getGeoInfo()
     {
-        console.log(`${this._host}/${this._ip}?token=${this._token}`)
         let response = await fetch(`${this._host}/${this._ip}?token=${this._token}`, {
             method: "GET",
              headers: {

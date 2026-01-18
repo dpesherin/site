@@ -106,7 +106,6 @@ export class ApplicationRepo
 
     async changeStatus(applicationModel)
     {
-        console.log(applicationModel)
         try
         {
             let sqlCandStatement = `SELECT *

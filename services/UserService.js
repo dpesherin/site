@@ -120,7 +120,6 @@ export class UserService
     async changeUserPass(data, providedByUser)
     {
         if(this.checkRights(data.id, providedByUser)){
-            console.log(process.env.BCRYPT_SALT_LEN)
             let crypted = bcrypt.hashSync(data.pass, parseInt(process.env.BCRYPT_SALT_LEN))
             try{
                 await this._repo.changePass(data.id, crypted)
