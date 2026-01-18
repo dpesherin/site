@@ -9,7 +9,7 @@ export const CheckAdminMiddleware = (req, res, next)=>{
                 userData: req.userInfo,
                 menuItems: []
             },
-            page: "forbidden",
+            page: "service_content/forbidden",
             pageData: {
                 prefix: "forbidden"
             }

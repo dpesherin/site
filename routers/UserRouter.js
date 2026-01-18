@@ -31,7 +31,7 @@ UserRouter.get("/:id/profile", async(req, res)=>{
                 userData: req.userInfo,
                 menuItems: []
             },
-            page: "forbidden",
+            page: "service_content/forbidden",
             pageData: {
                 prefix: "forbidden"
             }

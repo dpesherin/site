@@ -59,7 +59,7 @@ export class App {
               userData: req.userInfo,
               menuItems: []
           },
-          page: "nf",
+          page: "service_content/nf",
           pageData: {
               prefix: "nf"
           }
