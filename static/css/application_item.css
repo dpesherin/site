@@ -8,10 +8,14 @@
 }
 
 .application-header>h2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     font-size: 32px;
     font-weight: 700;
     color: #1a1a1a;
     margin: 0;
+    gap: 12px;
 }
 
 .application-date {
@@ -42,4 +46,24 @@
 }
 .info-group{
     width: 49%;
+}
+.badge{
+    padding: 8px;
+    border-radius: 9px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 800;
+    margin: 0 auto;
+}
+.badge-new{
+    background-color: aqua;
+    color: white;
+}
+.badge-canceled{
+    background-color: red;
+    color: white;
+}
+.badge-success{
+    background-color: lime;
+    color: white;
 }

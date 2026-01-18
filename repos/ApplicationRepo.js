@@ -103,4 +103,28 @@ export class ApplicationRepo
             console.log(sqlError)
         }
     }
+
+    async changeStatus(applicationModel)
+    {
+        console.log(applicationModel)
+        try
+        {
+            let sqlCandStatement = `SELECT *
+            FROM applications
+            WHERE id=$1`
+            let cand = await this._db.query(sqlCandStatement, [applicationModel.id])
+            if(cand.length > 0){
+                let sqlStatement = `UPDATE applications 
+                SET status=$1 
+                WHERE id=$2`
+                await this._db.query(sqlStatement, [applicationModel.status, applicationModel.id])
+                return true
+            }else{
+                return false
+            }
+        }catch(sqlError)
+        {
+            console.log(sqlError)
+        }
+    }
 }

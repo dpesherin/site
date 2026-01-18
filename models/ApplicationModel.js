@@ -9,6 +9,7 @@ export class ApplicationModel
     user_id
     agreement_confirmed
     date_create
+    status
 
     constructor(data = {})
     {

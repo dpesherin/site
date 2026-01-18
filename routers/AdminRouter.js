@@ -11,7 +11,7 @@ AdminRouter.get("/applications", async(req, res)=>{
         page = 1
     }
     let applicationService = new ApplicationService()
-    let result = await applicationService.getApplications(req.body, page)
+    let result = await applicationService.getApplications(req.query, page)
     let applications = []
     if(result.status){
         applications = result.applications
@@ -69,5 +69,22 @@ AdminRouter.get("/applications/:id/item", async(req, res)=>{
             }
         }
         return res.render("frame", data)
+    }
+})
+
+AdminRouter.post("/applications/:id/status", async(req, res)=>{
+    let applicationService = new ApplicationService()
+    let result = await applicationService.changeApplicationStatus(req.body)
+    console.log(result)
+    if(result.status){
+        return res.status(200).json({
+            status: "success",
+            msg: result.msg
+        })
+    }else{
+        return res.status(500).json({
+            status: "error",
+            error: result.msg
+        })
     }
 })
