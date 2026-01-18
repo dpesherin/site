@@ -75,7 +75,6 @@ AdminRouter.get("/applications/:id/item", async(req, res)=>{
 AdminRouter.post("/applications/:id/status", async(req, res)=>{
     let applicationService = new ApplicationService()
     let result = await applicationService.changeApplicationStatus(req.body)
-    console.log(result)
     if(result.status){
         return res.status(200).json({
             status: "success",

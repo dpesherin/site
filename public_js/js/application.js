@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     // Инициализация: показываем бадж если есть параметр в URL
     if (selectedStatus && optionTexts[selectedStatus]) {
-        console.log(selectedStatus)
         addBadge(selectedStatus);
     }
 
