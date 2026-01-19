@@ -1,7 +1,8 @@
 import { Router } from "express"
 import { Menu } from "../core/menu/Menu.js"
 import { ApplicationService } from "../services/ApplicationService.js"
-import { template } from "@babel/core"
+import { UserService } from "../services/UserService.js"
+import { UserModel } from "../models/UserModel.js"
 
 export const AdminRouter = Router()
 
@@ -38,7 +39,16 @@ AdminRouter.get("/applications", async(req, res)=>{
 
 AdminRouter.get("/applications/:id/item", async(req, res)=>{
     let applicationService = new ApplicationService()
+    let userService = new UserService()
     let result = await applicationService.getApplication(req.params.id)
+    let applicationUser
+    if(result.application.user_id){
+        applicationUser = await userService.getUserInfo(result.application.user_id, req.userInfo)
+    }
+    let user = new UserModel()
+    if(applicationUser && applicationUser.status){
+        user = applicationUser.user
+    }
     let menuitems = new Menu("authorized", req.userInfo).buildMenu()
     if(result.status){
         const data = {
@@ -51,7 +61,8 @@ AdminRouter.get("/applications/:id/item", async(req, res)=>{
             page: "application_item",
             pageData: {
                 prefix: "application_item",
-                applicationData: result.application
+                applicationData: result.application,
+                user: user
             }
         }
         return res.render("frame", data)

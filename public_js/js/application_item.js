@@ -23,4 +23,27 @@ document.addEventListener("DOMContentLoaded", ()=>{
             document.getElementById("cancelBtn").removeAttribute("disabled")
         }
     })
+
+    document.getElementById("processBtn").addEventListener("click", async(e)=>{
+        document.getElementById("processBtn").setAttribute("disabled", "disabled")
+        e.preventDefault()
+        let body = {
+            id: applicationID,
+            status: "success"
+        }
+        let response = await fetch(`/admin/applications/${applicationID}/status`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        })
+        let res = await response.json()
+        if(res.status === "success"){
+            window.location.reload()
+        }else{
+            window.AlertMsg(res.msg)
+            document.getElementById("processBtn").removeAttribute("disabled")
+        }
+    })
 })
