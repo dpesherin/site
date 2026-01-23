@@ -14,6 +14,7 @@ import { CheckAdminMiddleware } from "./middlewares/CheckAdminMiddleware.js"
 import { AdminRouter } from "./routers/AdminRouter.js"
 import {formatToRussianDateCustom} from "./core/utils/assetHelper.js"
 import {translateApplicationStatus} from './core/utils/assetHelper.js'
+import { PersonalRouter } from "./routers/PesonalRouter.js"
 
 export class App {
   constructor() {
@@ -53,6 +54,7 @@ export class App {
     this._app.use("/auth", AuthRouter)
     this._app.use("/application", ApplicationRouter)
     this._app.use("/admin", AuthMiddleware, CheckAdminMiddleware, AdminRouter)
+    this._app.use("/personal", AuthMiddleware, PersonalRouter)
     this._app.use(GetUserInfoMiddleware, (req, res) => {
       const data = {
           title: "Не найдено",

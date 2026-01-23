@@ -50,11 +50,45 @@
             </div>
         </div>
         <div class="info-group w-100">
-                <label>Дополнительная информация</label>
-                <div class="info-field">
-                    <span class="field-value"><%= applicationData.description %></span>
+            <label>Дополнительная информация</label>
+            <div class="info-field">
+                <span class="field-value"><%= applicationData.description %></span>
+            </div>
+        </div>
+        <div class="d-flex g-32">
+            <div class="info-group">
+                <label>Информация о пользователе</label>
+                <div class="user-info">
+                    <% if(user.id) {%>
+                        <a class="target-link" href="/user/<%= user.id %>/profile">
+                            <div class="ico-wrapper">
+                                <img class="iser-ico" src="/media/profile.png" alt="profile icon" fetchpriority="high">
+                            </div>
+                            
+                            <h4 class="link-text"><%= user.name+" "+user.lastname %></h4>
+                        </a>
+                    <% }else{ %>
+                        <a class="target-link" href="#">
+                            <div class="ico-wrapper">
+                                <img class="iser-ico" src="/media/profile.png" alt="profile icon" fetchpriority="high">
+                            </div>
+                            
+                            <h4 class="link-text">Anonymous</h4>
+                        </a>
+                    <% } %>
                 </div>
             </div>
+            <div class="info-group">
+                <label>Ссылка на фотосессию</label>
+                <a class="target-link" href="#">
+                    <div class="small-ico-wrapper">
+                        <img class="user-ico" src="/media/calendar.svg" alt="profile icon" fetchpriority="high">
+                    </div>
+                    
+                    <h4 class="link-text">Перейти</h4>
+                </a>
+            </div>
+        </div>
     </div>
     <% if(applicationData.status === "new"){ %>
         <div class="d-flex g-32 end btn-row">
@@ -62,6 +96,12 @@
                 Клиент отказался
             </button>
 
+            <button class="process-btn" id="processBtn">
+                Создать фотосессию
+            </button>
+        </div>
+    <% }else if(applicationData.status === "success"){ %>
+        <div class="d-flex g-32 end btn-row">
             <button class="process-btn" id="processBtn">
                 Создать фотосессию
             </button>

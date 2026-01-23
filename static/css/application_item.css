@@ -67,3 +67,33 @@
     background-color: lime;
     color: white;
 }
+a.target-link{
+    background-color: #ffffff75;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-left: 4px solid #624129;
+    padding: 12px;
+    margin-top: 12px !important;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    width: 350px;
+    text-decoration: none;
+    height: 60px;
+}
+.ico-wrapper{
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(119, 136, 153, 0.667);
+}
+.ico-wrapper>img{
+    position: relative;
+    width: 100%;
+}
+h4.link-text{
+    text-decoration: none;
+    font-size: 16px;
+    text-wrap: initial;
+}
