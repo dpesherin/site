@@ -1,0 +1,69 @@
+<link rel="preload" 
+      href="/css/<%= prefix %>.css" 
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="<%= getJsAsset(prefix+'.js') %>" as="script">
+
+<div class="content">
+    <div class="d-flex g-16 filter">
+        <div class="d-flex g-16 align-items-center">
+            <div class="d-flex g-16 filter-line-container">
+                <div class="d-flex g-8 filter-line" id="filter-line">
+                    <div class="d-flex g-8" id="filter"></div>
+                </div>
+                <div class="filter-modal" id="filter-modal">
+                    <div class="filter-modal-content">
+                        <div class="filter-option" data-value="new">Предстоящие</div>
+                        <div class="filter-option" data-value="canceled">Отмененные</div>
+                        <div class="filter-option" data-value="success">Прошедшие</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="orange-btn" id="filter-btn">Найти</button>
+    </div>
+    <div id="schedules">
+        <div id="tableWrapper">
+            <table class="modern">
+                  <thead>
+                        <tr>
+                              <th class="modern">Ссылка</th>
+                              <th class="modern">Название</th>
+                              <th class="modern">Статус</th>
+                              <th class="modern">Дата проведения</th>
+                        </tr>
+                  </thead>
+                  <tbody>
+                        <% schedules.forEach((apl, index) => { %>
+                        <tr class="modern" style="animation-delay: '<%= index * 0.05 %>'s">
+                              <td class="modern">
+                                    <span style="display: inline-flex; align-items: center; gap: 8px;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#624129" stroke-width="2">
+                                          <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                          <path d="M8 7h8M8 12h8M8 17h5"/>
+                                    </svg>
+                                    <a class="modern" href="/admin/applications/<%= apl.id %>/item">Фотосессия №<%= apl.id %></a>
+                                    </span>
+                              </td>
+                              <td class="modern"><%= apl.name %></td>
+                              <td class="modern">Статус текст</td>
+                              <td class="modern">
+                                    <span style="display: inline-flex; align-items: center; gap: 6px;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2">
+                                          <circle cx="12" cy="12" r="10"/>
+                                          <polyline points="12 6 12 12 16 14"/>
+                                    </svg>
+                                    <%= formatToRussianDateTimeCustom(apl.date_create) %>
+                                    </span>
+                              </td>
+                        </tr>
+                        <% }) %>
+                  </tbody>
+            </table>
+            </div>
+
+        <%- include('components/paginator') %>
+    </div>
+</div>
+
+<script src="<%= getJsAsset(prefix+'.js') %>"></script>

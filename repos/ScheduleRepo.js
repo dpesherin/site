@@ -10,6 +10,28 @@ export class ScheduleRepo
         this._db = new DB()
     }
 
+    async createSchedule(model)
+    {
+        try{
+            let values = []
+            let columns = []
+            let indexes = []
+            let i = 1
+            Object.keys(model).forEach(([k, v])=>{
+                values.push(v)
+                columns.push(k)
+                indexes.push(i)
+                i++
+            })
+            let sqlStatement = `INSERT INTO schedule
+            (${columns.join(", ")}) VALUES (${indexes.join(", ")})`
+            await this._db.query(sqlStatement, values)
+            return true
+        }catch(err){
+            return false
+        }
+    }
+
     async getById(id)
     {
         let sqlStatement = `SELECT * FROM schedule
@@ -22,7 +44,7 @@ export class ScheduleRepo
         return false
     }
 
-    async getList(select = [], filter = [], limit = null, offset = null){
+    async getList(select = [], filter = [], limit = 0, offset = 0, order = "ASC"){
         let selectVal = ""
         if(select.length > 0){
             selectVal = "*"
@@ -42,6 +64,7 @@ export class ScheduleRepo
         if(filterArr.length > 0){
             sqlStatement += ` WHERE ${filterArr.join(" AND ")}`
         }
+        sqlStatement += ` ORDER BY id ${order}`
         if(limit){
             sqlStatement += ` LIMIT ${limit}`
         }
@@ -54,5 +77,24 @@ export class ScheduleRepo
             result.push(new ScheduleModel(c))
         })
         return result
+    }
+    async getCount(filter = [])
+    {
+        let selectVal = ""    
+        let sqlStatement = `SELECT COUNT(id) FROM schedule`
+        let filterIndex = 1
+        let vals = []
+        let filterArr = []
+        filter.forEach(el => {
+            let a = `${el.column} ${el.type} $${filterIndex}`
+            filterIndex++
+            vals.push(el.value)
+            filterArr.push(a)
+        });
+        if(filterArr.length > 0){
+            sqlStatement += ` WHERE ${filterArr.join(" AND ")}`
+        }
+        let result = await this._db.query(sqlStatement, vals)
+        return result[0].count
     }
 }
