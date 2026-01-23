@@ -14,6 +14,7 @@ import { CheckAdminMiddleware } from "./middlewares/CheckAdminMiddleware.js"
 import { AdminRouter } from "./routers/AdminRouter.js"
 import {formatToRussianDateCustom} from "./core/utils/assetHelper.js"
 import {translateApplicationStatus} from './core/utils/assetHelper.js'
+import { translateScheduleStatus } from './core/utils/assetHelper.js'
 import { PersonalRouter } from "./routers/PesonalRouter.js"
 
 export class App {
@@ -25,6 +26,7 @@ export class App {
     this._app.locals.formatToRussianDateTimeCustom = formatToRussianDateTimeCustom
     this._app.locals.formatToRussianDateCustom = formatToRussianDateCustom
     this._app.locals.translateApplicationStatus = translateApplicationStatus
+    this._app.locals.translateScheduleStatus = translateScheduleStatus
   }
 
   _setupMiddleware() {

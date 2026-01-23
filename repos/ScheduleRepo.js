@@ -46,7 +46,7 @@ export class ScheduleRepo
 
     async getList(select = [], filter = [], limit = 0, offset = 0, order = "ASC"){
         let selectVal = ""
-        if(select.length > 0){
+        if(select.length == 0){
             selectVal = "*"
         }else{
             selectVal = select.join(", ")
@@ -71,7 +71,9 @@ export class ScheduleRepo
         if(offset){
             sqlStatement+= ` OFFSET ${offset}`
         }
+        console.log(sqlStatement)
         let cands = await this._db.query(sqlStatement, vals)
+        console.log(cands)
         let result = []
         cands.forEach((c)=>{
             result.push(new ScheduleModel(c))

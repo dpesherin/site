@@ -73,6 +73,7 @@ export class ScheduleService
         try{
             let result = await this._repo.getList([], filter, limit, offset, "DESC")
             let count = await this._repo.getCount(filter)
+            console.log(result)
             return {
                 status: true,
                 schedules: result,

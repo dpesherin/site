@@ -58,3 +58,17 @@ export function translateApplicationStatus(applicationStatus) {
   }
   return status
 }
+export function translateScheduleStatus(scheduleStatus) {
+  let status
+  switch (scheduleStatus){
+    case "canceled":
+      status = "Отменена"
+      break
+    case "success":
+      status = "Прошла"
+      break
+    default:
+      status = "Предстоит"
+  }
+  return status
+}

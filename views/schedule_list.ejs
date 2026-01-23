@@ -42,18 +42,18 @@
                                           <rect x="3" y="3" width="18" height="18" rx="2"/>
                                           <path d="M8 7h8M8 12h8M8 17h5"/>
                                     </svg>
-                                    <a class="modern" href="/admin/applications/<%= apl.id %>/item">Фотосессия №<%= apl.id %></a>
+                                    <a class="modern" href="/personal/schedule/<%= apl.id %>/item">Фотосессия №<%= apl.id %></a>
                                     </span>
                               </td>
                               <td class="modern"><%= apl.name %></td>
-                              <td class="modern">Статус текст</td>
+                              <td class="modern"><%= translateScheduleStatus(apl.status) %></td>
                               <td class="modern">
                                     <span style="display: inline-flex; align-items: center; gap: 6px;">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2">
                                           <circle cx="12" cy="12" r="10"/>
                                           <polyline points="12 6 12 12 16 14"/>
                                     </svg>
-                                    <%= formatToRussianDateTimeCustom(apl.date_create) %>
+                                    <%= formatToRussianDateTimeCustom(apl.date) %>
                                     </span>
                               </td>
                         </tr>
