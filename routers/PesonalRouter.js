@@ -10,7 +10,7 @@ PersonalRouter.get("/schedule", async (req, res)=>{
         page = 1
     }
     let scheduleService = new ScheduleService()
-    let result = await scheduleService.getSchedules(req.query, page)
+    let result = await scheduleService.getSchedules(req.query, page, req.userInfo)
     let schedules = []
     if(result.status){
         schedules = result.schedules
@@ -33,5 +33,43 @@ PersonalRouter.get("/schedule", async (req, res)=>{
             maxPage:result.maxPages
         }
     }
+    return res.render("frame", data)
+})
+
+PersonalRouter.get("/schedule/:id/item", async(req, res)=>{
+    let scheduleService = new ScheduleService()
+    let result = await scheduleService.getSchedule(req.params.id, req.userInfo)
+    let menuitems = new Menu("authorized", req.userInfo).buildMenu()
+    let data = {}
+    if(result.status){
+        data = {
+            title: `Фотосессия ${result.schedule.id}`,
+            hfEnabled: true,
+            headerData: {
+                userData: req.userInfo,
+                menuItems: menuitems
+            },
+            page: "schedule_item",
+            pageData: {
+                prefix: "schedule_item",
+                user: req.userInfo,
+                scheduleData: result.schedule
+            }
+        }
+    }else{
+        data = {
+            title: "Не найдено",
+            hfEnabled: true,
+            headerData: {
+                userData: req.userInfo,
+                menuItems: menuitems
+            },
+            page: "service_content/nf",
+            pageData: {
+                prefix: "nf"
+            }
+        }
+    }
+    
     return res.render("frame", data)
 })

@@ -71,9 +71,7 @@ export class ScheduleRepo
         if(offset){
             sqlStatement+= ` OFFSET ${offset}`
         }
-        console.log(sqlStatement)
         let cands = await this._db.query(sqlStatement, vals)
-        console.log(cands)
         let result = []
         cands.forEach((c)=>{
             result.push(new ScheduleModel(c))
