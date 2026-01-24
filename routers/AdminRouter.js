@@ -74,7 +74,7 @@ AdminRouter.get("/applications/:id/item", async(req, res)=>{
                 userData: req.userInfo,
                 menuItems: []
             },
-            page: "nf",
+            page: "service_content/nf",
             pageData: {
                 prefix: "nf"
             }

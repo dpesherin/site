@@ -10,39 +10,63 @@ export class ScheduleService
         this._repo = new ScheduleRepo()
     }
 
-    async createSchedule(data)
+    async createSchedule(data, userData)
     {
-        let model = new ScheduleModel(data)
-        if(model.date){
-            model.date = new Date(model.date)
-        }else{
-            model.date = null
-        }
-        let result = await this._repo.createSchedule(model)
-        if(result){
-            return {
-                status: true,
-                msg: "Schedule was creatred successfully"
+        if(userData.role === "admin"){
+            let model = new ScheduleModel(data)
+            if(model.date){
+                model.date = new Date(model.date)
+            }else{
+                model.date = null
+            }
+            let result = await this._repo.createSchedule(model)
+            if(result){
+                return {
+                    status: true,
+                    msg: "Schedule was creatred successfully"
+                }
+            }else{
+                return {
+                    status: false,
+                    type: "SQL",
+                    msg: "Error while saving schedule"
+                }
             }
         }else{
             return {
                 status: false,
-                type: "SQL",
-                msg: "Error while saving schedule"
+                type: "PERM_DENIED",
+                msg: "Permission Denied"
             }
         }
     }
 
-    async getSchedule(id)
+    async getSchedule(id, userData)
     {
         try{
             let result = await this._repo.getById(id)
-            if(result){
-                return {
-                    status: true,
-                    schedule: result
+            if(userData.role === "admin"){
+                if(result){
+                    return {
+                        status: true,
+                        schedule: result
+                    }
+                }else{
+                    return {
+                        status: false,
+                        type: "NOT_FOUND",
+                        msg: "Schedule wasn't found"
+                    }
                 }
             }else{
+                if(result){
+                    if(userData.id === result.user_id){
+                        return {
+                            status: true,
+                            schedule: result
+                        }
+                    }
+                }
                 return {
                     status: false,
                     type: "NOT_FOUND",
@@ -58,9 +82,16 @@ export class ScheduleService
         }
     }
 
-    async getSchedules(data, page)
+    async getSchedules(data, page, userData)
     {
         let filter = []
+        if(userData.role != "admin"){
+            filter.push({
+                column: "user_id",
+                type: "=",
+                value: userData.id
+            })
+        }
         let limit = 50
         let offset = limit*(page-1)
         if(data.type){

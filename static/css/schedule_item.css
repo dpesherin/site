@@ -1,0 +1,99 @@
+.schedule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.schedule-header>h2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    gap: 12px;
+}
+
+.schedule-date {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f8f9fa;
+    padding: 12px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.schedule-date>span:first-child {
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.schedule-date>span:last-child {
+    color: #1a1a1a;
+    font-weight: 600;
+    font-size: 15px;
+}
+.schedule-data{
+    background-color: #f5eedf;
+    padding: 24px;
+    border-radius: 15px;
+}
+.info-group{
+    width: 49%;
+}
+.badge{
+    padding: 8px;
+    border-radius: 9px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 800;
+    margin: 0 auto;
+}
+.badge-new{
+    background-color: aqua;
+    color: white;
+}
+.badge-canceled{
+    background-color: red;
+    color: white;
+}
+.badge-success{
+    background-color: lime;
+    color: white;
+}
+a.target-link{
+    background-color: #ffffff75;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-left: 4px solid #624129;
+    padding: 12px;
+    margin-top: 12px !important;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    width: 350px;
+    text-decoration: none;
+    height: 60px;
+}
+.ico-wrapper{
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(119, 136, 153, 0.667);
+}
+.ico-wrapper>img{
+    position: relative;
+    width: 100%;
+}
+h4.link-text{
+    text-decoration: none;
+    font-size: 16px;
+    text-wrap: initial;
+}

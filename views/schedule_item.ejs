@@ -1,0 +1,95 @@
+<link rel="preload" 
+      href="/css/<%= prefix %>.css" 
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="<%= getJsAsset(prefix+'.js') %>" as="script">
+
+<div class="content">
+    <div class="schedule-header">
+        <h2>Заявка №<%= scheduleData.id %> <span class="badge badge-<%= scheduleData.status %>"><%= translateScheduleStatus(scheduleData.status) %></span></h2>
+        <div class="schedule-date">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>Дата заявки:</span>
+            <span><%= formatToRussianDateTimeCustom(scheduleData.date_create) %></span>
+        </div>
+    </div>
+    <div class="schedule-data">
+        <input type="hidden" id="scheduleID" value="<%= scheduleData.id %>">
+        <input type="hidden" id="scheduleStatus" value="<%= scheduleData.status %>">
+        <div class="d-flex g-32">
+            <div class="info-group">
+                <label>Имя</label>
+                <div class="info-field">
+                    <span class="field-value"><%= scheduleData.name %></span>
+                </div>
+            </div>
+            <div class="info-group">
+                <label>Фамилия</label>
+                <div class="info-field">
+                    <span class="field-value"><%= scheduleData.lastname %></span>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex g-32">
+            <div class="info-group">
+                <label>Предпочитаемый способ связи</label>
+                <div class="info-field">
+                    <span class="field-value"><%= scheduleData.priority_contact %></span>
+                </div>
+            </div>
+            <div class="info-group">
+                <label>Предпочитаемая дата</label>
+                <div class="info-field">
+                    <span class="field-value"><%= formatToRussianDateCustom(scheduleData.date) %></span>
+                </div>
+            </div>
+        </div>
+        <div class="info-group w-100">
+            <label>Дополнительная информация</label>
+            <div class="info-field">
+                <span class="field-value"><%= scheduleData.description %></span>
+            </div>
+        </div>
+        <div class="d-flex g-32">
+            <div class="info-group">
+                <label>Информация о пользователе</label>
+                <div class="user-info">
+                    <% if(user.id) {%>
+                        <a class="target-link" href="/user/<%= user.id %>/profile">
+                            <div class="ico-wrapper">
+                                <img class="iser-ico" src="/media/profile.png" alt="profile icon" fetchpriority="high">
+                            </div>
+                            
+                            <h4 class="link-text"><%= user.name+" "+user.lastname %></h4>
+                        </a>
+                    <% }else{ %>
+                        <a class="target-link" href="#">
+                            <div class="ico-wrapper">
+                                <img class="iser-ico" src="/media/profile.png" alt="profile icon" fetchpriority="high">
+                            </div>
+                            
+                            <h4 class="link-text">Anonymous</h4>
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+            <div class="info-group">
+                <label>Ссылка на фотосессию</label>
+                <a class="target-link" href="#">
+                    <div class="small-ico-wrapper">
+                        <img class="user-ico" src="/media/calendar.svg" alt="profile icon" fetchpriority="high">
+                    </div>
+                    
+                    <h4 class="link-text">Перейти</h4>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<script src="<%= getJsAsset(prefix+'.js') %>"></script>
