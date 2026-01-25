@@ -4,6 +4,8 @@ export class ScheduleModel
     name
     description
     user_id
+    application_id
+    status
     date
 
     constructor(data = {})

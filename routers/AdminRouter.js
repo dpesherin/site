@@ -3,6 +3,7 @@ import { Menu } from "../core/menu/Menu.js"
 import { ApplicationService } from "../services/ApplicationService.js"
 import { UserService } from "../services/UserService.js"
 import { UserModel } from "../models/UserModel.js"
+import { ScheduleService } from "../services/ScheduleService.js"
 
 export const AdminRouter = Router()
 
@@ -51,6 +52,8 @@ AdminRouter.get("/applications/:id/item", async(req, res)=>{
     }
     let menuitems = new Menu("authorized", req.userInfo).buildMenu()
     if(result.status){
+        let scheduleService = new ScheduleService()
+        let scheduleCand = await scheduleService.getLinked(result.application.id)
         const data = {
             title: `Заявка №${req.params.id} от клиента`,
             hfEnabled: true,
@@ -62,7 +65,8 @@ AdminRouter.get("/applications/:id/item", async(req, res)=>{
             pageData: {
                 prefix: "application_item",
                 applicationData: result.application,
-                user: user
+                user: user,
+                scheduleData: scheduleCand
             }
         }
         return res.render("frame", data)
