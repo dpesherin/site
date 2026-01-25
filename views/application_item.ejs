@@ -98,15 +98,15 @@
                 Клиент отказался
             </button>
 
-            <button class="process-btn" id="processBtn">
+            <a href="/admin/schedule/create?application=<%= applicationData.id %>" class="process-btn" id="processBtn">
                 Создать фотосессию
-            </button>
+            </a>
         </div>
     <% }else if(applicationData.status === "success" && !scheduleData.schedule){ %>
         <div class="d-flex g-32 end btn-row">
-            <button class="process-btn" id="processBtn">
+            <a href="/admin/schedule/create?application=<%= applicationData.id %>" class="process-btn" id="processBtn">
                 Создать фотосессию
-            </button>
+            </a>
         </div>
     <% } %>
     

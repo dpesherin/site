@@ -6,21 +6,22 @@
 
 <div class="content">
     <div class="d-flex g-16 filter">
-        <div class="d-flex g-16 align-items-center">
-            <div class="d-flex g-16 filter-line-container">
-                <div class="d-flex g-8 filter-line" id="filter-line">
-                    <div class="d-flex g-8" id="filter"></div>
-                </div>
-                <div class="filter-modal" id="filter-modal">
-                    <div class="filter-modal-content">
-                        <div class="filter-option" data-value="new">Предстоящие</div>
-                        <div class="filter-option" data-value="canceled">Отмененные</div>
-                        <div class="filter-option" data-value="success">Прошедшие</div>
-                    </div>
-                </div>
+            <a href="/admin/schedule/create" class="orange-btn">Добавить фотосессию</a>
+            <div class="d-flex g-16 align-items-center">
+                  <div class="d-flex g-16 filter-line-container">
+                  <div class="d-flex g-8 filter-line" id="filter-line">
+                        <div class="d-flex g-8" id="filter"></div>
+                  </div>
+                  <div class="filter-modal" id="filter-modal">
+                        <div class="filter-modal-content">
+                              <div class="filter-option" data-value="new">Предстоящие</div>
+                              <div class="filter-option" data-value="canceled">Отмененные</div>
+                              <div class="filter-option" data-value="success">Прошедшие</div>
+                        </div>
+                  </div>
+                  </div>
             </div>
-        </div>
-        <button class="orange-btn" id="filter-btn">Найти</button>
+            <button class="orange-btn" id="filter-btn">Найти</button>
     </div>
     <div id="schedules">
         <div id="tableWrapper">

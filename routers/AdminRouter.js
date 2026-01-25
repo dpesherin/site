@@ -102,3 +102,20 @@ AdminRouter.post("/applications/:id/status", async(req, res)=>{
         })
     }
 })
+
+AdminRouter.get("/schedule/create", async(req, res)=>{
+    let menuitems = new Menu("authorized", req.userInfo).buildMenu()
+    const data = {
+        title: `Создание фотосессии`,
+        hfEnabled: true,
+        headerData: {
+            userData: req.userInfo,
+            menuItems: menuitems
+        },
+        page: "schedule_new",
+        pageData: {
+            prefix: "schedule_new"
+        }
+    }
+    return res.render("frame", data)
+})
