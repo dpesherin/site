@@ -95,9 +95,9 @@
 }
 
 .filter-option.selected {
-    background: #fff3e0;
-    color: #ff9800;
+    background: #372e22;
     font-weight: 500;
+    color: #fff;
 }
 
 .align-items-center {
