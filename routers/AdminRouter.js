@@ -114,8 +114,27 @@ AdminRouter.get("/schedule/create", async(req, res)=>{
         },
         page: "schedule_new",
         pageData: {
-            prefix: "schedule_new"
+            prefix: "schedule_new",
+            applicationID: req.query.application || ""
         }
     }
     return res.render("frame", data)
+})
+
+AdminRouter.post("/schedule/create", async(req, res)=>{
+    let scheduleService = new ScheduleService()
+    let data = {
+        name: req.body.name,
+        description: req.body.desc,
+        application_id: req.body.application || null,
+        date: req.body.date
+    }
+    let result = await scheduleService.createSchedule(data)
+    if(result.status){
+        return res.status(200).json(result)
+    }else if (result.type == 'BAD_RQ')
+    {
+        return res.status(400).json(result)
+    }
+    return res.status(500).json(result)
 })

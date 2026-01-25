@@ -95,7 +95,7 @@ export class ApplicationRepo
             let result = await this._db.query(sqlStatement, [id])
             if(result.length > 0)
             {
-                return result[0]
+                return new ApplicationModel(result[0])
             }else{
                 return false
             }

@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const optionTexts = {
         'new': 'Новые',
         'canceled': 'Клиент отказался',
-        'success': 'Создана фотосессия'
+        'success': 'Клиент согласился',
+        'scheduled': 'Создана фотосессия'
     };
 
      // Получаем текущий параметр из URL

@@ -17,17 +17,23 @@ export class ScheduleRepo
             let columns = []
             let indexes = []
             let i = 1
-            Object.keys(model).forEach(([k, v])=>{
-                values.push(v)
-                columns.push(k)
-                indexes.push(i)
-                i++
+            console.log(Object.keys(model))
+            Object.keys(model).forEach((k)=>{
+                if(k != "id" && k != "date_create"){
+                    values.push(model[k])
+                    columns.push(k)
+                    indexes.push(`$${i}`)
+                    i++
+                }
             })
+
             let sqlStatement = `INSERT INTO schedule
             (${columns.join(", ")}) VALUES (${indexes.join(", ")})`
+            console.log(sqlStatement)
             await this._db.query(sqlStatement, values)
             return true
         }catch(err){
+            console.log(err)
             return false
         }
     }

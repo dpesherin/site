@@ -51,7 +51,10 @@ export function translateApplicationStatus(applicationStatus) {
       status = "Отклонено"
       break
     case "success":
-      status = "Создана фотосессия"
+      status = "Клиент согласился"
+      break
+    case "scheduled":
+      status = "Фотосессия запланирована"
       break
     default:
       status = "Новая"

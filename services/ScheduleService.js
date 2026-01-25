@@ -1,5 +1,6 @@
 import { ScheduleRepo } from "../repos/ScheduleRepo.js";
 import { ScheduleModel } from "../models/ScheduleModel.js";
+import { ApplicationService } from "./ApplicationService.js";
 
 export class ScheduleService
 {
@@ -10,33 +11,41 @@ export class ScheduleService
         this._repo = new ScheduleRepo()
     }
 
-    async createSchedule(data, userData)
+    async createSchedule(data)
     {
-        if(userData.role === "admin"){
-            let model = new ScheduleModel(data)
-            if(model.date){
-                model.date = new Date(model.date)
-            }else{
-                model.date = null
+        let model = new ScheduleModel(data)
+        let applicationService = new ApplicationService()
+        if(model.date){
+            model.date = new Date(model.date)
+        }else{
+            model.date = null
+        }
+        if(model.application_id){
+            let cand = await applicationService.getApplication(model.application_id)
+            if(cand.status){
+                model.user_id = cand.application.user_id
             }
-            let result = await this._repo.createSchedule(model)
-            if(result){
-                return {
-                    status: true,
-                    msg: "Schedule was creatred successfully"
-                }
-            }else{
-                return {
-                    status: false,
-                    type: "SQL",
-                    msg: "Error while saving schedule"
-                }
+        }
+        let result = await this._repo.createSchedule(model)
+        if(result){
+            if(model.application_id){
+                let res = await applicationService.changeApplicationStatus(
+                    {
+                        id: model.application_id,
+                        status: "scheduled"
+                    }
+                )
+                console.log(res)
+            }
+            return {
+                status: true,
+                msg: "Schedule was creatred successfully"
             }
         }else{
             return {
                 status: false,
-                type: "PERM_DENIED",
-                msg: "Permission Denied"
+                type: "SQL",
+                msg: "Error while saving schedule"
             }
         }
     }

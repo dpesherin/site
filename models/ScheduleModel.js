@@ -3,6 +3,7 @@ export class ScheduleModel
     id
     name
     description
+    date_create
     user_id
     application_id
     status
