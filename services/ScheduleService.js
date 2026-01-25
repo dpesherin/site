@@ -116,7 +116,40 @@ export class ScheduleService
             return {
                 status: false,
                 type: "SQL",
-                msg: "Error while get applications"
+                msg: "Error while get schedules"
+            }
+        }
+    }
+
+    async getLinked(applID){
+        let limit = 1
+        let offset = 0
+        let filter = [
+            {
+                column: "application_id",
+                type: "=",
+                value: applID
+            }
+        ]
+        try{
+            let result = await this._repo.getList([], filter, limit, offset, "DESC")
+            if(result.length > 0){
+                return {
+                    status: true,
+                    schedule: result[0]
+                }
+            }else{
+                return {
+                    status: false,
+                    type: "NOT_FOUND",
+                    msg: "Linked applicatiuon wasn't found"
+                }
+            }
+        }catch(sqlError){
+            return {
+                status: false,
+                type: "SQL",
+                msg: "Error while get schedules"
             }
         }
     }
